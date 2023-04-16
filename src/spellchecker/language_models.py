@@ -16,7 +16,7 @@ class BigramLanguageModel:
         self.l1 = 0.3
     
     def fit(self, texts):
-        for text in tqdm(texts):
+        for text in texts:
             words = word_tokenize(text.lower())
             if len(words) > 0:
                 self.unigram_count += 1
