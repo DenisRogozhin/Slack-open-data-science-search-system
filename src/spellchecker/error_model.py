@@ -20,6 +20,27 @@ def levenshtein_matrix(orig, fix):
 def levenshtein_dist(self, matrix):
     return matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
 
+def find_mistakes_types(orig, fix, matrix):
+    i = matrix.shape[0] - 1 
+    j = matrix.shape[1] - 1
+    way = []
+    while i != 0 and j != 0:
+        #print(i,j)
+        m_up = matrix[i - 1, j]  #insert  
+        m_left =  matrix[i, j - 1]  #del
+        m_diag = matrix[i - 1, j - 1]  #replace
+        if m_diag <= m_left and m_diag <= m_up:
+            if orig[i-1] != fix[j-1]:
+                way.append(('replace', fix[j-1], orig[i-1]))
+            i = i - 1
+            j = j - 1
+        elif m_left < m_diag and m_left < m_up:
+            way.append(('delete', fix[j-1]))
+            j = j - 1
+        else:
+            way.append(('insert', orig[i-1]))
+            i = i - 1
+    return way[::-1]
 
 class ErrorModel:
 
