@@ -75,5 +75,19 @@ class ErrorModel:
                     self.fit_words(orig[i], fix[i])
         return
     
+    def levenstein(self, orig, fix):
+        matrix = levenshtein_matrix(orig, fix)
+        errors = find_mistakes_types(orig, fix, matrix)
+        dist = 0
+        for error in errors:
+            if error[0] == 'replace':
+                dist += (self.replaces[(error[1], error[2])] /
+                         sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
+            elif error[0] == 'delete':
+                dist += (self.deletions[error[1]] / sum([self.deletions[x] for x in self.deletions]))
+            elif error[0] == 'insert':
+                dist += (self.inserts[error[1]] / sum([self.inserts[x] for x in self.inserts]))
+        return dist
+    
     def P_err(self, orig, fix):
-        pass
+        return self.alpha ** (-self.levenstein(orig, fix))
