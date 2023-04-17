@@ -45,10 +45,35 @@ def find_mistakes_types(orig, fix, matrix):
 class ErrorModel:
 
     def __init__(self):
-        pass
+        self.alpha = 5.0
+        self.fixed_texts = []
+        for x,y in fixed_texts:
+            if len(x) == len(y):
+                self.fixed_texts.append((x,y))
+        self.replaces = defaultdict(int)
+        self.inserts = defaultdict(int)
+        self.deletions = defaultdict(int)
+        
+    def fit_words(self, orig, fix):
+        matrix = levenshtein_matrix(orig, fix)
+        errors = find_mistakes_types(orig, fix, matrix)
+        for error in errors:
+            if error[0] == 'replace':
+                self.replaces[(error[1], error[2])] += 1
+            elif error[0] == 'delete':
+                self.deletions[error[1]] += 1
+            elif error[0] == 'insert':
+                self.inserts[error[1]] += 1
+        return
     
     def fit(self, pairs_of_texts): 
-        pass
+        for text_pair in tqdm(pairs_of_texts):
+            orig = text_pair[0]
+            fix = text_pair[1]
+            if len(orig) == len(fix):
+                for i in range(len(orig)):
+                    self.fit_words(orig[i], fix[i])
+        return
     
     def P_err(self, orig, fix):
         pass
