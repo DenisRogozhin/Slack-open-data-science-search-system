@@ -5,6 +5,7 @@ import re
 
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_extras.switch_page_button import switch_page
 
 from utils import search
 
@@ -13,10 +14,16 @@ logging.basicConfig(format="\n%(asctime)s\n%(message)s", level=logging.INFO, for
 
 MIN_DATE = datetime.date(2017, 1, 1)
 MAX_DATE = datetime.date(2022, 1, 1)
+sorting_options = ["⬇️ по дате", "⬆️ по дате", "⬇️ по релевантности"]
 
 # ----- Page header ------
 
-st.set_page_config(page_title="ODS dump search", page_icon="🤖", layout="wide")
+st.set_page_config(
+    page_title="ODS dump search",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
 # st.write(
 #     """<style>
@@ -40,12 +47,18 @@ st.write("")
 
 # ----- Utils ------
 
-if "search_result" not in st.session_state:
-    st.session_state.search_result = None
+if "search_query" not in st.session_state:
+    st.session_state.search_query = ""
 if "start_date" not in st.session_state:
     st.session_state.start_date = MIN_DATE
 if "end_date" not in st.session_state:
     st.session_state.end_date = MAX_DATE
+if "sorting_direction" not in st.session_state:
+    st.session_state.sorting_direction = None
+if "search_result" not in st.session_state:
+    st.session_state.search_result = None
+if "post_id" not in st.session_state:
+    st.session_state.post_id = None
 
 
 def search_callback(query: str, start_date: datetime.date, end_date: datetime.date):
@@ -59,15 +72,16 @@ def search_callback(query: str, start_date: datetime.date, end_date: datetime.da
 
 col1, col2, col3, col4 = st.columns([5, 2, 2, 1])
 # query input
-query = col1.text_input(
+st.session_state.search_query = col1.text_input(
     label="Search",
     placeholder="Введите поисковый запрос",
     label_visibility="collapsed",
+    value=st.session_state.search_query,
 )
 
 date = col2.date_input(
     "Time period",
-    value=[MIN_DATE, MAX_DATE],
+    value=[st.session_state.start_date, st.session_state.end_date],
     min_value=MIN_DATE,
     max_value=MAX_DATE,
     label_visibility="collapsed",
@@ -80,9 +94,9 @@ elif len(date) == 1:
     st.session_state.start_date = date[0]
     st.session_state.end_date = MAX_DATE
 
-sorting = col3.selectbox(
+st.session_state.sorting_direction = col3.selectbox(
     "Ранжировать",
-    ["⬇️ по дате", "⬆️ по дате", "⬇️ по релевантности"],
+    options=sorting_options,
     label_visibility="collapsed",
 )
 
@@ -104,21 +118,25 @@ _, center, _ = st.columns([3, 2, 2])
 with center:
     if search_button:
         with st.spinner("Поиск..."):
-            if query:
+            if st.session_state.search_query:
                 st.session_state.search_result = search(
-                    query, st.session_state.start_date, st.session_state.end_date
+                    st.session_state.search_query,
+                    st.session_state.start_date,
+                    st.session_state.end_date,
                 )
             else:
                 st.session_state.search_result = None
 
     if st.session_state.search_result is not None:
         for i, search_result in enumerate(st.session_state.search_result):
-            st.button(
+            klick = st.button(
                 label=f"Результат поиска {i}",
                 type="primary",
                 # on_click=search,
                 # args=(query, st.session_state.start_date, st.session_state.end_date),
             )
+            if klick:
+                switch_page("Search_Result")
     else:
         st.caption("_Ничего не найдено_  ̄\\\_(ツ)\_/ ̄")
         st.caption("_Попробуйте изменить  запрос_")
