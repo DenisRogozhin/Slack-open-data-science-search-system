@@ -2,8 +2,8 @@
 
 # commands
 lint:
-	@isort development
-	@flake8 development
+	@isort src
+	@flake8 src
 
 test:
 	@pytest
