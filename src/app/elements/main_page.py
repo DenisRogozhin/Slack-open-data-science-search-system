@@ -74,7 +74,7 @@ class SearchBar(Element, SessionStateMixin):
         self.add_state("search_query", "")
         self.add_state("start_date", self.MIN_DATE)
         self.add_state("end_date", self.MAX_DATE)
-        self.add_state("sorting_direction", None)
+        self.add_state("sorting_direction_idx", 1)
 
     def display_search_bar(self, column) -> None:
         search_query = column.text_input(
@@ -95,15 +95,12 @@ class SearchBar(Element, SessionStateMixin):
             min_value=self.MIN_DATE,
             max_value=self.MAX_DATE,
             label_visibility="collapsed",
-            # TODO: callback for date
+            # TODO: callback for date -- need update sort results
         )
         # update date range
         if len(date) == 2:
             self.set_state("start_date", date[0])
             self.set_state("end_date", date[1])
-        # elif len(date) == 1:
-        #     self.set_state("start_date", date[0])
-        #     self.set_state("end_date", self.MAX_DATE)
 
     def display_search_button(self, column) -> None:
         column.button(
@@ -115,10 +112,14 @@ class SearchBar(Element, SessionStateMixin):
         )
 
     def display_sorting_options(self, column) -> None:
-        st.session_state.sorting_direction = column.selectbox(
+        sorting_direction = column.selectbox(
             "Ранжировать",
-            options=self.sorting_options,
             label_visibility="collapsed",
+            options=self.sorting_options,
+            index=self.get_state("sorting_direction_idx"),
+        )
+        self.set_state(
+            "sorting_direction_idx", self.sorting_options.index(sorting_direction)
         )
 
     def display(self) -> None:
