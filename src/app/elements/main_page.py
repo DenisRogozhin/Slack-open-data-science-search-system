@@ -95,21 +95,12 @@ class SearchBar(Element, SessionStateMixin):
             min_value=self.MIN_DATE,
             max_value=self.MAX_DATE,
             label_visibility="collapsed",
-            # TODO: callback for date -- need update sort results
+            on_change=self._search_results.search_callback,
         )
         # update date range
         if len(date) == 2:
             self.set_state("start_date", date[0])
             self.set_state("end_date", date[1])
-
-    def display_search_button(self, column) -> None:
-        column.button(
-            label="Найти",
-            type="primary",
-            # on_click=search_callback,
-            on_click=self._search_results.search_callback,
-            # args=(query, st.session_state.start_date, st.session_state.end_date),
-        )
 
     def display_sorting_options(self, column) -> None:
         sorting_direction = column.selectbox(
@@ -117,9 +108,17 @@ class SearchBar(Element, SessionStateMixin):
             label_visibility="collapsed",
             options=self.sorting_options,
             index=self.get_state("sorting_direction_idx"),
+            on_change=self._search_results.search_callback,
         )
         self.set_state(
             "sorting_direction_idx", self.sorting_options.index(sorting_direction)
+        )
+
+    def display_search_button(self, column) -> None:
+        column.button(
+            label="Найти",
+            type="primary",
+            on_click=self._search_results.search_callback,
         )
 
     def display(self) -> None:
@@ -132,15 +131,15 @@ class SearchBar(Element, SessionStateMixin):
         self.display_search_button(col4)
 
 
-class Result(Element):
-    def __init__(self) -> None:
-        self._init_state()
+# class Result(Element):
+#     def __init__(self) -> None:
+#         self._init_state()
 
-    def _init_state(self) -> None:
-        self.add_state("search_query", "")
-        self.add_state("start_date", self.MIN_DATE)
-        self.add_state("end_date", self.MAX_DATE)
-        self.add_state("sorting_direction", None)
+#     def _init_state(self) -> None:
+#         self.add_state("search_query", "")
+#         self.add_state("start_date", self.MIN_DATE)
+#         self.add_state("end_date", self.MAX_DATE)
+#         self.add_state("sorting_direction", None)
 
 
 header = Header()
