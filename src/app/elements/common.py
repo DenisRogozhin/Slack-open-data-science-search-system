@@ -2,6 +2,8 @@ from typing import Any, Optional
 
 import streamlit as st
 
+from src.app.templates import load_style
+
 
 class Element:
     def display(self) -> None:
@@ -9,9 +11,12 @@ class Element:
 
 
 class EmptySpace(Element):
+    def __init__(self, size: int) -> None:
+        self._size = size
+
     def display(self) -> None:
-        st.write("")
-        st.write("")
+        for _ in range(self._size):
+            st.write("")
 
 
 class SessionStateMixin:

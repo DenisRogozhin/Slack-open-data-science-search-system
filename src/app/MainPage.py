@@ -2,6 +2,7 @@ import streamlit as st
 
 from src.app.elements.main_page import header, search_bar, search_results
 from src.app.elements.common import EmptySpace
+from src.app.templates import load_style
 
 st.set_page_config(
     page_title="ODS dump search",
@@ -9,6 +10,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
+
+st.write(load_style(), unsafe_allow_html=True)
 
 # st.write(
 #     """<style>
@@ -23,10 +26,10 @@ st.set_page_config(
 
 header.display()
 
-EmptySpace().display()
+EmptySpace(2).display()
 
 search_bar.display()
 
-EmptySpace().display()
+EmptySpace(1).display()
 
 search_results.display()

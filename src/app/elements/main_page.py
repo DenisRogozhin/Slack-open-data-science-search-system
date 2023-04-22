@@ -5,7 +5,13 @@ import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
 from src.app.elements.common import SessionStateMixin, Element
-from src.app.utils import search
+from src.app.templates import (
+    search_element,
+    empty_search_results,
+    search_results_stat,
+    main_page_header,
+)
+from src.app.utils import Post, search
 
 __all__ = [
     "header",
@@ -16,10 +22,23 @@ __all__ = [
 
 class Header(Element):
     def display(self) -> None:
-        st.markdown(
-            "<h1 style='text-align: center; color: purple;'>ODS dump search system 🗿</h1>",
-            unsafe_allow_html=True,
+        st.markdown(main_page_header(), unsafe_allow_html=True)
+
+
+class SearchElement(Element, SessionStateMixin):
+    def __init__(self, post: Post) -> None:
+        self._post = post
+
+    def display(self, idx: int) -> None:
+        st.markdown(search_element(self._post), unsafe_allow_html=True)
+        klick = st.button(
+            label="Посмотреть",
+            type="primary",
+            key=idx + 1,
         )
+        if klick:
+            self.set_state("search_result", self._post)
+            switch_page("ResultPage")
 
 
 class SearchResults(Element, SessionStateMixin):
@@ -28,6 +47,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def _init_state(self) -> None:
         self.add_state("search_results", None)
+        self.add_state("search_result", None)
 
     def search_callback(self) -> None:
         _, center, _ = st.columns([3, 2, 2])
@@ -39,26 +59,24 @@ class SearchResults(Element, SessionStateMixin):
                         self.get_state("start_date"),
                         self.get_state("end_date"),
                     )
+                    # TODO: need sort results by sorting_directon here
                     self.set_state("search_results", new_search_result)
                 else:
                     self.set_state("search_results", None)
 
     def display(self) -> None:
         self._init_state()
-        _, center, _ = st.columns([3, 2, 2])
+        _, center, _ = st.columns([1, 2, 1])
 
         with center:
             if self.get_state("search_results") is not None:
+                st.write(search_results_stat(100, 2.0), unsafe_allow_html=True)
                 for i, search_result in enumerate(self.get_state("search_results")):
-                    klick = st.button(
-                        label=f"Результат поиска {i}",
-                        type="primary",
-                    )
-                    if klick:
-                        switch_page("ResultPage")
+                    search_result_element = SearchElement(post=search_result)
+                    search_result_element.display(idx=i)
             else:
-                st.caption("_Ничего не найдено_  ̄\\\_(ツ)\_/ ̄")
-                st.caption("_Попробуйте изменить  запрос_")
+                st.write(empty_search_results(), unsafe_allow_html=True)
+                st.caption("")
 
 
 class SearchBar(Element, SessionStateMixin):
@@ -129,17 +147,6 @@ class SearchBar(Element, SessionStateMixin):
         self.display_date_interval(col2)
         self.display_sorting_options(col3)
         self.display_search_button(col4)
-
-
-# class Result(Element):
-#     def __init__(self) -> None:
-#         self._init_state()
-
-#     def _init_state(self) -> None:
-#         self.add_state("search_query", "")
-#         self.add_state("start_date", self.MIN_DATE)
-#         self.add_state("end_date", self.MAX_DATE)
-#         self.add_state("sorting_direction", None)
 
 
 header = Header()
