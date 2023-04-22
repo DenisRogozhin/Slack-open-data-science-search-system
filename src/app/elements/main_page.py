@@ -1,4 +1,5 @@
 import datetime
+import time
 
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
@@ -54,6 +55,7 @@ class SearchResults(Element, SessionStateMixin):
     def _init_state(self) -> None:
         self.add_state("search_results", None)
         self.add_state("search_result", None)
+        self.add_state("search_time", 0.0)
         self.add_state("current_pages_count", None)
         self.add_state("page_number", None)
         self.add_state("default_pages_count", self.pages_options[0])
@@ -62,11 +64,14 @@ class SearchResults(Element, SessionStateMixin):
         _, center, _ = st.columns([3, 2, 2])
         with center:
             if self.get_state("search_query"):
+                start_time = time.time()
                 new_search_result = search(
                     self.get_state("search_query"),
                     self.get_state("start_date"),
                     self.get_state("end_date"),
                 )
+                end_time = time.time()
+                self.set_state("search_time", end_time - start_time)
                 # TODO: need sort results by sorting_directon here
                 self.set_state("search_results", new_search_result)
                 self.set_state("page_number", 1)
@@ -106,7 +111,10 @@ class SearchResults(Element, SessionStateMixin):
             with column:
                 EmptySpace(2).display()
                 st.write(
-                    search_results_stat(len(self.get_state("search_results")), 2.0),
+                    search_results_stat(
+                        len(self.get_state("search_results")),
+                        self.get_state("search_time"),
+                    ),
                     unsafe_allow_html=True,
                 )
                 EmptySpace(2).display()
