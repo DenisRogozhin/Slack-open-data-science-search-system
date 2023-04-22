@@ -32,3 +32,7 @@ def search(
         Post(id=i, text=f"post text {i}", author=f"author {i}", comments=comments)
         for i in range(30)
     ]
+
+
+def sort_results(query: str, results: list[Post], sorting_direction: str) -> list[Post]:
+    return results

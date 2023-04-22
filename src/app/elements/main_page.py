@@ -1,4 +1,3 @@
-import abc
 import datetime
 
 import streamlit as st
@@ -11,12 +10,12 @@ from src.app.templates import (
     search_results_stat,
     main_page_header,
 )
-from src.app.utils import Post, search
+from src.app.utils import Post, search, sort_results
 
 __all__ = [
-    "header",
-    "search_bar",
-    "search_results",
+    "Header",
+    "SearchResults",
+    "SearchBar",
 ]
 
 
@@ -62,19 +61,28 @@ class SearchResults(Element, SessionStateMixin):
     def search_callback(self) -> None:
         _, center, _ = st.columns([3, 2, 2])
         with center:
-            with st.spinner("Поиск..."):
-                if self.get_state("search_query"):
-                    new_search_result = search(
-                        self.get_state("search_query"),
-                        self.get_state("start_date"),
-                        self.get_state("end_date"),
-                    )
-                    # TODO: need sort results by sorting_directon here
-                    self.set_state("search_results", new_search_result)
-                    self.set_state("page_number", 1)
-                else:
-                    self.set_state("search_results", None)
-                    self.set_state("page_number", None)
+            if self.get_state("search_query"):
+                new_search_result = search(
+                    self.get_state("search_query"),
+                    self.get_state("start_date"),
+                    self.get_state("end_date"),
+                )
+                # TODO: need sort results by sorting_directon here
+                self.set_state("search_results", new_search_result)
+                self.set_state("page_number", 1)
+            else:
+                self.set_state("search_results", None)
+                self.set_state("page_number", None)
+
+    def sort_results_callback(self) -> None:
+        search_results = self.get_state("search_results")
+        if search_results:
+            sorted_results = sort_results(
+                self.get_state("search_query"),
+                search_results,
+                self.get_state("sorting_direction"),
+            )
+            self.set_state("search_results", sorted_results)
 
     def _pages_count_callback(self) -> None:
         self.set_state("page_number", 1)
@@ -179,7 +187,6 @@ class SearchBar(Element, SessionStateMixin):
             placeholder="Введите поисковый запрос",
             label_visibility="collapsed",
             value=self.get_state("search_query"),
-            # key="search_query",
         )
         # need store also current value of search query
         # for correct displaying after return from second page
@@ -192,7 +199,6 @@ class SearchBar(Element, SessionStateMixin):
             min_value=self.MIN_DATE,
             max_value=self.MAX_DATE,
             label_visibility="collapsed",
-            on_change=self._search_results.search_callback,
         )
         # update date range
         if len(date) == 2:
@@ -200,7 +206,7 @@ class SearchBar(Element, SessionStateMixin):
             self.set_state("end_date", date[1])
 
     def _sorting_direction_callback(self) -> None:
-        self._search_results.search_callback()
+        self._search_results.sort_results_callback()
         self.set_state("default_sorting_direction", self.sorting_options[0])
 
     def display_sorting_options(self, column) -> None:
@@ -230,8 +236,3 @@ class SearchBar(Element, SessionStateMixin):
         self.display_date_interval(col2)
         self.display_sorting_options(col3)
         self.display_search_button(col4)
-
-
-header = Header()
-search_results = SearchResults()
-search_bar = SearchBar(search_results)
