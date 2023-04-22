@@ -4,7 +4,7 @@ from src.app.utils import Post
 def search_results_stat(results_count: int, duration: float) -> str:
     return f"""
     <div style="text-align:center;color:grey;font-size:95%;">
-        {results_count} results ({duration:.2f} seconds)
+        {results_count} результатов (время: {duration:.2f} с)
     </div>"""
 
 
@@ -47,7 +47,8 @@ def load_style() -> str:
         color: #F4F6F7;
         background-color: #8E44AD;
         border-color: #8E44AD;
-        width: 10em;
+        # width: 10em;
+        width: auto;
         display: block;
         margin: auto;
     # .stButton button:hover {

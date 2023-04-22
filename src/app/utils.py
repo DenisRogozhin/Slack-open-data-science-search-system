@@ -30,5 +30,5 @@ def search(
     ]
     return [
         Post(id=i, text=f"post text {i}", author=f"author {i}", comments=comments)
-        for i in range(20)
+        for i in range(30)
     ]

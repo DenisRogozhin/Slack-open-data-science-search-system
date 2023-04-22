@@ -4,7 +4,7 @@ import datetime
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
-from src.app.elements.common import SessionStateMixin, Element
+from src.app.elements.common import EmptySpace, SessionStateMixin, Element
 from src.app.templates import (
     search_element,
     empty_search_results,
@@ -42,12 +42,16 @@ class SearchElement(Element, SessionStateMixin):
 
 
 class SearchResults(Element, SessionStateMixin):
+    pages_options = [10, 20, 40, 80]
+
     def __init__(self) -> None:
         self._init_state()
 
     def _init_state(self) -> None:
         self.add_state("search_results", None)
         self.add_state("search_result", None)
+        self.add_state("pages_count", self.pages_options[0])
+        self.add_state("page_number", None)
 
     def search_callback(self) -> None:
         _, center, _ = st.columns([3, 2, 2])
@@ -61,22 +65,80 @@ class SearchResults(Element, SessionStateMixin):
                     )
                     # TODO: need sort results by sorting_directon here
                     self.set_state("search_results", new_search_result)
+                    self.set_state("page_number", 1)
                 else:
                     self.set_state("search_results", None)
+                    self.set_state("page_number", None)
 
-    def display(self) -> None:
-        self._init_state()
-        _, center, _ = st.columns([1, 2, 1])
+    def display_page_count(self, column) -> None:
+        if self.get_state("search_results") is not None:
+            column.markdown("**Число результатов на странице**")
+            pages_count = column.selectbox(
+                "Число результатов на странице",
+                label_visibility="collapsed",  # "visible",
+                options=self.pages_options,
+                index=self.pages_options.index(self.get_state("pages_count")),
+                on_change=lambda: self.set_state("page_number", 1),
+            )
+            if pages_count:
+                self.set_state("pages_count", pages_count)
 
-        with center:
-            if self.get_state("search_results") is not None:
-                st.write(search_results_stat(100, 2.0), unsafe_allow_html=True)
-                for i, search_result in enumerate(self.get_state("search_results")):
+    def display_page_number(self, column) -> None:
+        if self.get_state("search_results") is not None:
+            page_number = self.get_state("page_number")
+            results_per_page = self.get_state("pages_count")
+            results_cnt = len(self.get_state("search_results"))
+            pages_count = (results_cnt - 1) // results_per_page + 1
+
+            left, center, rigth = column.columns([3, 2, 2])
+
+            if page_number > 1:
+                left.button(
+                    "◀️",
+                    on_click=lambda: self.set_state("page_number", page_number - 1),
+                )
+
+            center.markdown(f"**{self.get_state('page_number')}/{pages_count}**")
+
+            if page_number < pages_count:
+                rigth.button(
+                    "▶️",
+                    on_click=lambda: self.set_state("page_number", page_number + 1),
+                )
+
+    def display_search_results(self, column) -> None:
+        with column:
+            search_results = self.get_state("search_results")
+
+            if search_results is not None:
+                page_number = self.get_state("page_number")
+                pages_count = self.get_state("pages_count")
+
+                EmptySpace(2).display()
+                st.write(
+                    search_results_stat(len(search_results), 2.0),
+                    unsafe_allow_html=True,
+                )
+                EmptySpace(2).display()
+
+                cur_page_results = search_results[
+                    (page_number - 1)
+                    * pages_count : min(page_number * pages_count, len(search_results))
+                ]
+                for i, search_result in enumerate(cur_page_results):
                     search_result_element = SearchElement(post=search_result)
                     search_result_element.display(idx=i)
             else:
                 st.write(empty_search_results(), unsafe_allow_html=True)
                 st.caption("")
+
+    def display(self) -> None:
+        self._init_state()
+        left, center, right = st.columns([1, 2, 1])
+
+        self.display_page_count(left)
+        self.display_search_results(center)
+        self.display_page_number(right)
 
 
 class SearchBar(Element, SessionStateMixin):
@@ -92,7 +154,7 @@ class SearchBar(Element, SessionStateMixin):
         self.add_state("search_query", "")
         self.add_state("start_date", self.MIN_DATE)
         self.add_state("end_date", self.MAX_DATE)
-        self.add_state("sorting_direction_idx", 1)
+        self.add_state("sorting_direction_idx", 0)
 
     def display_search_bar(self, column) -> None:
         search_query = column.text_input(

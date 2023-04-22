@@ -30,6 +30,4 @@ EmptySpace(2).display()
 
 search_bar.display()
 
-EmptySpace(1).display()
-
 search_results.display()
