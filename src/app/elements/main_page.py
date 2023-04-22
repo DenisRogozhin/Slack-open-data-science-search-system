@@ -29,6 +29,11 @@ class SearchElement(Element, SessionStateMixin):
     def __init__(self, post: Post) -> None:
         self._post = post
 
+    def _switch_page(self, page_name: str) -> None:
+        self.set_state("default_pages_count", self.get_state("pages_count"))
+        self.set_state("default_sorting_direction", self.get_state("sorting_direction"))
+        switch_page(page_name)
+
     def display(self, idx: int) -> None:
         st.markdown(search_element(self._post), unsafe_allow_html=True)
         klick = st.button(
@@ -38,7 +43,7 @@ class SearchElement(Element, SessionStateMixin):
         )
         if klick:
             self.set_state("search_result", self._post)
-            switch_page("ResultPage")
+            self._switch_page("ResultPage")
 
 
 class SearchResults(Element, SessionStateMixin):
@@ -50,8 +55,9 @@ class SearchResults(Element, SessionStateMixin):
     def _init_state(self) -> None:
         self.add_state("search_results", None)
         self.add_state("search_result", None)
-        self.add_state("pages_count", self.pages_options[0])
+        self.add_state("current_pages_count", None)
         self.add_state("page_number", None)
+        self.add_state("default_pages_count", self.pages_options[0])
 
     def search_callback(self) -> None:
         _, center, _ = st.columns([3, 2, 2])
@@ -70,18 +76,21 @@ class SearchResults(Element, SessionStateMixin):
                     self.set_state("search_results", None)
                     self.set_state("page_number", None)
 
+    def _pages_count_callback(self) -> None:
+        self.set_state("page_number", 1)
+        self.set_state("default_pages_count", self.pages_options[0])
+
     def display_page_count(self, column) -> None:
         if self.get_state("search_results") is not None:
             column.markdown("**Число результатов на странице**")
-            pages_count = column.selectbox(
+            column.selectbox(
                 "Число результатов на странице",
                 label_visibility="collapsed",  # "visible",
                 options=self.pages_options,
-                index=self.pages_options.index(self.get_state("pages_count")),
-                on_change=lambda: self.set_state("page_number", 1),
+                index=self.pages_options.index(self.get_state("default_pages_count")),
+                key="pages_count",
+                on_change=self._pages_count_callback,
             )
-            if pages_count:
-                self.set_state("pages_count", pages_count)
 
     def display_page_number(self, column) -> None:
         if self.get_state("search_results") is not None:
@@ -154,7 +163,7 @@ class SearchBar(Element, SessionStateMixin):
         self.add_state("search_query", "")
         self.add_state("start_date", self.MIN_DATE)
         self.add_state("end_date", self.MAX_DATE)
-        self.add_state("sorting_direction_idx", 0)
+        self.add_state("default_sorting_direction", self.sorting_options[0])
 
     def display_search_bar(self, column) -> None:
         search_query = column.text_input(
@@ -182,16 +191,20 @@ class SearchBar(Element, SessionStateMixin):
             self.set_state("start_date", date[0])
             self.set_state("end_date", date[1])
 
+    def _sorting_direction_callback(self) -> None:
+        self._search_results.search_callback()
+        self.set_state("default_sorting_direction", self.sorting_options[0])
+
     def display_sorting_options(self, column) -> None:
-        sorting_direction = column.selectbox(
+        column.selectbox(
             "Ранжировать",
             label_visibility="collapsed",
             options=self.sorting_options,
-            index=self.get_state("sorting_direction_idx"),
-            on_change=self._search_results.search_callback,
-        )
-        self.set_state(
-            "sorting_direction_idx", self.sorting_options.index(sorting_direction)
+            index=self.sorting_options.index(
+                self.get_state("default_sorting_direction")
+            ),
+            key="sorting_direction",
+            on_change=self._sorting_direction_callback,
         )
 
     def display_search_button(self, column) -> None:
