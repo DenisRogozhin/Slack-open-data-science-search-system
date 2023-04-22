@@ -92,6 +92,17 @@ class SearchResults(Element, SessionStateMixin):
                 on_change=self._pages_count_callback,
             )
 
+    def display_sorting_stat(self, column) -> None:
+        search_result = self.get_state("search_results")
+        if search_result:
+            with column:
+                EmptySpace(2).display()
+                st.write(
+                    search_results_stat(len(self.get_state("search_results")), 2.0),
+                    unsafe_allow_html=True,
+                )
+                EmptySpace(2).display()
+
     def display_page_number(self, column) -> None:
         if self.get_state("search_results") is not None:
             page_number = self.get_state("page_number")
@@ -123,13 +134,6 @@ class SearchResults(Element, SessionStateMixin):
                 page_number = self.get_state("page_number")
                 pages_count = self.get_state("pages_count")
 
-                EmptySpace(2).display()
-                st.write(
-                    search_results_stat(len(search_results), 2.0),
-                    unsafe_allow_html=True,
-                )
-                EmptySpace(2).display()
-
                 cur_page_results = search_results[
                     (page_number - 1)
                     * pages_count : min(page_number * pages_count, len(search_results))
@@ -146,8 +150,12 @@ class SearchResults(Element, SessionStateMixin):
         left, center, right = st.columns([1, 2, 1])
 
         self.display_page_count(left)
-        self.display_search_results(center)
+        self.display_sorting_stat(center)
         self.display_page_number(right)
+
+        _, content, _ = st.columns([1, 2, 1])
+
+        self.display_search_results(content)
 
 
 class SearchBar(Element, SessionStateMixin):
