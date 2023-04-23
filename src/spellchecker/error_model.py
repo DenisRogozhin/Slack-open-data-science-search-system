@@ -1,6 +1,14 @@
+"""Realisation of Error model and some support functions."""
+
 import numpy as np
 
 def levenshtein_matrix(orig, fix):
+    """Count levenshtein matrix for twho given words.
+        
+    :param orig: word with mistake
+    :param fix: correct word
+    :return: np.array(shape=(len(orig) + 1, len(fix) + 1)) - levenshtein matrix
+    """
     len_1 = len(orig) + 1
     len_2 = len(fix) + 1
     matrix = np.zeros((len_1, len_2))
@@ -18,9 +26,21 @@ def levenshtein_matrix(orig, fix):
     return matrix
 
 def levenshtein_dist(self, matrix):
+    """Count levenshtein distance with given levenshtein matrix.
+        
+    :param matrix: levenshtein matrix
+    :return: levenshtein distance
+    """
     return matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
 
 def find_mistakes_types(orig, fix, matrix):
+    """Find types of mistakes in the original word with the fixed word given.
+        
+    :param orig: word with mistake
+    :param fix: correct word
+    :param matrix: levenshtein matrix
+    :return: List of mistakes types: ('replace', a, b), ('delete', a), ('insert', a)
+    """
     i = matrix.shape[0] - 1 
     j = matrix.shape[1] - 1
     way = []
@@ -43,8 +63,10 @@ def find_mistakes_types(orig, fix, matrix):
     return way[::-1]
 
 class ErrorModel:
-
+    """Realisation of Error model."""
+    
     def __init__(self):
+        """Init Error model."""
         self.alpha = 5.0
         self.fixed_texts = []
         for x,y in fixed_texts:
@@ -55,6 +77,11 @@ class ErrorModel:
         self.deletions = defaultdict(int)
         
     def fit_words(self, orig, fix):
+        """Add pair of (orig, fix) words to error model.
+            
+        :param orig: word with mistake
+        :param fix: correct word
+        """        
         matrix = levenshtein_matrix(orig, fix)
         errors = find_mistakes_types(orig, fix, matrix)
         for error in errors:
@@ -64,18 +91,27 @@ class ErrorModel:
                 self.deletions[error[1]] += 1
             elif error[0] == 'insert':
                 self.inserts[error[1]] += 1
-        return
     
     def fit(self, pairs_of_texts): 
+        """Add pairs of (orig, fix) words to error model.
+            
+        :param pairs_of_texts: list of texts (orig, fix)
+        :param fix: correct word
+        """        
         for text_pair in tqdm(pairs_of_texts):
             orig = text_pair[0]
             fix = text_pair[1]
             if len(orig) == len(fix):
                 for i in range(len(orig)):
                     self.fit_words(orig[i], fix[i])
-        return
     
     def levenstein(self, orig, fix):
+        """Count modified levenstein distance between orig and fix.
+            
+        :param orig: word with mistake
+        :param fix: correct word
+        :return: levenshtein distance
+        """        
         matrix = levenshtein_matrix(orig, fix)
         errors = find_mistakes_types(orig, fix, matrix)
         dist = 0
@@ -90,4 +126,10 @@ class ErrorModel:
         return dist
     
     def P_err(self, orig, fix):
+        """Count P(orig|fix).
+            
+        :param orig: word with mistake
+        :param fix: correct word
+        :return: P(orig|fix)
+        """        
         return self.alpha ** (-self.levenstein(orig, fix))
