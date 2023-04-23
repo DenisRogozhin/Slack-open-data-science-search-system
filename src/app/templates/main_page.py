@@ -81,25 +81,29 @@ def search_element(post: Post, max_snippet_len: int) -> str:
         margin-bottom: 4px
     ">
         <div style="
-            font-family:    Arial, Helvetica, sans-serif;
-            font: italic;
+            text-align: center;
         ">
             {post.text if len(post.text) <= max_snippet_len else 
              post.text[: max_snippet_len] + "..."}
         </div>
+        <br>
         <div style="
             display: flex; 
             justify-content: space-between";
         >
-            <div>
+            <div style="
+                font-family: 'Roboto', sans-serif;
+            ">
                 {post.datetime.strftime("%Y-%m-%d %H:%M:%S")}
             </div>
             <div style="
-                font: italic 1.2em
+                font-family: 'Prompt', sans-serif;
             ">
                 {post.author}
             </div>
-            <div>
+            <div style="
+                font-family: 'Roboto', sans-serif;
+            ">
                 Number of comments: {len(post.comments)}
             </div>
         </div>

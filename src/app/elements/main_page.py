@@ -180,6 +180,7 @@ class SearchResults(Element, SessionStateMixin):
         self.display_sorting_stat(center)
         self.display_page_number(right)
 
+        EmptySpace(1).display()
         _, content, _ = st.columns([1, 2, 1])
 
         self.display_search_results(content)

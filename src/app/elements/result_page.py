@@ -33,7 +33,8 @@ class SearchComment(Element, SessionStateMixin):
         else:
             with st.expander(self._comment.text[: self.max_snippet_len] + "..."):
                 st.markdown(
-                    search_result_comment(self._comment), unsafe_allow_html=True
+                    search_result_comment(self._comment, with_border=False),
+                    unsafe_allow_html=True,
                 )
 
 

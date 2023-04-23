@@ -31,30 +31,40 @@ def result_page_comments_header() -> str:
     </h2>"""
 
 
-def search_result_comment(comment: Comment) -> str:
-    return f"""
-    <div style="
+def search_result_comment(comment: Comment, with_border: bool = True) -> str:
+    if with_border:
+        style = """
         box-sizing: border-box; 
-        padding: 5px; 
-        border: 0.5px solid #CACFD2; 
-        border-radius: 3px; 
-        margin-bottom: 4px
-    ">
+        padding: 15px; 
+        border: 1px solid #CACFD2; 
+        border-radius: 3px;
+        margin-bottom: 4px;"""
+    else:
+        style = """
+        box-sizing: border-box; 
+        padding: 15px;
+        margin-bottom: 4px;"""
+
+    return f"""
+    <div style="{style}">
         <div style="
-            font-family:    Arial, Helvetica, sans-serif;
-            font: italic;
+            font-size: 90%;
+            text-align: center;
         ">
             {comment.text}
         </div>
+        <br>
         <div style="
             display: flex; 
             justify-content: space-between";
         >
-            <div>
+            <div style="
+                font-family: 'Roboto', sans-serif;
+            ">
                 {comment.datetime.strftime("%Y-%m-%d %H:%M:%S")}
             </div>
             <div style="
-                font: italic 1.2em
+                font-family: 'Prompt', sans-serif;
             ">
                 {comment.author}
             </div>
