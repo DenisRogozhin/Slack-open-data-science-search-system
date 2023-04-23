@@ -227,6 +227,7 @@ class SearchBar(Element, SessionStateMixin):
     def _sorting_direction_callback(self) -> None:
         self._search_results.sort_results_callback()
         self.set_state("default_sorting_direction", self.sorting_options[0])
+        self.set_state("page_number", 1)
 
     def display_sorting_options(self, column) -> None:
         column.selectbox(
