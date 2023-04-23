@@ -1,8 +1,8 @@
 import streamlit as st
 
 from src.app.elements.common import EmptySpace
-from src.app.elements.result_page import header, back_botton, search_result
-from src.app.templates import load_style
+from src.app.elements.result_page import Header, SearchResult, BackBotton
+from src.app.templates.common import load_style
 
 
 st.set_page_config(
@@ -15,6 +15,14 @@ st.set_page_config(
 # load styles
 st.write(load_style(), unsafe_allow_html=True)
 
+# init page elements
+header = Header()
+
+search_result = SearchResult()
+
+back_botton = BackBotton()
+
+# display page elements
 header.display()
 
 EmptySpace(1).display()

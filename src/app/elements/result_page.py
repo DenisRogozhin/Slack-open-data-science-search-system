@@ -2,19 +2,19 @@ import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
 from src.app.elements.common import EmptySpace, SessionStateMixin, Element
-from src.app.templates import (
+from src.app.templates.result_page import (
     result_page_comments_header,
     result_page_header,
     result_page_post_header,
-    search_element,
     search_result_comment,
 )
+from src.app.templates.main_page import search_element
 from src.app.utils import Comment
 
 __all__ = [
-    "header",
-    "back_botton",
-    "search_result",
+    "Header",
+    "BackBotton",
+    "SearchResult",
 ]
 
 
@@ -30,8 +30,6 @@ class SearchComment(Element, SessionStateMixin):
     def display(self) -> None:
         if len(self._comment.text) <= self.max_snippet_len:
             st.markdown(search_result_comment(self._comment), unsafe_allow_html=True)
-            # st.text(self._comment.text)
-            # st.markdown(search_element(post), unsafe_allow_html=True)
         else:
             with st.expander(self._comment.text[: self.max_snippet_len] + "..."):
                 st.markdown(
@@ -62,8 +60,3 @@ class BackBotton(Element, SessionStateMixin):
         klick = st.button("Назад")
         if klick:
             switch_page("MainPage")
-
-
-header = Header()
-search_result = SearchResult()
-back_botton = BackBotton()

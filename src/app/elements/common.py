@@ -2,8 +2,6 @@ from typing import Any, Optional
 
 import streamlit as st
 
-from src.app.templates import load_style
-
 
 class Element:
     max_snippet_len = 200

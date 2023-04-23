@@ -5,7 +5,7 @@ import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
 from src.app.elements.common import EmptySpace, SessionStateMixin, Element
-from src.app.templates import (
+from src.app.templates.main_page import (
     page_number_display,
     page_number_text,
     results_per_page_count_text,
@@ -53,7 +53,7 @@ class SearchElement(Element, SessionStateMixin):
 
 
 class SearchResults(Element, SessionStateMixin):
-    pages_options = [10, 20, 40, 80]
+    pages_options = [5, 10, 20, 40, 80]
 
     def __init__(self) -> None:
         self._init_state()
