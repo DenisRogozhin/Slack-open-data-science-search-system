@@ -6,6 +6,9 @@ from streamlit_extras.switch_page_button import switch_page
 
 from src.app.elements.common import EmptySpace, SessionStateMixin, Element
 from src.app.templates import (
+    page_number_display,
+    page_number_text,
+    results_per_page_count_text,
     search_element,
     empty_search_results,
     search_results_stat,
@@ -35,7 +38,10 @@ class SearchElement(Element, SessionStateMixin):
         switch_page(page_name)
 
     def display(self, idx: int) -> None:
-        st.markdown(search_element(self._post), unsafe_allow_html=True)
+        st.markdown(
+            search_element(post=self._post, max_snippet_len=self.max_snippet_len),
+            unsafe_allow_html=True,
+        )
         klick = st.button(
             label="Посмотреть",
             type="primary",
@@ -95,8 +101,9 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_page_count(self, column) -> None:
         if self.get_state("search_results") is not None:
-            column.markdown("**Число результатов на странице**")
-            column.selectbox(
+            column.markdown(results_per_page_count_text(), unsafe_allow_html=True)
+            _, center, _ = column.columns([2, 2, 2])
+            center.selectbox(
                 "Число результатов на странице",
                 label_visibility="collapsed",  # "visible",
                 options=self.pages_options,
@@ -126,7 +133,9 @@ class SearchResults(Element, SessionStateMixin):
             results_cnt = len(self.get_state("search_results"))
             pages_count = (results_cnt - 1) // results_per_page + 1
 
-            left, center, rigth = column.columns([3, 2, 2])
+            column.markdown(page_number_text(), unsafe_allow_html=True)
+
+            _, left, center, rigth, _ = column.columns([1, 2, 2, 2, 1])
 
             if page_number > 1:
                 left.button(
@@ -134,7 +143,9 @@ class SearchResults(Element, SessionStateMixin):
                     on_click=lambda: self.set_state("page_number", page_number - 1),
                 )
 
-            center.markdown(f"**{self.get_state('page_number')}/{pages_count}**")
+            center.markdown(
+                page_number_display(page_number, pages_count), unsafe_allow_html=True
+            )
 
             if page_number < pages_count:
                 rigth.button(

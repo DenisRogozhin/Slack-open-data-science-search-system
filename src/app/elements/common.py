@@ -6,6 +6,8 @@ from src.app.templates import load_style
 
 
 class Element:
+    max_snippet_len = 200
+
     def display(self) -> None:
         raise NotImplementedError
 

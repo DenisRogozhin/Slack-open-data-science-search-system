@@ -5,18 +5,17 @@ from time import sleep
 
 @dataclass
 class Comment:
-    id: int
     text: str
     author: str
+    datetime: datetime.datetime
 
 
 @dataclass
 class Post:
-    id: int
     text: str
     author: str
+    datetime: datetime.datetime
     comments: list[Comment]
-    snippet: str = ""
 
 
 def search(
@@ -26,10 +25,24 @@ def search(
 ) -> list[Post]:
     sleep(2)
     comments = [
-        Comment(id=i, text=f"comment text {i}", author=f"author {i}") for i in range(20)
+        Comment(
+            text="; ".join(100 * [f"comment text {i}"])
+            if i % 2 == 0
+            else f"comment text {i}",
+            author=f"comment author {i}",
+            datetime=datetime.datetime.now(),
+        )
+        for i in range(20)
     ]
     return [
-        Post(id=i, text=f"post text {i}", author=f"author {i}", comments=comments)
+        Post(
+            text="; ".join(100 * [f"post text {i}"])
+            if i % 2 == 0
+            else f"post text {i}",
+            author=f"post author {i}",
+            comments=comments,
+            datetime=datetime.datetime.now(),
+        )
         for i in range(30)
     ]
 

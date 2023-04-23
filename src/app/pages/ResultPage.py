@@ -12,6 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# load styles
 st.write(load_style(), unsafe_allow_html=True)
 
 header.display()
