@@ -1,11 +1,23 @@
+from collections import defaultdict
+
+
 class Index:
 
     def __init__(self):
-        pass
+        self.index = defaultdict(list)
 
 
-    def build(self, text_list):
-        pass
+    def build(self, text_list=None):
+        text_id = 0
+
+        for text in text_list:
+            tokens = text.split(' ')
+
+            for tok in tokens:
+                self.index[tok].append(text_id)
+            text_id += 1
+
+        # self.compress()
 
 
     def compress(self):
@@ -26,4 +38,3 @@ class Index:
 
     def load(self, index_filepath, compression_filepath):
         pass
-    
