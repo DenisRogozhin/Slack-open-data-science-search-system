@@ -1,4 +1,5 @@
 from collections import defaultdict
+import varbyte_encoding
 
 
 class Index:
@@ -17,15 +18,16 @@ class Index:
                 self.index[tok].append(text_id)
             text_id += 1
 
-        # self.compress()
+        self.compress()
 
 
     def compress(self):
-        pass
+        for tok in self.index.keys():
+            self.index[tok] = varbyte_encoding.compress(self.index[tok])
 
 
-    def decompress(self):
-        pass
+    def decompress_ids(self, ids):
+        return varbyte_encoding.decompress(ids)
 
 
     def search(self, query):
