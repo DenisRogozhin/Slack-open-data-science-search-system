@@ -1,6 +1,6 @@
 """Bigram language model to count text probabilities."""
 
-from nltk import word_tokenize
+from utils import tokenize
 from collections import defaultdict
 
 
@@ -26,7 +26,7 @@ class BigramLanguageModel:
         :param texts: list of texts
         """
         for text in texts:
-            words = word_tokenize(text.lower())
+            words = tokenize(text.lower())
             if len(words) > 0:
                 self.unigram_count += 1
                 self.unigrams[words[0]] += 1
@@ -86,7 +86,7 @@ class BigramLanguageModel:
                           [None, 'laplace', 'jelinek-mercer', 'katz-smoothing']
         :return: probability of the given text
         """
-        words = word_tokenize(text.lower())
+        words = tokenize(text.lower())
         p = 1
         if smoothing not in [None, 'laplace', 'jelinek-mercer', 'katz-smoothing']:
             print('bad smoothing, changed to None')
