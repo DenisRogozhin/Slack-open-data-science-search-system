@@ -71,7 +71,7 @@ class ErrorModel:
 
     def __init__(self):
         """Init Error model."""
-        self.alpha = 5.0
+        self.alpha = 1.5
         self.replaces = defaultdict(int)
         self.inserts = defaultdict(int)
         self.deletions = defaultdict(int)
@@ -117,12 +117,21 @@ class ErrorModel:
         dist = 0
         for error in errors:
             if error[0] == 'replace':
-                dist += (self.replaces[(error[1], error[2])] /
+                if self.replaces[(error[1], error[2])] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.replaces[(error[1], error[2])] /
                          sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
             elif error[0] == 'delete':
-                dist += (self.deletions[error[1]] / sum([self.deletions[x] for x in self.deletions]))
+                if self.deletions[error[1]] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.deletions[error[1]] / sum([self.deletions[x] for x in self.deletions]))
             elif error[0] == 'insert':
-                dist += (self.inserts[error[1]] / sum([self.inserts[x] for x in self.inserts]))
+                if self.inserts[error[1]] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.inserts[error[1]] / sum([self.inserts[x] for x in self.inserts]))
         return dist
 
     def P_err(self, orig, fix):
