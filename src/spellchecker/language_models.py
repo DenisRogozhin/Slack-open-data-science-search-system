@@ -54,23 +54,23 @@ class BigramLanguageModel:
                 p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
             else:
                 p = 0
-            p += self.l1 * self.unigrams[word] / self.W
+            p += self.l1 * self.unigrams[word] / self.unigram_count
         elif smoothing == 'katz-smoothing':
             if self.unigrams[prev_word] != 0:
                 p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
             else:
                 p = 0
             if p == 0:
-                p = self.l1 * self.unigrams[word] / self.W
+                p = self.l1 * self.unigrams[word] / self.unigram_count
         return p
 
     def __count_unigram_p(self, word, smoothing):
         if smoothing != 'laplace':
             smoothing = None
         if not smoothing:
-            p = self.unigrams[word] / self.W
+            p = self.unigrams[word] / self.unigram_count
         elif smoothing == 'laplace':
-            p = (self.unigrams[word] + self.alpha) / (self.W + self.alpha * self.W)
+            p = (self.unigrams[word] + self.alpha) / (self.unigram_count + self.alpha * self.W)
         return p
 
     def P2(self, text, smoothing=None):
