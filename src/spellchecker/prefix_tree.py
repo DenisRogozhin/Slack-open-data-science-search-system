@@ -56,5 +56,30 @@ class Bor():
         return current[prefix[n - 1]].freq
     
     def search(self, orig):
-        pass
+        current = self.tree
+        fix = ""
+        cur_len = 0
+        queue = []
+        candidates = []
+        ins_cnt = 0
+        del_cnt = 0
+        
+        while len(candidates) < self.max_candidates:
+            if abs(len(fix) - len(orig)) <= 1 and current.word is not None:
+                candidates.append(fix)
+            cur_len = cur_len + 1
+            for letter in current.children:
+                cost = (self.alpha * np.log2(self.get_prefix_freq(fix + letter)) + self.beta * 
+                                    self.error_model.P_err(orig[:cur_len], fix + letter))
+                
+                if len(queue) < self.max_queue_len:
+                    queue.append((fix + letter, cost, current.children[letter], cur_len, ins_cnt, del_cnt))
+                elif cost > queue[self.max_queue_len - 1][1]:
+                    queue[self.max_queue_len - 1] = (fix + letter, cost, current.children[letter], cur_len, ins_cnt, del_cnt)
+                queue = sorted(queue, key = lambda x: x[1],reverse = True)
     
+            if len(queue) <= 0:
+                return candidates
+            fix, cost, current, cur_len, ins_cnt, del_cnt = queue[0]
+            queue.remove(queue[0])
+        return candidates
