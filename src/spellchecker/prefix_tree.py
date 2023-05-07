@@ -1,9 +1,20 @@
 from utils import tokenize
 
+class Node():
+    def __init__(self, word=None):
+        self.word = word
+        self.children = dict()
+        self.freq = 0
+
 class Bor():
     
     def __init__(self, error_model):
-        pass
+        self.error_model = error_model
+        self.tree = Node()
+        self.alpha = 0.01
+        self.beta = 1
+        self.max_queue_len = 100
+        self.max_candidates = 20
     
     def fit(self, correct_queries):
         for query in correct_queries:
@@ -32,7 +43,17 @@ class Bor():
                 current[word[n - 1]].word = word
     
     def get_prefix_freq(self, prefix):
-        pass
+        current = self.tree.children
+        n = len(prefix)
+        if n == 0:
+            return 1
+        for i in range(n - 1):
+            if prefix[i] not in current:
+                return 0
+            current = current[prefix[i]].children
+        if prefix[n - 1] not in current:
+            return 0
+        return current[prefix[n - 1]].freq
     
     def search(self, orig):
         pass
