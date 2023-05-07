@@ -63,6 +63,12 @@ def find_mistakes_types(orig, fix, matrix):
         else:
             way.append(('insert', orig[i-1]))
             i = i - 1
+    while i > 0:
+        way.append(('insert', orig[i-1]))
+        i = i - 1
+    while j > 0:
+        way.append(('delete', fix[j-1]))
+        j = j - 1
     return way[::-1]
 
 
