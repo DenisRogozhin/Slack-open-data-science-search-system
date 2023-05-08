@@ -68,4 +68,28 @@ class SpellCorrector():
         return query
         
     def spellcorrect(self, query):
-        pass
+        tokens = tokenize(query)
+        for i in range(2):
+            grammar_fixes = list(map(lambda x: x[0], self.grammar_error_correct(tokens)))
+            splits = self.fix_split(tokens)
+            joins = self.fix_join(tokens)
+            layouts = [self.fix_layout(tokens)]
+    
+            candidates = grammar_fixes + splits + joins + layouts
+        
+            uniq_candidates = []
+            for candidate in candidates:
+                if candidate not in uniq_candidates:
+                    uniq_candidates.append((candidate, self.lm.P2((" ".join(candidate)), smoothing=None), 
+                                                sc.err.P_err(query, " ".join(candidate))))
+                
+            uniq_candidates = sorted(uniq_candidates, key=lambda x: x[1], reverse=True)
+            res = uniq_candidates[0][0]
+        
+            if tokens == res:
+                break
+            else:
+                tokens = res
+                query = " ".join(tokens)
+        
+        return res
