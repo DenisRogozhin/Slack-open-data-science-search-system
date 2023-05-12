@@ -14,7 +14,7 @@ from src.app.templates.main_page import (
     search_results_stat,
     main_page_header,
 )
-from src.app.utils import Post, search, sort_results
+from src.app.utils import Post, search, sort_results, _
 
 __all__ = [
     "Header",
@@ -43,7 +43,7 @@ class SearchElement(Element, SessionStateMixin):
             unsafe_allow_html=True,
         )
         klick = st.button(
-            label="Посмотреть",
+            label=_("Lookup"),  # "Посмотреть"
             type="primary",
             key=idx + 1,
         )
@@ -104,7 +104,7 @@ class SearchResults(Element, SessionStateMixin):
             column.markdown(results_per_page_count_text(), unsafe_allow_html=True)
             _, center, _ = column.columns([2, 2, 2])
             center.selectbox(
-                "Число результатов на странице",
+                label="Number of results per page",
                 label_visibility="collapsed",  # "visible",
                 options=self.pages_options,
                 index=self.pages_options.index(self.get_state("default_pages_count")),
@@ -189,7 +189,11 @@ class SearchResults(Element, SessionStateMixin):
 class SearchBar(Element, SessionStateMixin):
     MIN_DATE = datetime.date(2017, 1, 1)
     MAX_DATE = datetime.date(2022, 1, 1)
-    sorting_options = ["⬇️ по релевантности", "⬇️ по дате", "⬆️ по дате"]
+    sorting_options = [
+        "⬇️" + " " + _("on relevance"),
+        "⬇️" + " " + _("on date"),
+        "⬆️" + " " + _("on date"),
+    ]
 
     def __init__(self, search_results: SearchResults) -> None:
         self._search_results = search_results
@@ -204,7 +208,7 @@ class SearchBar(Element, SessionStateMixin):
     def display_search_bar(self, column) -> None:
         search_query = column.text_input(
             label="Search",
-            placeholder="Введите поисковый запрос",
+            placeholder=_("Write a search query"),
             label_visibility="collapsed",
             value=self.get_state("search_query"),
         )
@@ -214,7 +218,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_date_interval(self, column) -> None:
         date = column.date_input(
-            "Time period",
+            _("Time period"),
             value=[self.get_state("start_date"), self.get_state("end_date")],
             min_value=self.MIN_DATE,
             max_value=self.MAX_DATE,
@@ -232,7 +236,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_sorting_options(self, column) -> None:
         column.selectbox(
-            "Ранжировать",
+            _("Sort by"),
             label_visibility="collapsed",
             options=self.sorting_options,
             index=self.sorting_options.index(
@@ -244,7 +248,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_search_button(self, column) -> None:
         column.button(
-            label="Найти",
+            label=_("Search"),
             type="primary",
             on_click=self._search_results.search_callback,
         )

@@ -1,6 +1,16 @@
+import os
+import gettext
 from dataclasses import dataclass
 import datetime
 from time import sleep
+
+
+translation = gettext.translation(
+    domain="app",
+    localedir=os.path.join(os.path.dirname(__file__), "../locales"),
+    languages=["en", "ru"],
+)
+_ = translation.gettext
 
 
 @dataclass
