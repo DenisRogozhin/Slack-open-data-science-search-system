@@ -1,0 +1,96 @@
+# English translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-05-12 23:03+0300\n"
+"PO-Revision-Date: 2023-05-12 23:07+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: src/app/MainPage.py:23
+msgid "ODS dump search"
+msgstr ""
+
+#: src/app/elements/main_page.py:50
+msgid "Lookup"
+msgstr ""
+
+#: src/app/elements/main_page.py:111
+msgid "Number of results per page"
+msgstr ""
+
+#: src/app/elements/main_page.py:197
+msgid "on relevance"
+msgstr ""
+
+#: src/app/elements/main_page.py:198 src/app/elements/main_page.py:199
+msgid "on date"
+msgstr ""
+
+#: src/app/elements/main_page.py:215
+msgid "Write a search query"
+msgstr ""
+
+#: src/app/elements/main_page.py:225
+msgid "Time period"
+msgstr ""
+
+#: src/app/elements/main_page.py:243
+msgid "Sort by"
+msgstr ""
+
+#: src/app/elements/main_page.py:255
+msgid "Search"
+msgstr ""
+
+#: src/app/elements/result_page.py:65
+msgid "Back"
+msgstr ""
+
+#: src/app/pages/ResultPage.py:13 src/app/templates/result_page.py:9
+msgid "Search result"
+msgstr ""
+
+#: src/app/templates/main_page.py:9
+msgid "ODS dump search system"
+msgstr ""
+
+#: src/app/templates/main_page.py:34
+msgid "No results"
+msgstr ""
+
+#: src/app/templates/main_page.py:35
+msgid "Try to change query"
+msgstr ""
+
+#: src/app/templates/main_page.py:49
+msgid "Results per page"
+msgstr ""
+
+#: src/app/templates/main_page.py:62
+msgid "Current page"
+msgstr ""
+
+#: src/app/templates/main_page.py:87
+msgid "Number of comments"
+msgstr ""
+
+#: src/app/templates/result_page.py:20
+msgid "Post"
+msgstr ""
+
+#: src/app/templates/result_page.py:31
+msgid "Comment"
+msgstr ""
+
