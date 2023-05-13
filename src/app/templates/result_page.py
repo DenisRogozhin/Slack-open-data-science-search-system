@@ -25,7 +25,7 @@ def result_page_post_header() -> str:
 
 
 def result_page_comments_header() -> str:
-    comment_str = _("Comment")
+    comment_str = _("Comments")
     return f"""
     <h2 style="
         text-align: center; 

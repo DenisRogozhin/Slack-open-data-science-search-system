@@ -190,9 +190,9 @@ class SearchBar(Element, SessionStateMixin):
     MIN_DATE = datetime.date(2017, 1, 1)
     MAX_DATE = datetime.date(2022, 1, 1)
     sorting_options = [
-        "⬇️" + " " + _("on relevance"),
-        "⬇️" + " " + _("on date"),
-        "⬆️" + " " + _("on date"),
+        "⬇️" + " " + _("relevance"),
+        "⬇️" + " " + _("date"),
+        "⬆️" + " " + _("date"),
     ]
 
     def __init__(self, search_results: SearchResults) -> None:
@@ -206,6 +206,8 @@ class SearchBar(Element, SessionStateMixin):
         self.add_state("default_sorting_direction", self.sorting_options[0])
 
     def display_search_bar(self, column) -> None:
+        column.write("")
+        column.write("")
         search_query = column.text_input(
             label="Search",
             placeholder=_("Write a search query"),
@@ -222,7 +224,7 @@ class SearchBar(Element, SessionStateMixin):
             value=[self.get_state("start_date"), self.get_state("end_date")],
             min_value=self.MIN_DATE,
             max_value=self.MAX_DATE,
-            label_visibility="collapsed",
+            # label_visibility="collapsed",
         )
         # update date range
         if len(date) == 2:
@@ -237,7 +239,7 @@ class SearchBar(Element, SessionStateMixin):
     def display_sorting_options(self, column) -> None:
         column.selectbox(
             _("Sort by"),
-            label_visibility="collapsed",
+            # label_visibility="collapsed",
             options=self.sorting_options,
             index=self.sorting_options.index(
                 self.get_state("default_sorting_direction")
@@ -247,7 +249,10 @@ class SearchBar(Element, SessionStateMixin):
         )
 
     def display_search_button(self, column) -> None:
+        column.write("")
+        column.write("")
         column.button(
+            # label_visibility="collapsed",
             label=_("Search"),
             type="primary",
             on_click=self._search_results.search_callback,

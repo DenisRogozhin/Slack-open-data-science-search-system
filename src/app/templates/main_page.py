@@ -1,5 +1,4 @@
-from src.app.utils import Post
-from src.app.utils import _
+from src.app.utils import Post, _, ngettext
 
 
 def main_page_header() -> str:
@@ -14,9 +13,9 @@ def main_page_header() -> str:
 
 
 def search_results_stat(results_count: int, duration: float) -> str:
-    _search_stat = "Results count: {0} (time: {1:.2f} seconds)".format(
-        results_count, duration
-    )
+    _search_stat = ngettext(
+        "{0} result:  ({1:.2f} seconds)", "{0} results ({1:.2f} seconds)", results_count
+    ).format(results_count, duration)
     return f"""
     <div style="
         text-align: center;

@@ -20,6 +20,10 @@
 
 ## How to run app
 
-1.  `export PYTHONPATH="${PYTHONPATH}:{pwd}/src"`
+0. `pybabel compile -D app -d src/locales/ -l ru`
 
-2.  `streamlit run src/app/MainPage.py`
+   `pybabel compile -D app -d src/locales/ -l en`
+
+1. `export PYTHONPATH="${PYTHONPATH}:{pwd}/src"`
+
+2. `streamlit run src/app/MainPage.py`

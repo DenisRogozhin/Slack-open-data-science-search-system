@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-12 23:03+0300\n"
-"PO-Revision-Date: 2023-05-12 23:07+0300\n"
+"POT-Creation-Date: 2023-05-13 01:04+0300\n"
+"PO-Revision-Date: 2023-05-13 11:07+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,79 +18,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: src/app/MainPage.py:23
+#: src/app/MainPage.py:10
 msgid "ODS dump search"
-msgstr ""
+msgstr "ODS dump search"
 
-#: src/app/elements/main_page.py:50
+#: src/app/elements/main_page.py:46
 msgid "Lookup"
-msgstr ""
+msgstr "Lookup"
 
-#: src/app/elements/main_page.py:111
-msgid "Number of results per page"
-msgstr ""
+#: src/app/elements/main_page.py:193
+msgid "relevance"
+msgstr "relevance"
 
-#: src/app/elements/main_page.py:197
-msgid "on relevance"
-msgstr ""
+#: src/app/elements/main_page.py:194 src/app/elements/main_page.py:195
+msgid "date"
+msgstr "date"
 
-#: src/app/elements/main_page.py:198 src/app/elements/main_page.py:199
-msgid "on date"
-msgstr ""
-
-#: src/app/elements/main_page.py:215
+#: src/app/elements/main_page.py:211
 msgid "Write a search query"
-msgstr ""
+msgstr "Write a search query"
 
-#: src/app/elements/main_page.py:225
+#: src/app/elements/main_page.py:221
 msgid "Time period"
-msgstr ""
+msgstr "Time period"
 
-#: src/app/elements/main_page.py:243
+#: src/app/elements/main_page.py:239
 msgid "Sort by"
-msgstr ""
+msgstr "Sort by"
 
-#: src/app/elements/main_page.py:255
+#: src/app/elements/main_page.py:251
 msgid "Search"
-msgstr ""
+msgstr "Search"
 
-#: src/app/elements/result_page.py:65
+#: src/app/elements/result_page.py:61
 msgid "Back"
-msgstr ""
+msgstr "Back"
 
-#: src/app/pages/ResultPage.py:13 src/app/templates/result_page.py:9
+#: src/app/pages/ResultPage.py:10 src/app/templates/result_page.py:6
 msgid "Search result"
-msgstr ""
+msgstr "Search result"
 
-#: src/app/templates/main_page.py:9
+#: src/app/templates/main_page.py:5
 msgid "ODS dump search system"
-msgstr ""
+msgstr "ODS dump search system"
 
-#: src/app/templates/main_page.py:34
+#: src/app/templates/main_page.py:16
+msgid "{0} result:  ({1:.2f} seconds)"
+msgid_plural "{0} results ({1:.2f} seconds)"
+msgstr[0] "{0} result:  ({1:.2f} seconds)"
+msgstr[1] "{0} results ({1:.2f} seconds)"
+
+#: src/app/templates/main_page.py:30
 msgid "No results"
-msgstr ""
+msgstr "No results"
 
-#: src/app/templates/main_page.py:35
+#: src/app/templates/main_page.py:31
 msgid "Try to change query"
-msgstr ""
+msgstr "Try to change query"
 
-#: src/app/templates/main_page.py:49
+#: src/app/templates/main_page.py:45
 msgid "Results per page"
-msgstr ""
+msgstr "Results per page"
 
-#: src/app/templates/main_page.py:62
+#: src/app/templates/main_page.py:58
 msgid "Current page"
-msgstr ""
+msgstr "Current page"
 
-#: src/app/templates/main_page.py:87
+#: src/app/templates/main_page.py:83
 msgid "Number of comments"
-msgstr ""
+msgstr "Number of comments"
 
-#: src/app/templates/result_page.py:20
+#: src/app/templates/result_page.py:17
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
-#: src/app/templates/result_page.py:31
-msgid "Comment"
-msgstr ""
+#: src/app/templates/result_page.py:28
+msgid "Comments"
+msgstr "Comments"
 
