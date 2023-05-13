@@ -14,6 +14,8 @@ class Clean:
         df = df[~df["text"].str.contains("<")]
         df = df[~df["text"].str.contains(":")]
 
+        counts = df["text"].value_counts()
+        df = df[df["text"].isin(counts[counts < 100].index)]
         if self.save:
             df.to_csv(self.data_name, index=False, escapechar="\\")
         return df
