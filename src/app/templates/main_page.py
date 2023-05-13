@@ -67,6 +67,32 @@ def page_number_text() -> str:
     """
 
 
+def sort_by_text() -> str:
+    _current_page = _("Sort by")
+    return f"""
+    <div style="
+        text-align: center;
+        color: dark;
+        font-size: 105%;
+    ">
+        {_current_page}
+    </div>
+    """
+
+
+def date_period_text() -> str:
+    _current_page = _("Current page")
+    return f"""
+    <div style="
+        text-align: center;
+        color: dark;
+        font-size: 105%;
+    ">
+        {_current_page}
+    </div>
+    """
+
+
 def page_number_display(page_number: int, pages_count: int) -> str:
     return f"""
     <div style="

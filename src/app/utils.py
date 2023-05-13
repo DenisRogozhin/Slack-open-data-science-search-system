@@ -8,8 +8,7 @@ from time import sleep
 translation = gettext.translation(
     domain="app",
     localedir=os.path.join(os.path.dirname(__file__), "../locales"),
-    # languages=["en", "ru"],
-    languages=["ru"],
+    languages=["en", "ru"],
 )
 _, ngettext = translation.gettext, translation.ngettext
 
