@@ -10,6 +10,10 @@ class Clean:
         df = pd.read_csv(self.data_name)
         df = df[~df["text"].isna()]
         df = df[~df["user"].isna()]
+        df = df[df["text"].str.len() > 10]
+        df = df[~df["text"].str.contains("<")]
+        df = df[~df["text"].str.contains(":")]
+
         if self.save:
             df.to_csv(self.data_name, index=False, escapechar="\\")
         return df
