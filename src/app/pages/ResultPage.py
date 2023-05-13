@@ -3,10 +3,11 @@ import streamlit as st
 from src.app.elements.common import EmptySpace
 from src.app.elements.result_page import Header, SearchResult, BackBotton
 from src.app.templates.common import load_style
+from src.app.utils import _
 
 
 st.set_page_config(
-    page_title="Search result",
+    page_title=_("Search result"),
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="collapsed",

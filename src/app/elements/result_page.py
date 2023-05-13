@@ -9,7 +9,7 @@ from src.app.templates.result_page import (
     search_result_comment,
 )
 from src.app.templates.main_page import search_element
-from src.app.utils import Comment
+from src.app.utils import Comment, _
 
 __all__ = [
     "Header",
@@ -58,6 +58,6 @@ class SearchResult(Element, SessionStateMixin):
 
 class BackBotton(Element, SessionStateMixin):
     def display(self) -> None:
-        klick = st.button("Назад")
+        klick = st.button(_("Back"))
         if klick:
             switch_page("MainPage")
