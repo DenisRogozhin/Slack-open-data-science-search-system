@@ -1,5 +1,6 @@
 from collections import defaultdict
 import varbyte_encoding
+import pickle
 
 
 class Index:
@@ -34,9 +35,11 @@ class Index:
         pass
 
 
-    def dump(self, index_filepath, compression_filepath):
-        pass
+    def dump(self, filepath):
+        with open(filepath, mode='wb') as ind_f:
+            pickle.dump(self.index, ind_f)
 
 
-    def load(self, index_filepath, compression_filepath):
-        pass
+    def load(self, filepath):
+        with open(filepath, mode='rb') as ind_f:
+            self.index = pickle.load(ind_f)
