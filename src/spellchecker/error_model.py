@@ -86,7 +86,7 @@ class ErrorModel:
         """Add pair of (orig, fix) words to error model.
 
         :param orig: word with mistake
-        :param fix: correct word
+        :param fix: correct words
         """
         matrix = levenshtein_matrix(orig, fix)
         errors = find_mistakes_types(orig, fix, matrix)
@@ -127,7 +127,7 @@ class ErrorModel:
                     dist += 1
                 else:
                     dist += 1 - (self.replaces[(error[1], error[2])] /
-                         sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
+                                 sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
             elif error[0] == 'delete':
                 if self.deletions[error[1]] == 0:
                     dist += 1

@@ -48,7 +48,7 @@ class BigramLanguageModel:
                 p = 0
         elif smoothing == 'laplace':
             p = ((self.bigrams[bigram] + self.alpha) /
-                     (self.unigrams[prev_word] + self.W * self.alpha))
+                 (self.unigrams[prev_word] + self.W * self.alpha))
         elif smoothing == 'jelinek-mercer':
             if self.unigrams[prev_word] != 0:
                 p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
