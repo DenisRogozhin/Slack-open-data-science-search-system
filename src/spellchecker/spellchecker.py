@@ -1,13 +1,14 @@
 from utils import keyboard, tokenize
 
+
 class SpellCorrector():
-    
+
     def __init__(self, lm, err, bor):
         self.lm = lm
         self.err = err
         self.bor = bor
         self.max_candidates = 10
-   
+
     def fix_join(self, words):
         if len(words) < 2:
             return words
@@ -18,7 +19,7 @@ class SpellCorrector():
             join.extend(words[i + 2:])
             joins.append(join)
         return joins
-    
+
     def fix_split(self, words):
         splits = []
         for i in range(len(words)):
@@ -30,29 +31,29 @@ class SpellCorrector():
                 split.extend(words[i + 1:])
                 splits.append(split)
         return splits
-    
+
     def grammar_error_correct(self, words):
         list_of_candidates = []
         for word in words:
             candidates = list(map(lambda x: x[0], self.bor.search(word)))
             list_of_candidates.append(candidates)
         res = []
-        candidates1 = list_of_candidates[0]  
-        candidates1 = list(map(lambda x: [x], candidates1))  
-        for i in range(1,len(list_of_candidates)):
+        candidates1 = list_of_candidates[0]
+        candidates1 = list(map(lambda x: [x], candidates1))
+        for i in range(1, len(list_of_candidates)):
             res = []
-            candidates2 = list_of_candidates[i]  
-            for word1 in candidates1: 
-                for word2 in candidates2:  
-                    cost = self.lm.P2(" ".join(word1 + [word2])) 
+            candidates2 = list_of_candidates[i]
+            for word1 in candidates1:
+                for word2 in candidates2:
+                    cost = self.lm.P2(" ".join(word1 + [word2]))
                     if len(res) < self.max_candidates:
                         res.append((word1 + [word2], cost))
                     else:
                         if cost > res[-1][1]:
                             res[-1] = (word1 + [word2], cost)
-                    res = sorted(res, key = lambda x: x[1],reverse = True)
+                    res = sorted(res, key=lambda x: x[1], reverse=True)
             candidates1 = list(map(lambda x: x[0], res))
-                
+
         return res
 
     def fix_layout(self, words):
@@ -66,7 +67,7 @@ class SpellCorrector():
                     new_word += char
             query.append(new_word)
         return query
-        
+
     def spellcorrect(self, query):
         tokens = tokenize(query)
         for i in range(2):
@@ -74,22 +75,23 @@ class SpellCorrector():
             splits = self.fix_split(tokens)
             joins = self.fix_join(tokens)
             layouts = [self.fix_layout(tokens)]
-    
+
             candidates = grammar_fixes + splits + joins + layouts
-        
+
             uniq_candidates = []
             for candidate in candidates:
                 if candidate not in uniq_candidates:
-                    uniq_candidates.append((candidate, self.lm.P2((" ".join(candidate)), smoothing=None), 
-                                                sc.err.P_err(query, " ".join(candidate))))
-                
+                    uniq_candidates.append((candidate,
+                                            self.lm.P2((" ".join(candidate)), smoothing=None),
+                                            self.err.P_err(query, " ".join(candidate))))
+
             uniq_candidates = sorted(uniq_candidates, key=lambda x: x[1], reverse=True)
             res = uniq_candidates[0][0]
-        
+
             if tokens == res:
                 break
             else:
                 tokens = res
                 query = " ".join(tokens)
-        
+
         return res
