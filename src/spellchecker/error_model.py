@@ -132,12 +132,14 @@ class ErrorModel:
                 if self.deletions[error[1]] == 0:
                     dist += 1
                 else:
-                    dist += 1 - (self.deletions[error[1]] / sum([self.deletions[x] for x in self.deletions]))
+                    dist += 1 - (self.deletions[error[1]] /
+                                 sum([self.deletions[x] for x in self.deletions]))
             elif error[0] == 'insert':
                 if self.inserts[error[1]] == 0:
                     dist += 1
                 else:
-                    dist += 1 - (self.inserts[error[1]] / sum([self.inserts[x] for x in self.inserts]))
+                    dist += 1 - (self.inserts[error[1]] /
+                                 sum([self.inserts[x] for x in self.inserts]))
         return dist
 
     def P_err(self, orig, fix):
