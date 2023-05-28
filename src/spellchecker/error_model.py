@@ -2,9 +2,10 @@
 
 import numpy as np
 from collections import defaultdict
+from typing import List, Tuple
 
 
-def levenshtein_matrix(orig, fix):
+def levenshtein_matrix(orig: str, fix: str):
     """Count levenshtein matrix for twho given words.
 
     :param orig: word with mistake
@@ -28,7 +29,7 @@ def levenshtein_matrix(orig, fix):
     return matrix
 
 
-def levenshtein_dist(self, matrix):
+def levenshtein_dist(self, matrix: np.array):
     """Count levenshtein distance with given levenshtein matrix.
 
     :param matrix: levenshtein matrix
@@ -37,7 +38,7 @@ def levenshtein_dist(self, matrix):
     return matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
 
 
-def find_mistakes_types(orig, fix, matrix):
+def find_mistakes_types(orig: str, fix: str, matrix: np.array):
     """Find types of mistakes in the original word with the fixed word given.
 
     :param orig: word with mistake
@@ -82,7 +83,7 @@ class ErrorModel:
         self.inserts = defaultdict(int)
         self.deletions = defaultdict(int)
 
-    def fit_words(self, orig, fix):
+    def fit_words(self, orig: str, fix: str):
         """Add pair of (orig, fix) words to error model.
 
         :param orig: word with mistake
@@ -98,7 +99,7 @@ class ErrorModel:
             elif error[0] == 'insert':
                 self.inserts[error[1]] += 1
 
-    def fit(self, pairs_of_texts):
+    def fit(self, pairs_of_texts: Tuple[List[str], List[str]]):
         """Add pairs of (orig, fix) words to error model.
 
         :param pairs_of_texts: list of texts (orig, fix)
@@ -111,7 +112,7 @@ class ErrorModel:
                 for i in range(len(orig)):
                     self.fit_words(orig[i], fix[i])
 
-    def levenstein(self, orig, fix):
+    def levenstein(self, orig: str, fix: str):
         """Count modified levenstein distance between orig and fix.
 
         :param orig: word with mistake
@@ -142,7 +143,7 @@ class ErrorModel:
                                  sum([self.inserts[x] for x in self.inserts]))
         return dist
 
-    def P_err(self, orig, fix):
+    def P_err(self, orig: str, fix: str):
         """Count P(orig|fix).
 
         :param orig: word with mistake
