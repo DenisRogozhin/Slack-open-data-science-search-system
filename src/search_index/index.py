@@ -1,5 +1,6 @@
 from collections import defaultdict
 import varbyte_encoding
+import query_processing
 import pandas as pd
 import pickle
 
@@ -10,9 +11,10 @@ class Index:
         self.index = defaultdict(list)
         self.filepath = filepath
         self.data = pd.read_csv(self.filepath, index_col=0).reset_index(drop=True)
+        self.all_doc_ids = set(self.data.index)
 
 
-    def build(self):
+    def build(self, compress = False):
         self.post_main_id = self.data.sort_values(by=['file', 'ts'], ascending=[True, True]).groupby('file').head(1)\
                                     .reset_index().groupby('file').agg({'index': list})['index'].to_dict()        
 
@@ -22,7 +24,8 @@ class Index:
             for tok in tokens:
                 self.index[tok].append(i)
         
-        self.compress()
+        if compress:
+            self.compress()
 
 
     def compress(self):
@@ -39,18 +42,18 @@ class Index:
 
 
     def dump(self, filepath):
-        with open(filepath, mode='wb') as ind_f:
+        with open(filepath + 'index.pkl', mode='wb') as ind_f:
             pickle.dump(self.index, ind_f)
 
         dot = filepath.rfind('.')
-        with open(filepath[:dot] + '_post' + filepath[dot:], mode='wb') as post_f:
+        with open(filepath + 'index_post.pkl', mode='wb') as post_f:
             pickle.dump(self.post_main_id, post_f)
 
 
     def load(self, filepath):
-        with open(filepath, mode='rb') as ind_f:
+        with open(filepath + 'index.pkl', mode='rb') as ind_f:
             self.index = pickle.load(ind_f)
         
         dot = filepath.rfind('.')
-        with open(filepath[:dot] + '_post' + filepath[dot:], mode='rb') as post_f:
+        with open(filepath + 'index_post.pkl', mode='rb') as post_f:
             self.post_main_id = pickle.load(post_f)

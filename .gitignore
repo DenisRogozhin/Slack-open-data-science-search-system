@@ -46,4 +46,4 @@ venv.bak/
 dmypy.json
 
 # index dumps
-src/search_index/index*.pkl
+src/search_index/dumps/index*.pkl
