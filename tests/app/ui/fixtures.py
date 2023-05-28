@@ -15,7 +15,6 @@ def run_streamlit():
     import subprocess
 
     SRC_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-    ROOT_PATH = os.path.abspath(os.path.join(SRC_PATH, ".."))
 
     my_env = os.environ.copy()
     my_env["PYTHONPATH"] = f"{SRC_PATH}" + ":" + my_env.get("PYTHONPATH", "")
