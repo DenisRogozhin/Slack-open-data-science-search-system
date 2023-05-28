@@ -28,13 +28,13 @@ def tokenized_query_to_poliz(tokens):
                 bracket_expr = to_poliz(tokens, 0)
                 tok = tokens.pop()
                 if tok != ')':
-                    raise ValueError('Must be \')\'')
+                    raise ValueError("Must be ')'")
                 res += bracket_expr
                 continue
             if tok == ')':
                 tokens.append(')')
                 break
-            
+
             if tok in priors:
                 if priors[tok] < prev_prior:
                     tokens.append(tok)
@@ -46,7 +46,7 @@ def tokenized_query_to_poliz(tokens):
             else:
                 res.append(tok)
         return res
-    
+
     return to_poliz(tokens, 0)
 
 
@@ -55,7 +55,7 @@ def build_search_structure(query_str):
     return tokenized_query_to_poliz(tokens)
 
 
-def find_doc_ids(poliz, index, all_doc_ids, decompress = False):
+def find_doc_ids(poliz, index, all_doc_ids, decompress=False):
     rest = deque(poliz)
     ids_stack = list()
     ops = {
@@ -66,7 +66,7 @@ def find_doc_ids(poliz, index, all_doc_ids, decompress = False):
 
     while len(rest) > 0:
         tok = rest.popleft()
-        
+
         if tok in ops:
             if tok in ['&', '|']:
                 right, left = ids_stack.pop(), ids_stack.pop()
@@ -79,5 +79,5 @@ def find_doc_ids(poliz, index, all_doc_ids, decompress = False):
                 ids_stack.append(set(varbyte_encoding.decompress(index[tok])))
             else:
                 ids_stack.append(set(index[tok]))
-    
+
     return ids_stack[0]

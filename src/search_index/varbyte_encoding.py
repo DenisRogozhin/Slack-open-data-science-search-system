@@ -49,7 +49,7 @@ def decompress(id_bytes):
                 number = 0
             b_cnt = 0
             continue
-        
+
         number += int(b) << pos
         pos += 1
         b_cnt += 1
