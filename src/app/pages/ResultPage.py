@@ -1,3 +1,4 @@
+"""Resulting page."""
 import streamlit as st
 
 from src.app.elements.common import EmptySpace

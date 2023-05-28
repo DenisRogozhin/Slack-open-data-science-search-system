@@ -1,3 +1,4 @@
+"""Utils for app."""
 import os
 import gettext
 from dataclasses import dataclass
