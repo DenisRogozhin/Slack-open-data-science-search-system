@@ -38,7 +38,22 @@ class Index:
 
 
     def search(self, query):
-        pass
+        query_poliz = query_processing.build_search_structure(query)
+        found_doc_ids = query_processing.find_doc_ids(query_poliz, self.index, self.all_doc_ids)
+
+        post_names = self.data.loc[list(found_doc_ids)]['file'].values
+        main_post_ids = sorted([(self.post_main_id[pn][0], pn) for pn in post_names],
+                               key=lambda x: len(self.data.loc[x[0]]['lemmatize_text'].strip().split(' ')),
+                               reverse=True)
+        
+        result = list()
+        for pi, pn in main_post_ids:
+            main_post_data = self.data.loc[pi][['text', 'ts']].tolist()
+            comments_data = self.data.query(f'(file == "{pn}")').sort_values(by=['ts'], ascending=[True])\
+                                                            .drop(index=[pi])[['text', 'ts']].values.tolist()
+            result.append((main_post_data, comments_data))
+        
+        return result
 
 
     def dump(self, filepath):
