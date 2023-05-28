@@ -27,7 +27,8 @@ class Header(Element):
         """
         Display method for a header element.
 
-        This method displays the header element, which includes the title of the search results page.
+        This method displays the header element,
+        which includes the title of the search results page.
 
         :return: None
         :rtype: None
@@ -37,7 +38,8 @@ class Header(Element):
 
 class SearchComment(Element, SessionStateMixin):
     """
-    This class represents a search comment element. It inherits from `Element` and `SessionStateMixin`.
+    This class represents a search comment element.
+    It inherits from `Element` and `SessionStateMixin`.
     """
 
     def __init__(self, comment: Comment) -> None:
@@ -56,7 +58,8 @@ class SearchComment(Element, SessionStateMixin):
         """
         Display method for a search comment element.
 
-        This method displays the search comment, including the text and a snippet of the comment if it is too long.
+        This method displays the search comment,
+        including the text and a snippet of the comment if it is too long.
 
         :return: None
         :rtype: None
@@ -73,7 +76,8 @@ class SearchComment(Element, SessionStateMixin):
 
 class SearchResult(Element, SessionStateMixin):
     """
-    This class represents a search result element. It inherits from `Element` and `SessionStateMixin`.
+    This class represents a search result element.
+    It inherits from `Element` and `SessionStateMixin`.
     """
 
     def display(self) -> None:
@@ -112,7 +116,8 @@ class BackBotton(Element, SessionStateMixin):
         """
         Display method for a back button element.
 
-        This method displays a Streamlit button labeled "Back". When the button is clicked, it switches the page to "MainPage".
+        This method displays a Streamlit button labeled "Back".
+        When the button is clicked, it switches the page to "MainPage".
 
         :return: None
         :rtype: None

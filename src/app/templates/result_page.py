@@ -17,7 +17,7 @@ def result_page_post_header() -> str:
     post_str = _("Post")
     return f"""
     <h2 style="
-        text-align: center; 
+        text-align: center;
         color: #8E44AD;
     ">
         {post_str}
@@ -28,7 +28,7 @@ def result_page_comments_header() -> str:
     comment_str = _("Comments")
     return f"""
     <h2 style="
-        text-align: center; 
+        text-align: center;
         color: #8E44AD;
     ">
         {comment_str}
@@ -38,14 +38,14 @@ def result_page_comments_header() -> str:
 def search_result_comment(comment: Comment, with_border: bool = True) -> str:
     if with_border:
         style = """
-        box-sizing: border-box; 
-        padding: 15px; 
-        border: 1px solid #CACFD2; 
+        box-sizing: border-box;
+        padding: 15px;
+        border: 1px solid #CACFD2;
         border-radius: 3px;
         margin-bottom: 4px;"""
     else:
         style = """
-        box-sizing: border-box; 
+        box-sizing: border-box;
         padding: 15px;
         margin-bottom: 4px;"""
 
@@ -59,7 +59,7 @@ def search_result_comment(comment: Comment, with_border: bool = True) -> str:
         </div>
         <br>
         <div style="
-            display: flex; 
+            display: flex;
             justify-content: space-between";
         >
             <div style="

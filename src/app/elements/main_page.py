@@ -36,7 +36,8 @@ class Header(Element):
         """
         Display method for a header element.
 
-        This method displays the header element, which includes the title of the search results page.
+        This method displays the header element, w
+        hich includes the title of the search results page.
 
         :return: None
         :rtype: None
@@ -105,7 +106,8 @@ class SearchResults(Element, SessionStateMixin):
     """
     SearchResults class.
 
-    This class represents a search results element. It inherits from `Element` and `SessionStateMixin`.
+    This class represents a search results element.
+    It inherits from `Element` and `SessionStateMixin`.
     """
 
     pages_options: list[int] = [5, 10, 20, 40, 80]
@@ -212,7 +214,8 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_sorting_stat(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the statistics related to the search results, such as the number of results and search time.
+        Displays the statistics related to the search results,
+        such as the number of results and search time.
 
         :param column: The column to display the statistics in.
         :type column: streamlit.DeltaGenerator
@@ -288,7 +291,7 @@ class SearchResults(Element, SessionStateMixin):
 
                 cur_page_results = search_results[
                     (page_number - 1)
-                    * pages_count : min(page_number * pages_count, len(search_results))
+                    * pages_count: min(page_number * pages_count, len(search_results))
                 ]
                 for i, search_result in enumerate(cur_page_results):
                     search_result_element = SearchElement(post=search_result)
@@ -299,7 +302,8 @@ class SearchResults(Element, SessionStateMixin):
 
     def display(self) -> None:
         """
-        Initializes the state and displays the search results, statistics, and page navigation buttons.
+        Initializes the state and displays the search results,
+        statistics, and page navigation buttons.
 
         :return: None
         :rtype: None
@@ -319,7 +323,8 @@ class SearchResults(Element, SessionStateMixin):
 
 class SearchBar(Element, SessionStateMixin):
     """
-    A class used to display a search bar with filters and sorting options in a Streamlit app.
+    A class used to display a search bar with filters and
+    sorting options in a Streamlit app.
 
     """
 
@@ -338,7 +343,7 @@ class SearchBar(Element, SessionStateMixin):
         """
         Initializes the SearchBar object with the specified SearchResults object.
 
-        :param search_results: The SearchResults object used to store and display the search results.
+        :param search_results: Used to store and display the search results.
         :type search_results: SearchResults
         """
         self._search_results = search_results
@@ -455,7 +460,8 @@ class SearchBar(Element, SessionStateMixin):
 
     def display(self) -> None:
         """
-        Initializes the state and displays the search bar, filters, sorting options, and search button.
+        Initializes the state and displays the search bar,
+        filters, sorting options, and search button.
 
         :return: None
         :rtype: None

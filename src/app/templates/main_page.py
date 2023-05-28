@@ -153,7 +153,7 @@ def page_number_display(page_number: int, pages_count: int) -> str:
     :param pages_count: The total number of pages.
     :type pages_count: int
 
-    :return: A string with a HTML div element containing the page number and the total number of pages.
+    :return: A HTML div containing the page number and the total number of pages.
     :rtype: str
     """
     return f"""
@@ -169,8 +169,10 @@ def page_number_display(page_number: int, pages_count: int) -> str:
 
 def search_element(post: Post, max_snippet_len: int) -> str:
     """
-    Return a string with a HTML div element containing the text of a post, the date and time it was posted,
-    the author's name and the number of comments it has. The text is truncated to a maximum length set by the
+    Return a string with a HTML div element containing the text of a post,
+    the date and time it was posted,
+    the author's name and the number of comments it has.
+    The text is truncated to a maximum length set by the
     max_snippet_len parameter if it exceeds this length.
 
     :param post: The Post object to display.
@@ -179,27 +181,27 @@ def search_element(post: Post, max_snippet_len: int) -> str:
     :param max_snippet_len: The maximum length of the post text snippet to display.
     :type max_snippet_len: int
 
-    :return: A string with a HTML div element containing the post text, date and time, author's name and number of comments.
+    :return: A HTML div element containing the post text, date and time, author's info.
     :rtype: str
     """
     _number_of_comments = _("Number of comments")
     return f"""
     <div style="
-        box-sizing: border-box; 
-        padding: 5px; 
-        border: 0.5px solid #CACFD2; 
-        border-radius: 3px; 
+        box-sizing: border-box;
+        padding: 5px;
+        border: 0.5px solid #CACFD2;
+        border-radius: 3px;
         margin-bottom: 4px
     ">
         <div style="
             text-align: center;
         ">
-            {post.text if len(post.text) <= max_snippet_len else 
+            {post.text if len(post.text) <= max_snippet_len else
              post.text[: max_snippet_len] + "..."}
         </div>
         <br>
         <div style="
-            display: flex; 
+            display: flex;
             justify-content: space-between";
         >
             <div style="
