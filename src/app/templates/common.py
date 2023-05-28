@@ -1,6 +1,9 @@
+"""Templates for displaying on both pages."""
+
+
 def load_style() -> str:
     """
-    Returns the CSS style for customizing the appearance of Streamlit widgets.
+    Return the CSS style for customizing the appearance of Streamlit widgets.
 
     :return: The CSS style for customizing the appearance of Streamlit widgets.
     :rtype: str

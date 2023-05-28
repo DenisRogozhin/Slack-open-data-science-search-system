@@ -60,10 +60,10 @@ def search_result_comment(comment: Comment, with_border: bool = True) -> str:
 
     :param comment: The comment object to display.
     :type comment: Comment
-    
+
     :param with_border: Whether or not to include a border around the comment.
     :type with_border: bool
-    
+
     :return: The HTML formatted comment string for the search result page.
     :rtype: str
     """

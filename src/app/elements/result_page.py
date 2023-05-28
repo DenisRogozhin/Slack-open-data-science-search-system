@@ -1,3 +1,4 @@
+"""Elements of result page."""
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
@@ -19,9 +20,7 @@ __all__ = [
 
 
 class Header(Element):
-    """
-    This class represents a header element. It inherits from `Element`.
-    """
+    """This class represents a header element. It inherits from `Element`."""
 
     def display(self) -> None:
         """
@@ -39,12 +38,13 @@ class Header(Element):
 class SearchComment(Element, SessionStateMixin):
     """
     This class represents a search comment element.
+
     It inherits from `Element` and `SessionStateMixin`.
     """
 
     def __init__(self, comment: Comment) -> None:
         """
-        Constructor for a search comment element.
+        Construct a search comment element.
 
         :param comment: The comment to be displayed
         :type comment: Comment
@@ -77,6 +77,7 @@ class SearchComment(Element, SessionStateMixin):
 class SearchResult(Element, SessionStateMixin):
     """
     This class represents a search result element.
+
     It inherits from `Element` and `SessionStateMixin`.
     """
 

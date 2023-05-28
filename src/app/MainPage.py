@@ -1,3 +1,4 @@
+"""Main page."""
 import streamlit as st
 
 from src.app.elements.main_page import Header, SearchResults, SearchBar

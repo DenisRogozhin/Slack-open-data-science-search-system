@@ -1,3 +1,4 @@
+"""Utils for pages elements."""
 from typing import Callable
 
 import streamlit
@@ -7,7 +8,7 @@ from src.app.templates.common import load_style
 
 def button_decorator(func: Callable):
     """
-    A decorator that applies a Streamlit style to a function that generates a button.
+    Decorate that applies a Streamlit style to a function that generates a button.
 
     :param func: The function to be decorated.
     :type func: callable

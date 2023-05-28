@@ -1,9 +1,10 @@
+"""Templates for displaying on the mane page."""
 from src.app.utils import Post, _, ngettext
 
 
 def main_page_header() -> str:
     """
-    Returns the HTML code for the main header of the ODS dump search system.
+    Return the HTML code for the main header of the ODS dump search system.
 
     :return: HTML code
     :rtype: str
@@ -20,7 +21,7 @@ def main_page_header() -> str:
 
 def search_results_stat(results_count: int, duration: float) -> str:
     """
-    Returns the HTML code for displaying the search results statistics.
+    Return the HTML code for displaying the search results statistics.
 
     :param results_count: The number of search results.
     :type results_count: int
@@ -46,7 +47,7 @@ def search_results_stat(results_count: int, duration: float) -> str:
 
 def empty_search_results() -> str:
     """
-    Returns the HTML code for displaying a message when there are no search results.
+    Return the HTML code for displaying a message when there are no search results.
 
     :return: HTML code
     :rtype: str
@@ -67,7 +68,7 @@ def empty_search_results() -> str:
 
 def results_per_page_count_text() -> str:
     """
-    Returns the HTML code for displaying the text "Results per page".
+    Return the HTML code for displaying the text "Results per page".
 
     :return: HTML code
     :rtype: str
@@ -86,7 +87,7 @@ def results_per_page_count_text() -> str:
 
 def page_number_text() -> str:
     """
-    Returns the HTML code for displaying the text "Current page".
+    Return the HTML code for displaying the text "Current page".
 
     :return: HTML code
     :rtype: str
@@ -105,7 +106,7 @@ def page_number_text() -> str:
 
 def sort_by_text() -> str:
     """
-    Returns the HTML code for displaying the text "Sort by".
+    Return the HTML code for displaying the text "Sort by".
 
     :return: HTML code
     :rtype: str
@@ -124,6 +125,8 @@ def sort_by_text() -> str:
 
 def date_period_text() -> str:
     """
+    Return the HTML code for displaying the text "Date period".
+
     Return a string with a HTML div element containing the localized text "Current page"
     centered and styled with a dark color and font-size of 105%.
 
@@ -144,6 +147,8 @@ def date_period_text() -> str:
 
 def page_number_display(page_number: int, pages_count: int) -> str:
     """
+    Page number display template.
+
     Return a string with a HTML div element containing the page number and the total number
     of pages, centered and styled with a color of #8E44AD and font-size of 130%.
 
@@ -169,6 +174,8 @@ def page_number_display(page_number: int, pages_count: int) -> str:
 
 def search_element(post: Post, max_snippet_len: int) -> str:
     """
+    Search element template.
+
     Return a string with a HTML div element containing the text of a post,
     the date and time it was posted,
     the author's name and the number of comments it has.

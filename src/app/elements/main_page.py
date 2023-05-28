@@ -1,3 +1,4 @@
+"""Elements of main page."""
 import datetime
 import time
 from typing import List
@@ -28,9 +29,7 @@ __all__ = [
 
 
 class Header(Element):
-    """
-    This class represents a header element. It inherits from `Element`.
-    """
+    """This class represents a header element. It inherits from `Element`."""
 
     def display(self) -> None:
         """
@@ -54,7 +53,7 @@ class SearchElement(Element, SessionStateMixin):
 
     def __init__(self, post: Post) -> None:
         """
-        Constructs a `SearchElement` instance.
+        Construct a `SearchElement` instance.
 
         :param post: The post to be displayed.
         :type post: Post
@@ -66,7 +65,7 @@ class SearchElement(Element, SessionStateMixin):
 
     def _switch_page(self, page_name: str) -> None:
         """
-        Switches the page to the given name.
+        Switche the page to the given name.
 
         :param page_name: The name of the page to switch to.
         :type page_name: str
@@ -80,7 +79,7 @@ class SearchElement(Element, SessionStateMixin):
 
     def display(self, idx: int) -> None:
         """
-        Displays the search element and handles the lookup button click.
+        Display the search element and handles the lookup button click.
 
         :param idx: The index of the search element.
         :type idx: int
@@ -115,7 +114,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def __init__(self) -> None:
         """
-        Constructs a `SearchResults` instance.
+        Construct a `SearchResults` instance.
 
         :return: None
         :rtype: None
@@ -124,7 +123,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def _init_state(self) -> None:
         """
-        Initializes the state variables.
+        Initialize the state variables.
 
         :return: None
         :rtype: None
@@ -139,7 +138,7 @@ class SearchResults(Element, SessionStateMixin):
     @button_decorator
     def search_callback(self) -> None:
         """
-        Handles the search button click event.
+        Handle the search button click event.
 
         :return: None
         :rtype: None
@@ -165,7 +164,7 @@ class SearchResults(Element, SessionStateMixin):
     @button_decorator
     def sort_results_callback(self) -> None:
         """
-        Handles the sort button click event.
+        Handle the sort button click event.
 
         :return: None
         :rtype: None
@@ -182,7 +181,7 @@ class SearchResults(Element, SessionStateMixin):
     @button_decorator
     def _pages_count_callback(self) -> None:
         """
-        Handles the change in the number of results per page.
+        Handle the change in the number of results per page.
 
         :return: None
         :rtype: None
@@ -192,7 +191,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_page_count(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the number of results per page selector.
+        Display the number of results per page selector.
 
         :param column: The column to display the selector in.
         :type column: streamlit.DeltaGenerator
@@ -214,8 +213,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_sorting_stat(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the statistics related to the search results,
-        such as the number of results and search time.
+        Display the statistics such as the number of results and search time.
 
         :param column: The column to display the statistics in.
         :type column: streamlit.DeltaGenerator
@@ -238,7 +236,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_page_number(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the page number and navigation buttons for pagination.
+        Display the page number and navigation buttons for pagination.
 
         :param column: The column to display the page number in.
         :type column: streamlit.DeltaGenerator
@@ -274,7 +272,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def display_search_results(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the search results in a column.
+        Display the search results in a column.
 
         :param column: The column to display the search results in.
         :type column: streamlit.DeltaGenerator
@@ -302,8 +300,7 @@ class SearchResults(Element, SessionStateMixin):
 
     def display(self) -> None:
         """
-        Initializes the state and displays the search results,
-        statistics, and page navigation buttons.
+        Initialize the state and displays the search results and statistics.
 
         :return: None
         :rtype: None
@@ -322,11 +319,7 @@ class SearchResults(Element, SessionStateMixin):
 
 
 class SearchBar(Element, SessionStateMixin):
-    """
-    A class used to display a search bar with filters and
-    sorting options in a Streamlit app.
-
-    """
+    """A class used to display a search bar with filters and sorting options."""
 
     # The minimum date value for the date interval filter.
     MIN_DATE: datetime.date = datetime.date(2017, 1, 1)
@@ -341,7 +334,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def __init__(self, search_results: SearchResults) -> None:
         """
-        Initializes the SearchBar object with the specified SearchResults object.
+        Initialize the SearchBar object with the specified SearchResults object.
 
         :param search_results: Used to store and display the search results.
         :type search_results: SearchResults
@@ -351,7 +344,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def _init_state(self) -> None:
         """
-        Initializes the state of the SearchBar object.
+        Initialize the state of the SearchBar object.
 
         :return: None
         :rtype: None
@@ -363,7 +356,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_search_bar(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the search bar with a text input for the search query.
+        Display the search bar with a text input for the search query.
 
         :param column: The column to display the search bar in.
         :type column: streamlit.DeltaGenerator
@@ -385,7 +378,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_date_interval(self, column: st.DeltaGenerator) -> None:
         """
-        Displays a date interval filter to search for results within a specified time period.
+        Display a date interval filter to search for results within a specified time period.
 
         :param column: The column to display the date interval filter in.
         :type column: streamlit.DeltaGenerator
@@ -408,7 +401,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def _sorting_direction_callback(self) -> None:
         """
-        Callback function for the sorting direction selectbox.
+        Call callback for the sorting direction selectbox.
 
         :return: None
         :rtype: None
@@ -419,7 +412,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_sorting_options(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the sorting options for the search results.
+        Display the sorting options for the search results.
 
         :param column: The column to display the sorting options in.
         :type column: streamlit.DeltaGenerator
@@ -441,7 +434,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display_search_button(self, column: st.DeltaGenerator) -> None:
         """
-        Displays the search button to trigger the search.
+        Display the search button to trigger the search.
 
         :param column: The column to display the search button in.
         :type column: streamlit.DeltaGenerator
@@ -460,8 +453,7 @@ class SearchBar(Element, SessionStateMixin):
 
     def display(self) -> None:
         """
-        Initializes the state and displays the search bar,
-        filters, sorting options, and search button.
+        Display the search bar, filters, sorting options, and search button.
 
         :return: None
         :rtype: None

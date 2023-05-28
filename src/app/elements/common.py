@@ -1,19 +1,18 @@
+"""Elements for both pages."""
 from typing import Any, Optional
 
 import streamlit as st
 
 
 class Element:
-    """
-    An abstract base class for UI elements in a Streamlit app.
-    """
+    """An abstract base class for UI elements in a Streamlit app."""
 
     # The maximum length of a text snippet to display.
     max_snippet_len: int = 200
 
     def display(self) -> None:
         """
-        Displays the UI element.
+        Display the UI element.
 
         :return: None
         :rtype: None
@@ -22,13 +21,11 @@ class Element:
 
 
 class EmptySpace(Element):
-    """
-    A class used to display an empty space in a Streamlit app.
-    """
+    """A class used to display an empty space in a Streamlit app."""
 
     def __init__(self, size: int) -> None:
         """
-        Initializes the EmptySpace object with the specified size.
+        Initialize the EmptySpace object with the specified size.
 
         :param size: The size of the empty space.
         :type size: int
@@ -40,7 +37,7 @@ class EmptySpace(Element):
 
     def display(self) -> None:
         """
-        Displays the empty space.
+        Display the empty space.
 
         :return: None
         :rtype: None
@@ -50,13 +47,11 @@ class EmptySpace(Element):
 
 
 class SessionStateMixin:
-    """
-    A mixin class for adding session state functionality to a Streamlit app.
-    """
+    """A mixin class for adding session state functionality to a Streamlit app."""
 
     def add_state(self, state_name: str, state_value: Optional[Any]) -> None:
         """
-        Adds a new state to the session state if it does not already exist.
+        Add a new state to the session state if it does not already exist.
 
         :param state_name: The name of the state to add.
         :type state_name: str
@@ -72,7 +67,7 @@ class SessionStateMixin:
 
     def set_state(self, state_name: str, state_value: Optional[Any]) -> None:
         """
-        Sets the value of a state in the session state.
+        Set the value of a state in the session state.
 
         :param state_name: The name of the state to set.
         :type state_name: str
@@ -87,7 +82,7 @@ class SessionStateMixin:
 
     def get_state(self, state_name: str) -> Any:
         """
-        Retrieves the value of a state from the session state.
+        Retrieve the value of a state from the session state.
 
         :param state_name: The name of the state to retrieve.
         :type state_name: str
