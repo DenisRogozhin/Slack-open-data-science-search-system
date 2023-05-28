@@ -1,19 +1,31 @@
+"""Implementation of inverted search index."""
 from collections import defaultdict
 import varbyte_encoding
 import query_processing
 import pandas as pd
 import pickle
+import bitstring
+from typing import List, Tuple
 
 
 class Index:
+    """Inverted search index class."""
 
-    def __init__(self, filepath):
+    def __init__(self, filepath: str):
+        """Init Index.
+
+        :param filepath: file with data for search
+        """
         self.index = defaultdict(list)
         self.filepath = filepath
         self.data = pd.read_csv(self.filepath, index_col=0).reset_index(drop=True)
         self.all_doc_ids = set(self.data.index)
 
-    def build(self, compress=False):
+    def build(self, compress: bool = False):
+        """Build inverted index for given data.
+
+        :param compress: if True then use compression with VarByte encoding
+        """
         self.post_main_id = self.data.sort_values(by=['file', 'ts'],
                                                   ascending=[True, True])\
             .groupby('file').head(1).reset_index().groupby('file')\
@@ -29,13 +41,19 @@ class Index:
             self.compress()
 
     def compress(self):
+        """Compress index with VarByte encoding."""
         for tok in self.index.keys():
             self.index[tok] = varbyte_encoding.compress(self.index[tok])
 
-    def decompress_ids(self, ids):
+    def decompress_ids(self, ids: bitstring.BitStream) -> List[int]:
+        """Decompress index for one term from VarByte encoding."""
         return varbyte_encoding.decompress(ids)
 
-    def search(self, query):
+    def search(self, query: str) -> List[Tuple[str, str]]:
+        """Search for user query.
+
+        :param query: query from user
+        """
         query_poliz = query_processing.build_search_structure(query)
         found_doc_ids = query_processing.find_doc_ids(query_poliz, self.index, self.all_doc_ids)
 
@@ -56,6 +74,10 @@ class Index:
         return result
 
     def dump(self, filepath):
+        """Dump index.
+
+        :param filepath: path .pickle files
+        """
         with open(filepath + 'index.pkl', mode='wb') as ind_f:
             pickle.dump(self.index, ind_f)
 
@@ -63,6 +85,10 @@ class Index:
             pickle.dump(self.post_main_id, post_f)
 
     def load(self, filepath):
+        """Load index from dumps.
+
+        :param filepath: path .pickle files
+        """
         with open(filepath + 'index.pkl', mode='rb') as ind_f:
             self.index = pickle.load(ind_f)
 

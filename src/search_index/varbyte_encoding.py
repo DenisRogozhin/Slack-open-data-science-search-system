@@ -1,12 +1,23 @@
+"""Implementation of VarByte encoding."""
 import bitstring
+from typing import List
 
 
-def add_byte(bs, d):
+def add_byte(bs: bitstring.BitStream, d: int) -> bitstring.BitStream:
+    """Add single bit to bitstream.
+
+    :param bs: bitstream
+    :param d: contains value of adding bit`
+    """
     b = '0b1' if d == 1 else '0b0'
     bs.append(b)
 
 
-def compress(id_list):
+def compress(id_list: List[int]):
+    """Compress list of ints into a byte representation.
+
+    :param id_list: list containing ints
+    """
     bs = bitstring.BitStream()
     for i in range(len(id_list)):
         if i == 0:
@@ -31,7 +42,11 @@ def compress(id_list):
     return bs.tobytes()
 
 
-def decompress(id_bytes):
+def decompress(id_bytes: bitstring.BitStream) -> List[int]:
+    """Decompress bytes into a list of ints.
+
+    :param id_bytes: bytestr containing compressed list`
+    """
     id_list = []
     bs = bitstring.BitStream(id_bytes)
 
