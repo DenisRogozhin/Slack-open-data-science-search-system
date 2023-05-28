@@ -1,8 +1,10 @@
+"""Reaisation of additional functions and keyboard to fix layout."""
+
 import re
 
 keyboard = {
         'й': 'q', 'ц': 'w', 'у': 'e', 'к': 'r',
-        'е': 't', 'н': 'y', 'г': 'u', 'ш': 'i', 
+        'е': 't', 'н': 'y', 'г': 'u', 'ш': 'i',
         'щ': 'o', 'з': 'p', 'х': '[', 'ъ': ']',
         'ф': 'a', 'ы': 's', 'в': 'd', 'а': 'f',
         'п': 'g', 'р': 'h', 'о': 'j', 'л': 'k',
@@ -21,4 +23,9 @@ keyboard = {
 
 
 def tokenize(text):
+    """Tokenize text.
+
+    :param text: text to tokenize
+    :return: tokenized text
+    """
     return re.findall(pattern=r"(?u)\w+", string=text.lower())
