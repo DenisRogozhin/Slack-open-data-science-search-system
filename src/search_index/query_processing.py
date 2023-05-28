@@ -46,3 +46,8 @@ def tokenized_query_to_poliz(tokens):
         return res
     
     return to_poliz(tokens, 0)
+
+
+def build_search_structure(query_str):
+    tokens = tokenize(query_str)
+    return tokenized_query_to_poliz(tokens)
