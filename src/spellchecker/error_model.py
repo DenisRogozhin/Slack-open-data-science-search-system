@@ -2,10 +2,11 @@
 
 import numpy as np
 from collections import defaultdict
+from typing import List, Tuple
 
 
-def levenshtein_matrix(orig, fix):
-    """Count levenshtein matrix for twho given words.
+def levenshtein_matrix(orig: str, fix: str) -> np.array:
+    """Count levenshtein matrix for two given words.
 
     :param orig: word with mistake
     :param fix: correct word
@@ -28,7 +29,7 @@ def levenshtein_matrix(orig, fix):
     return matrix
 
 
-def levenshtein_dist(self, matrix):
+def levenshtein_dist(self, matrix: np.array) -> int:
     """Count levenshtein distance with given levenshtein matrix.
 
     :param matrix: levenshtein matrix
@@ -37,7 +38,7 @@ def levenshtein_dist(self, matrix):
     return matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
 
 
-def find_mistakes_types(orig, fix, matrix):
+def find_mistakes_types(orig: str, fix: str, matrix: np.array) -> List[Tuple[str, str, str]]:
     """Find types of mistakes in the original word with the fixed word given.
 
     :param orig: word with mistake
@@ -63,6 +64,12 @@ def find_mistakes_types(orig, fix, matrix):
         else:
             way.append(('insert', orig[i-1]))
             i = i - 1
+    while i > 0:
+        way.append(('insert', orig[i-1]))
+        i = i - 1
+    while j > 0:
+        way.append(('delete', fix[j-1]))
+        j = j - 1
     return way[::-1]
 
 
@@ -71,16 +78,16 @@ class ErrorModel:
 
     def __init__(self):
         """Init Error model."""
-        self.alpha = 5.0
+        self.alpha = 1.5
         self.replaces = defaultdict(int)
         self.inserts = defaultdict(int)
         self.deletions = defaultdict(int)
 
-    def fit_words(self, orig, fix):
+    def fit_words(self, orig: str, fix: str):
         """Add pair of (orig, fix) words to error model.
 
         :param orig: word with mistake
-        :param fix: correct word
+        :param fix: correct words
         """
         matrix = levenshtein_matrix(orig, fix)
         errors = find_mistakes_types(orig, fix, matrix)
@@ -92,7 +99,7 @@ class ErrorModel:
             elif error[0] == 'insert':
                 self.inserts[error[1]] += 1
 
-    def fit(self, pairs_of_texts):
+    def fit(self, pairs_of_texts: Tuple[List[str], List[str]]):
         """Add pairs of (orig, fix) words to error model.
 
         :param pairs_of_texts: list of texts (orig, fix)
@@ -105,7 +112,7 @@ class ErrorModel:
                 for i in range(len(orig)):
                     self.fit_words(orig[i], fix[i])
 
-    def levenstein(self, orig, fix):
+    def levenstein(self, orig: str, fix: str) -> float:
         """Count modified levenstein distance between orig and fix.
 
         :param orig: word with mistake
@@ -117,15 +124,26 @@ class ErrorModel:
         dist = 0
         for error in errors:
             if error[0] == 'replace':
-                dist += (self.replaces[(error[1], error[2])] /
-                         sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
+                if self.replaces[(error[1], error[2])] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.replaces[(error[1], error[2])] /
+                                 sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
             elif error[0] == 'delete':
-                dist += (self.deletions[error[1]] / sum([self.deletions[x] for x in self.deletions]))
+                if self.deletions[error[1]] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.deletions[error[1]] /
+                                 sum([self.deletions[x] for x in self.deletions]))
             elif error[0] == 'insert':
-                dist += (self.inserts[error[1]] / sum([self.inserts[x] for x in self.inserts]))
+                if self.inserts[error[1]] == 0:
+                    dist += 1
+                else:
+                    dist += 1 - (self.inserts[error[1]] /
+                                 sum([self.inserts[x] for x in self.inserts]))
         return dist
 
-    def P_err(self, orig, fix):
+    def P_err(self, orig: str, fix: str) -> float:
         """Count P(orig|fix).
 
         :param orig: word with mistake

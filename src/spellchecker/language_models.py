@@ -1,7 +1,8 @@
 """Bigram language model to count text probabilities."""
 
-from nltk import word_tokenize
+from utils import tokenize
 from collections import defaultdict
+from typing import List, Tuple
 
 
 class BigramLanguageModel:
@@ -20,13 +21,13 @@ class BigramLanguageModel:
         self.l2 = 0.7
         self.l1 = 0.3
 
-    def fit(self, texts):
+    def fit(self, texts: List[str]):
         """Fit language model.
 
         :param texts: list of texts
         """
         for text in texts:
-            words = word_tokenize(text.lower())
+            words = tokenize(text)
             if len(words) > 0:
                 self.unigram_count += 1
                 self.unigrams[words[0]] += 1
@@ -39,46 +40,42 @@ class BigramLanguageModel:
                 self.unigrams[words[i]] += 1
 
         self.W = len(self.unigrams)
-        self.dictionary = set(self.unigrams.keys())
 
-    def __count_bigram_p(self, bigram, prev_word, word, smoothing):
-        p = 1
+    def __count_bigram_p(self, bigram: Tuple[str, str], prev_word: str,
+                         word: str, smoothing: str) -> float:
         if not smoothing:
             if self.unigrams[prev_word] != 0:
-                p *= self.bigrams[bigram] / self.unigrams[prev_word]
+                p = self.bigrams[bigram] / self.unigrams[prev_word]
             else:
-                p *= 0
+                p = 0
         elif smoothing == 'laplace':
-            p = p * ((self.bigrams[bigram] + self.alpha) /
-                     (self.unigrams[prev_word] + self.W * self.alpha))
+            p = ((self.bigrams[bigram] + self.alpha) /
+                 (self.unigrams[prev_word] + self.W * self.alpha))
         elif smoothing == 'jelinek-mercer':
             if self.unigrams[prev_word] != 0:
-                delta_p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
+                p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
             else:
-                delta_p = 0
-            delta_p += self.l1 * self.unigrams[word] / self.W
-            p = p * delta_p
+                p = 0
+            p += self.l1 * self.unigrams[word] / self.unigram_count
         elif smoothing == 'katz-smoothing':
             if self.unigrams[prev_word] != 0:
-                delta_p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
+                p = self.l2 * self.bigrams[bigram] / self.unigrams[prev_word]
             else:
-                delta_p = 0
-            if delta_p == 0:
-                delta_p = self.l1 * self.unigrams[word] / self.W
-            p *= delta_p
+                p = 0
+            if p == 0:
+                p = self.l1 * self.unigrams[word] / self.unigram_count
         return p
 
-    def __count_unigram_p(self, word, smoothing):
-        p = 1
+    def __count_unigram_p(self, word: str, smoothing: str) -> float:
         if smoothing != 'laplace':
             smoothing = None
         if not smoothing:
-            p *= self.unigrams[word] / self.W
+            p = self.unigrams[word] / self.unigram_count
         elif smoothing == 'laplace':
-            p *= (self.unigrams[word] + self.alpha) / (self.W + self.alpha * self.W)
+            p = (self.unigrams[word] + self.alpha) / (self.unigram_count + self.alpha * self.W)
         return p
 
-    def P2(self, text, smoothing=None):
+    def P2(self, text: str, smoothing: str = None) -> float:
         """Count text probability with fitted model.
 
         :param text: text to count probability
@@ -86,7 +83,7 @@ class BigramLanguageModel:
                           [None, 'laplace', 'jelinek-mercer', 'katz-smoothing']
         :return: probability of the given text
         """
-        words = word_tokenize(text.lower())
+        words = tokenize(text)
         p = 1
         if smoothing not in [None, 'laplace', 'jelinek-mercer', 'katz-smoothing']:
             print('bad smoothing, changed to None')
