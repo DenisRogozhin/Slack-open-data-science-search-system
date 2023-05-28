@@ -1,15 +1,28 @@
+"""Realisation of SpellCorrector class."""
 from utils import keyboard, tokenize
 
 
 class SpellCorrector():
+    """Realisation of SpellCorrector."""
 
     def __init__(self, lm, err, bor):
+        """Init SpellCorrector with error model, prefix tree and language model.
+
+        :param lm: language model
+        :param err: error model
+        :param bor: prefix tree
+        """
         self.lm = lm
         self.err = err
         self.bor = bor
         self.max_candidates = 10
 
     def fix_join(self, words):
+        """Join words to fox split error.
+
+        :param words: list of words
+        :return: list of fixing candidates
+        """
         if len(words) < 2:
             return words
         joins = []
@@ -21,6 +34,11 @@ class SpellCorrector():
         return joins
 
     def fix_split(self, words):
+        """Separate words to fox join error.
+
+        :param words: list of words
+        :return: list of fixing candidates
+        """
         splits = []
         for i in range(len(words)):
             word = words[i]
@@ -33,6 +51,11 @@ class SpellCorrector():
         return splits
 
     def grammar_error_correct(self, words):
+        """Fix grammar error in the word.
+
+        :param words: list of words
+        :return: list of fixing candidates
+        """
         list_of_candidates = []
         for word in words:
             candidates = list(map(lambda x: x[0], self.bor.search(word)))
@@ -57,6 +80,11 @@ class SpellCorrector():
         return res
 
     def fix_layout(self, words):
+        """Fix layout error in the word.
+
+        :param words: list of words
+        :return: list with fixing candidates
+        """
         query = []
         for word in words:
             new_word = ""
@@ -69,6 +97,11 @@ class SpellCorrector():
         return query
 
     def spellcorrect(self, query):
+        """Correct error in the query.
+
+        :param query: user query
+        :return: best fixing candidate
+        """
         tokens = tokenize(query)
         for i in range(2):
             grammar_fixes = list(map(lambda x: x[0], self.grammar_error_correct(tokens)))
