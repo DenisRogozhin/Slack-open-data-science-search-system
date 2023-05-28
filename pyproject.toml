@@ -1,52 +1,35 @@
 [project]
-name = "spam"
-version = "2020.0.0"
-description = "Lovely Spam! Wonderful Spam!"
-readme = "README.rst"
+name = "Slack-open-data-science-search-system"
+version = "1.0.0"
+description = "Search system using slack dataset"
+readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE.txt"}
-keywords = ["egg", "bacon", "sausage", "tomatoes", "Lobster Thermidor"]
+keywords = ["slack", "search", "data science", "MSU"]
 authors = [
-  {name = "Pradyun Gedam", email = "pradyun@example.com"},
-  {name = "Tzu-Ping Chung", email = "tzu-ping@example.com"},
-  {name = "Another person"},
-  {email = "different.person@example.com"},
-]
-maintainers = [
-  {name = "Brett Cannon", email = "brett@python.org"}
-]
-classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python"
+  {name = "Denis Rogozhin", email = "den1s.rogozhin@mail.ru"},
+  {name = "Aleksej Zubaryov", email = "aleksej.zubaryov@gmail.com"},
+  {name = "Dmitriy Motrichenko", email = "001122mj@gmail.com"},
+  {name = "Alexander Vorontsov", email = "makler322@gmail.com"},
 ]
 
 dependencies = [
   "httpx",
-  "gidgethub[httpx]>4.0.0",
-  "django>2.1; os_name != 'nt'",
-  "django>2.0; os_name == 'nt'",
+
 ]
 
-# dynamic = ["version", "description"]
-
-[project.optional-dependencies]
-gui = ["PyQt5"]
-cli = [
-  "rich",
-  "click",
-]
+dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://example.com"
-Documentation = "https://readthedocs.org"
-Repository = "https://github.com/me/spam.git"
-Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
 [project.scripts]
 spam-cli = "spam:main_cli"
 
-[project.gui-scripts]
-spam-gui = "spam:main_gui"
+[build-system]
+requires = ["Sphinx", "build", "coverage", "doit", "flake8", "pydocstyle", "pyfiglet", "setuptools"]
+build-backend = "setuptools.build_meta"
 
-[project.entry-points."spam.magical"]
-tomatoes = "spam:main_tomatoes"
+
+[tool.setuptools]
+packages = ["Slack-open-data-science-search-system"]
