@@ -1,11 +1,15 @@
 """Realisation of SpellCorrector class."""
 from utils import keyboard, tokenize
+from language_models import BigramLanguageModel
+from error_model import ErrorModel
+from prefix_tree import Bor
+from typing import List
 
 
 class SpellCorrector():
     """Realisation of SpellCorrector."""
 
-    def __init__(self, lm, err, bor):
+    def __init__(self, lm: BigramLanguageModel, err: ErrorModel, bor: Bor):
         """Init SpellCorrector with error model, prefix tree and language model.
 
         :param lm: language model
@@ -17,7 +21,7 @@ class SpellCorrector():
         self.bor = bor
         self.max_candidates = 10
 
-    def fix_join(self, words):
+    def fix_join(self, words: List[str]) -> List[str]:
         """Join words to fox split error.
 
         :param words: list of words
@@ -33,7 +37,7 @@ class SpellCorrector():
             joins.append(join)
         return joins
 
-    def fix_split(self, words):
+    def fix_split(self, words: List[str]) -> List[str]:
         """Separate words to fox join error.
 
         :param words: list of words
@@ -50,7 +54,7 @@ class SpellCorrector():
                 splits.append(split)
         return splits
 
-    def grammar_error_correct(self, words):
+    def grammar_error_correct(self, words: List[str]) -> List[str]:
         """Fix grammar error in the word.
 
         :param words: list of words
@@ -79,7 +83,7 @@ class SpellCorrector():
 
         return res
 
-    def fix_layout(self, words):
+    def fix_layout(self, words: List[str]) -> List[str]:
         """Fix layout error in the word.
 
         :param words: list of words
@@ -96,7 +100,7 @@ class SpellCorrector():
             query.append(new_word)
         return query
 
-    def spellcorrect(self, query):
+    def spellcorrect(self, query: str) -> List[str]:
         """Correct error in the query.
 
         :param query: user query
