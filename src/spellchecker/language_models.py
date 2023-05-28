@@ -41,7 +41,8 @@ class BigramLanguageModel:
 
         self.W = len(self.unigrams)
 
-    def __count_bigram_p(self, bigram: Tuple[str, str], prev_word: str, word: str, smoothing: str):
+    def __count_bigram_p(self, bigram: Tuple[str, str], prev_word: str,
+                         word: str, smoothing: str) -> float:
         if not smoothing:
             if self.unigrams[prev_word] != 0:
                 p = self.bigrams[bigram] / self.unigrams[prev_word]
@@ -65,7 +66,7 @@ class BigramLanguageModel:
                 p = self.l1 * self.unigrams[word] / self.unigram_count
         return p
 
-    def __count_unigram_p(self, word: str, smoothing: str):
+    def __count_unigram_p(self, word: str, smoothing: str) -> float:
         if smoothing != 'laplace':
             smoothing = None
         if not smoothing:
@@ -74,7 +75,7 @@ class BigramLanguageModel:
             p = (self.unigrams[word] + self.alpha) / (self.unigram_count + self.alpha * self.W)
         return p
 
-    def P2(self, text: str, smoothing: str = None):
+    def P2(self, text: str, smoothing: str = None) -> float:
         """Count text probability with fitted model.
 
         :param text: text to count probability
