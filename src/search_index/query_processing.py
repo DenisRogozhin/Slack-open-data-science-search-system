@@ -1,5 +1,6 @@
 import re
 from collections import deque
+import varbyte_encoding
 
 REGEX_SPLIT = re.compile(r'\w+|[\(\)\|&!]', re.U)
 
@@ -54,7 +55,7 @@ def build_search_structure(query_str):
     return tokenized_query_to_poliz(tokens)
 
 
-def find_doc_ids(poliz, index, all_doc_ids):
+def find_doc_ids(poliz, index, all_doc_ids, decompress = False):
     rest = deque(poliz)
     ids_stack = list()
     ops = {
@@ -74,6 +75,9 @@ def find_doc_ids(poliz, index, all_doc_ids):
                 right = ids_stack.pop()
                 ids_stack.append(ops[tok](right))
         else:
-            ids_stack.append(set(index[tok]))
+            if decompress:
+                ids_stack.append(set(varbyte_encoding.decompress(index[tok])))
+            else:
+                ids_stack.append(set(index[tok]))
     
     return ids_stack[0]
