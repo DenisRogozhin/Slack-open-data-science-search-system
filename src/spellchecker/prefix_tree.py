@@ -1,11 +1,13 @@
 """Realisation of Prefix tree with fixed words search."""
 from utils import tokenize
+from error_model import ErrorModel
+from typing import List
 
 
 class Node():
     """Realisation of Prefix tree node."""
 
-    def __init__(self, word=None):
+    def __init__(self, word: str = None):
         """Init node of the prefix tree.
 
         :param word: word in the current node
@@ -18,7 +20,7 @@ class Node():
 class Bor():
     """Realisation of Prefix tree."""
 
-    def __init__(self, error_model):
+    def __init__(self, error_model: ErrorModel):
         """Init prefix tree.
 
         :param error_model: trained error model
@@ -30,7 +32,7 @@ class Bor():
         self.max_queue_len = 100
         self.max_candidates = 20
 
-    def fit(self, correct_queries):
+    def fit(self, correct_queries: List[str]):
         """Fit prefix tree with words.
 
         :param correct_queries: list of queries
@@ -40,7 +42,7 @@ class Bor():
             for word in query:
                 self.add(word)
 
-    def add(self, word):
+    def add(self, word: str):
         """Add word to the prefix tree.
 
         :param word: word to add
@@ -64,7 +66,7 @@ class Bor():
             if current[word[n - 1]].word is None:
                 current[word[n - 1]].word = word
 
-    def get_prefix_freq(self, prefix):
+    def get_prefix_freq(self, prefix: str) -> int:
         """Count frequence of the prefix in the tree.
 
         :param prefix: prefix to find
@@ -82,7 +84,7 @@ class Bor():
             return 0
         return current[prefix[n - 1]].freq
 
-    def search(self, word, max_lev=2):
+    def search(self, word: str, max_lev: int = 2) -> List[str]:
         """Search words, which are close to the given word.
 
         :param word: word to find fixes
@@ -95,7 +97,8 @@ class Bor():
             self._search(self.tree.children[letter], letter, word, first_row, res, max_lev)
         return res
 
-    def _search(self, node, letter, word, prev_row, res, max_lev):
+    def _search(self, node: Node, letter: str, word: str, prev_row: List[int],
+                res: List[str], max_lev: int):
         """Search words, which are close to the given word in the current node.
 
         :param node: current node
@@ -113,7 +116,7 @@ class Bor():
             for letter in node.children:
                 self._search(node.children[letter], letter, word, cur_row, res, max_lev)
 
-    def levenstein_iter(self, prev_row, word, letter):
+    def levenstein_iter(self, prev_row: List[int], word: str, letter: str) -> List[int]:
         """Count next row of levenshtein matrix.
 
         :param prev_row: prev row of levenshtein matrix
