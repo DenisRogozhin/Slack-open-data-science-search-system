@@ -1,60 +1,94 @@
-from src.app.utils import Post
+from src.app.utils import Post, _, ngettext
 
 
 def main_page_header() -> str:
-    return """
+    _main_header = _("ODS dump search system")
+    return f"""
     <h1 style="
         text-align: center;
         color: #8E44AD;
     ">
-        ODS dump search system 🗿
+        {_main_header}
     </h1>"""
 
 
 def search_results_stat(results_count: int, duration: float) -> str:
+    _search_stat = ngettext(
+        "{0} result:  ({1:.2f} seconds)", "{0} results ({1:.2f} seconds)", results_count
+    ).format(results_count, duration)
     return f"""
     <div style="
         text-align: center;
         color: grey;
         font-size: 95%;
     ">
-        Число результатов: {results_count} (время: {duration:.2f} с)
+        {_search_stat}
     </div>"""
 
 
 def empty_search_results() -> str:
+    _empty_results = _("No results")
+    _try_to_change_query = _("Try to change query")
     return f"""
     <div style="
         text-align: center;
         color: grey;
         font-size:125%;
     ">
-        Ничего не найдено  ̄\\_(ツ)_/ ̄
+        {_empty_results}  ̄\\_(ツ)_/ ̄
         <br>
-        Попробуйте изменить  запрос
+        {_try_to_change_query}
     </div>"""
 
 
 def results_per_page_count_text() -> str:
+    _results_per_page = _("Results per page")
     return f"""
     <div style="
         text-align: center;
         color: dark;
         font-size: 105%;
     ">
-        Число результатов на странице
+        {_results_per_page}
     </div>
     """
 
 
 def page_number_text() -> str:
+    _current_page = _("Current page")
     return f"""
     <div style="
         text-align: center;
         color: dark;
         font-size: 105%;
     ">
-        Текущая страница
+        {_current_page}
+    </div>
+    """
+
+
+def sort_by_text() -> str:
+    _current_page = _("Sort by")
+    return f"""
+    <div style="
+        text-align: center;
+        color: dark;
+        font-size: 105%;
+    ">
+        {_current_page}
+    </div>
+    """
+
+
+def date_period_text() -> str:
+    _current_page = _("Current page")
+    return f"""
+    <div style="
+        text-align: center;
+        color: dark;
+        font-size: 105%;
+    ">
+        {_current_page}
     </div>
     """
 
@@ -72,6 +106,7 @@ def page_number_display(page_number: int, pages_count: int) -> str:
 
 
 def search_element(post: Post, max_snippet_len: int) -> str:
+    _number_of_comments = _("Number of comments")
     return f"""
     <div style="
         box-sizing: border-box; 
@@ -104,7 +139,7 @@ def search_element(post: Post, max_snippet_len: int) -> str:
             <div style="
                 font-family: 'Roboto', sans-serif;
             ">
-                Number of comments: {len(post.comments)}
+                {_number_of_comments}: {len(post.comments)}
             </div>
         </div>
     </div>"""

@@ -1,33 +1,37 @@
 from src.app.utils import Comment
+from src.app.utils import _
 
 
 def result_page_header() -> str:
-    return """
+    result_header_str = _("Search result")
+    return f"""
     <h1 style="
         text-align: center;
         color: #8E44AD;
     ">
-        Search result 🗿
+        {result_header_str}
     </h1>"""
 
 
 def result_page_post_header() -> str:
-    return """
+    post_str = _("Post")
+    return f"""
     <h2 style="
         text-align: center; 
         color: #8E44AD;
     ">
-        Post 🗿
+        {post_str}
     </h2>"""
 
 
 def result_page_comments_header() -> str:
-    return """
+    comment_str = _("Comments")
+    return f"""
     <h2 style="
         text-align: center; 
         color: #8E44AD;
     ">
-        Comments 🗿
+        {comment_str}
     </h2>"""
 
 

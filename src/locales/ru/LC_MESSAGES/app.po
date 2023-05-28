@@ -1,0 +1,100 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-05-13 01:04+0300\n"
+"PO-Revision-Date: 2023-05-13 01:04+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: src/app/MainPage.py:10
+msgid "ODS dump search"
+msgstr "Поиск по ODS"
+
+#: src/app/elements/main_page.py:46
+msgid "Lookup"
+msgstr "Посмотреть"
+
+#: src/app/elements/main_page.py:193
+msgid "relevance"
+msgstr "релевантности"
+
+#: src/app/elements/main_page.py:194 src/app/elements/main_page.py:195
+msgid "date"
+msgstr "дате"
+
+#: src/app/elements/main_page.py:211
+msgid "Write a search query"
+msgstr "Введите поисковый запрос"
+
+#: src/app/elements/main_page.py:221
+msgid "Time period"
+msgstr "Период времени"
+
+#: src/app/elements/main_page.py:239
+msgid "Sort by"
+msgstr "Ранжировать по"
+
+#: src/app/elements/main_page.py:251
+msgid "Search"
+msgstr "Искать"
+
+#: src/app/elements/result_page.py:61
+msgid "Back"
+msgstr "Назад"
+
+#: src/app/pages/ResultPage.py:10 src/app/templates/result_page.py:6
+msgid "Search result"
+msgstr "Результат поиска"
+
+#: src/app/templates/main_page.py:5
+msgid "ODS dump search system"
+msgstr "Поисковая система по сообщениям ODS"
+
+#: src/app/templates/main_page.py:16
+msgid "{0} result:  ({1:.2f} seconds)"
+msgid_plural "{0} results ({1:.2f} seconds)"
+msgstr[0] "{0} результат:  ({1:.2f} секунд)"
+msgstr[1] "{0} результата:  ({1:.2f} секунд)"
+msgstr[2] "{0} результатов:  ({1:.2f} секунд)"
+
+#: src/app/templates/main_page.py:30
+msgid "No results"
+msgstr "Результатов не найдено"
+
+#: src/app/templates/main_page.py:31
+msgid "Try to change query"
+msgstr "Попробуйте изменить запрос"
+
+#: src/app/templates/main_page.py:45
+msgid "Results per page"
+msgstr "Кол-во результатов на странице"
+
+#: src/app/templates/main_page.py:58
+msgid "Current page"
+msgstr "Текущая страница"
+
+#: src/app/templates/main_page.py:83
+msgid "Number of comments"
+msgstr "Кол-во комментариев"
+
+#: src/app/templates/result_page.py:17
+msgid "Post"
+msgstr "Пост"
+
+#: src/app/templates/result_page.py:28
+msgid "Comments"
+msgstr "Комментарии"
+
