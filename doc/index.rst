@@ -22,60 +22,42 @@ Welcome to Slack-open-data-science-search-system's documentation!
    :caption: Contents:
    
 1.1. Модель ошибок
-========================================
-
-Error Model
-----------------------------------------
+------------------
 
 .. automodule:: error_model
     :members:
     :undoc-members:
  
 1.2. Модель языка
-=================
-
-Language Model
-----------------------------------------
+-----------------
     
 .. automodule:: language_models
     :members:
     :undoc-members:
     
 1.3. Префиксное дерево
-======================
-
-Prefix tree
-----------------------------------------
+----------------------
     
 .. automodule:: prefix_tree
     :members:
     :undoc-members:
     
 1.4.  Спеллкоректор
-===================
-
-Spellchecker
-----------------------------------------
+-------------------
     
 .. automodule:: spellchecker
     :members:
     :undoc-members:
     
 1.5.  Обучение моделей и построение дерева
-==========================================
-
-Fitting
-----------------------------------------
+------------------------------------------
     
 .. automodule:: build_models
     :members:
     :undoc-members:
     
 1.6.  Вспомогательные функции
-=============================
-
-Support functions
-----------------------------------------
+-----------------------------
     
 .. automodule:: utils
     :members:
