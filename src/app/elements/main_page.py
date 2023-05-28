@@ -1,5 +1,6 @@
 import datetime
 import time
+from typing import List
 
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
@@ -27,20 +28,65 @@ __all__ = [
 
 
 class Header(Element):
+    """
+    This class represents a header element. It inherits from `Element`.
+    """
+
     def display(self) -> None:
+        """
+        Display method for a header element.
+
+        This method displays the header element, which includes the title of the search results page.
+
+        :return: None
+        :rtype: None
+        """
         st.markdown(main_page_header(), unsafe_allow_html=True)
 
 
 class SearchElement(Element, SessionStateMixin):
+    """
+    SearchElement class.
+
+    This class represents a search element. It inherits from `Element` and `SessionStateMixin`.
+    """
+
     def __init__(self, post: Post) -> None:
+        """
+        Constructs a `SearchElement` instance.
+
+        :param post: The post to be displayed.
+        :type post: Post
+
+        :return: None
+        :rtype: None
+        """
         self._post = post
 
     def _switch_page(self, page_name: str) -> None:
+        """
+        Switches the page to the given name.
+
+        :param page_name: The name of the page to switch to.
+        :type page_name: str
+
+        :return: None
+        :rtype: None
+        """
         self.set_state("default_pages_count", self.get_state("pages_count"))
         self.set_state("default_sorting_direction", self.get_state("sorting_direction"))
         switch_page(page_name)
 
     def display(self, idx: int) -> None:
+        """
+        Displays the search element and handles the lookup button click.
+
+        :param idx: The index of the search element.
+        :type idx: int
+
+        :return: None
+        :rtype: None
+        """
         st.markdown(
             search_element(post=self._post, max_snippet_len=self.max_snippet_len),
             unsafe_allow_html=True,
@@ -56,12 +102,31 @@ class SearchElement(Element, SessionStateMixin):
 
 
 class SearchResults(Element, SessionStateMixin):
-    pages_options = [5, 10, 20, 40, 80]
+    """
+    SearchResults class.
+
+    This class represents a search results element. It inherits from `Element` and `SessionStateMixin`.
+    """
+
+    pages_options: list[int] = [5, 10, 20, 40, 80]
+    # A list of possible options for the number of results per page
 
     def __init__(self) -> None:
+        """
+        Constructs a `SearchResults` instance.
+
+        :return: None
+        :rtype: None
+        """
         self._init_state()
 
     def _init_state(self) -> None:
+        """
+        Initializes the state variables.
+
+        :return: None
+        :rtype: None
+        """
         self.add_state("search_results", None)
         self.add_state("search_result", None)
         self.add_state("search_time", 0.0)
@@ -71,6 +136,12 @@ class SearchResults(Element, SessionStateMixin):
 
     @button_decorator
     def search_callback(self) -> None:
+        """
+        Handles the search button click event.
+
+        :return: None
+        :rtype: None
+        """
         _, center, _ = st.columns([3, 2, 2])
         with center:
             if self.get_state("search_query"):
@@ -91,6 +162,12 @@ class SearchResults(Element, SessionStateMixin):
 
     @button_decorator
     def sort_results_callback(self) -> None:
+        """
+        Handles the sort button click event.
+
+        :return: None
+        :rtype: None
+        """
         search_results = self.get_state("search_results")
         if search_results:
             sorted_results = sort_results(
@@ -102,10 +179,25 @@ class SearchResults(Element, SessionStateMixin):
 
     @button_decorator
     def _pages_count_callback(self) -> None:
+        """
+        Handles the change in the number of results per page.
+
+        :return: None
+        :rtype: None
+        """
         self.set_state("page_number", 1)
         self.set_state("default_pages_count", self.pages_options[0])
 
-    def display_page_count(self, column) -> None:
+    def display_page_count(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the number of results per page selector.
+
+        :param column: The column to display the selector in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         if self.get_state("search_results") is not None:
             column.markdown(results_per_page_count_text(), unsafe_allow_html=True)
             _, center, _ = column.columns([2, 2, 2])
@@ -118,7 +210,16 @@ class SearchResults(Element, SessionStateMixin):
                 on_change=self._pages_count_callback,
             )
 
-    def display_sorting_stat(self, column) -> None:
+    def display_sorting_stat(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the statistics related to the search results, such as the number of results and search time.
+
+        :param column: The column to display the statistics in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         search_result = self.get_state("search_results")
         if search_result:
             with column:
@@ -132,7 +233,16 @@ class SearchResults(Element, SessionStateMixin):
                 )
                 EmptySpace(2).display()
 
-    def display_page_number(self, column) -> None:
+    def display_page_number(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the page number and navigation buttons for pagination.
+
+        :param column: The column to display the page number in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         if self.get_state("search_results") is not None:
             page_number = self.get_state("page_number")
             results_per_page = self.get_state("pages_count")
@@ -159,7 +269,16 @@ class SearchResults(Element, SessionStateMixin):
                     on_click=lambda: self.set_state("page_number", page_number + 1),
                 )
 
-    def display_search_results(self, column) -> None:
+    def display_search_results(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the search results in a column.
+
+        :param column: The column to display the search results in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         with column:
             search_results = self.get_state("search_results")
 
@@ -179,6 +298,12 @@ class SearchResults(Element, SessionStateMixin):
                 st.caption("")
 
     def display(self) -> None:
+        """
+        Initializes the state and displays the search results, statistics, and page navigation buttons.
+
+        :return: None
+        :rtype: None
+        """
         self._init_state()
         left, center, right = st.columns([1, 2, 1])
 
@@ -193,25 +318,54 @@ class SearchResults(Element, SessionStateMixin):
 
 
 class SearchBar(Element, SessionStateMixin):
-    MIN_DATE = datetime.date(2017, 1, 1)
-    MAX_DATE = datetime.date(2022, 1, 1)
-    sorting_options = [
+    """
+    A class used to display a search bar with filters and sorting options in a Streamlit app.
+
+    """
+
+    # The minimum date value for the date interval filter.
+    MIN_DATE: datetime.date = datetime.date(2017, 1, 1)
+    # The maximum date value for the date interval filter.
+    MAX_DATE: datetime.date = datetime.date(2022, 1, 1)
+    # The list of available sorting options for the search results.
+    sorting_options: List[str] = [
         "⬇️" + " " + _("relevance"),
         "⬇️" + " " + _("date"),
         "⬆️" + " " + _("date"),
     ]
 
     def __init__(self, search_results: SearchResults) -> None:
+        """
+        Initializes the SearchBar object with the specified SearchResults object.
+
+        :param search_results: The SearchResults object used to store and display the search results.
+        :type search_results: SearchResults
+        """
         self._search_results = search_results
         self._init_state()
 
     def _init_state(self) -> None:
+        """
+        Initializes the state of the SearchBar object.
+
+        :return: None
+        :rtype: None
+        """
         self.add_state("search_query", "")
         self.add_state("start_date", self.MIN_DATE)
         self.add_state("end_date", self.MAX_DATE)
         self.add_state("default_sorting_direction", self.sorting_options[0])
 
-    def display_search_bar(self, column) -> None:
+    def display_search_bar(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the search bar with a text input for the search query.
+
+        :param column: The column to display the search bar in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         column.write("")
         column.write("")
         search_query = column.text_input(
@@ -224,7 +378,16 @@ class SearchBar(Element, SessionStateMixin):
         # for correct displaying after return from second page
         self.set_state("search_query", search_query)
 
-    def display_date_interval(self, column) -> None:
+    def display_date_interval(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays a date interval filter to search for results within a specified time period.
+
+        :param column: The column to display the date interval filter in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         column.markdown(date_period_text(), unsafe_allow_html=True)
         date = column.date_input(
             label="Time period",
@@ -239,11 +402,26 @@ class SearchBar(Element, SessionStateMixin):
             self.set_state("end_date", date[1])
 
     def _sorting_direction_callback(self) -> None:
+        """
+        Callback function for the sorting direction selectbox.
+
+        :return: None
+        :rtype: None
+        """
         self._search_results.sort_results_callback()
         self.set_state("default_sorting_direction", self.sorting_options[0])
         self.set_state("page_number", 1)
 
-    def display_sorting_options(self, column) -> None:
+    def display_sorting_options(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the sorting options for the search results.
+
+        :param column: The column to display the sorting options in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         column.markdown(sort_by_text(), unsafe_allow_html=True)
         column.selectbox(
             label="Sort by",
@@ -256,7 +434,16 @@ class SearchBar(Element, SessionStateMixin):
             on_change=self._sorting_direction_callback,
         )
 
-    def display_search_button(self, column) -> None:
+    def display_search_button(self, column: st.DeltaGenerator) -> None:
+        """
+        Displays the search button to trigger the search.
+
+        :param column: The column to display the search button in.
+        :type column: streamlit.DeltaGenerator
+
+        :return: None
+        :rtype: None
+        """
         column.write("")
         column.write("")
         column.button(
@@ -267,6 +454,12 @@ class SearchBar(Element, SessionStateMixin):
         )
 
     def display(self) -> None:
+        """
+        Initializes the state and displays the search bar, filters, sorting options, and search button.
+
+        :return: None
+        :rtype: None
+        """
         self._init_state()
         col1, col2, col3, col4 = st.columns([5, 2, 2, 1])
 
