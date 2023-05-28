@@ -5,8 +5,8 @@ from collections import defaultdict
 from typing import List, Tuple
 
 
-def levenshtein_matrix(orig: str, fix: str):
-    """Count levenshtein matrix for twho given words.
+def levenshtein_matrix(orig: str, fix: str) -> np.array:
+    """Count levenshtein matrix for two given words.
 
     :param orig: word with mistake
     :param fix: correct word
@@ -29,7 +29,7 @@ def levenshtein_matrix(orig: str, fix: str):
     return matrix
 
 
-def levenshtein_dist(self, matrix: np.array):
+def levenshtein_dist(self, matrix: np.array) -> int:
     """Count levenshtein distance with given levenshtein matrix.
 
     :param matrix: levenshtein matrix
@@ -38,7 +38,7 @@ def levenshtein_dist(self, matrix: np.array):
     return matrix[matrix.shape[0] - 1, matrix.shape[1] - 1]
 
 
-def find_mistakes_types(orig: str, fix: str, matrix: np.array):
+def find_mistakes_types(orig: str, fix: str, matrix: np.array) -> List[Tuple[str, str, str]]:
     """Find types of mistakes in the original word with the fixed word given.
 
     :param orig: word with mistake
@@ -112,7 +112,7 @@ class ErrorModel:
                 for i in range(len(orig)):
                     self.fit_words(orig[i], fix[i])
 
-    def levenstein(self, orig: str, fix: str):
+    def levenstein(self, orig: str, fix: str) -> float:
         """Count modified levenstein distance between orig and fix.
 
         :param orig: word with mistake
@@ -143,7 +143,7 @@ class ErrorModel:
                                  sum([self.inserts[x] for x in self.inserts]))
         return dist
 
-    def P_err(self, orig: str, fix: str):
+    def P_err(self, orig: str, fix: str) -> float:
         """Count P(orig|fix).
 
         :param orig: word with mistake
