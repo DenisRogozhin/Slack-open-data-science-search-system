@@ -1,6 +1,7 @@
 """Reaisation of additional functions and keyboard to fix layout."""
 
 import re
+from typing import List
 
 keyboard = {
         'й': 'q', 'ц': 'w', 'у': 'e', 'к': 'r',
@@ -22,7 +23,7 @@ keyboard = {
     }
 
 
-def tokenize(text):
+def tokenize(text: str) -> List[str]:
     """Tokenize text.
 
     :param text: text to tokenize
