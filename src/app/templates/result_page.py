@@ -1,8 +1,15 @@
+"""Templates for displaying on the result page."""
 from src.app.utils import Comment
 from src.app.utils import _
 
 
 def result_page_header() -> str:
+    """
+    Return a string representing the header of the search result page.
+
+    :return: The HTML formatted header string for the search result page.
+    :rtype: str
+    """
     result_header_str = _("Search result")
     return f"""
     <h1 style="
@@ -14,6 +21,12 @@ def result_page_header() -> str:
 
 
 def result_page_post_header() -> str:
+    """
+    Return a string representing the post header of the search result page.
+
+    :return: The HTML formatted post header string for the search result page.
+    :rtype: str
+    """
     post_str = _("Post")
     return f"""
     <h2 style="
@@ -25,6 +38,12 @@ def result_page_post_header() -> str:
 
 
 def result_page_comments_header() -> str:
+    """
+    Return a string representing the comments header of the search result page.
+
+    :return: The HTML formatted comments header string for the search result page.
+    :rtype: str
+    """
     comment_str = _("Comments")
     return f"""
     <h2 style="
@@ -36,6 +55,18 @@ def result_page_comments_header() -> str:
 
 
 def search_result_comment(comment: Comment, with_border: bool = True) -> str:
+    """
+    Return a string representing the formatted comment for the search result page.
+
+    :param comment: The comment object to display.
+    :type comment: Comment
+    
+    :param with_border: Whether or not to include a border around the comment.
+    :type with_border: bool
+    
+    :return: The HTML formatted comment string for the search result page.
+    :rtype: str
+    """
     if with_border:
         style = """
         box-sizing: border-box;
