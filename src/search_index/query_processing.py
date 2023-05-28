@@ -1,4 +1,5 @@
 import re
+from collections import deque
 
 REGEX_SPLIT = re.compile(r'\w+|[\(\)\|&!]', re.U)
 
@@ -51,3 +52,28 @@ def tokenized_query_to_poliz(tokens):
 def build_search_structure(query_str):
     tokens = tokenize(query_str)
     return tokenized_query_to_poliz(tokens)
+
+
+def find_doc_ids(poliz, index, all_doc_ids):
+    rest = deque(poliz)
+    ids_stack = list()
+    ops = {
+        '|': lambda x, y: x | y,
+        '&': lambda x, y: x & y,
+        '!': lambda x: all_doc_ids - x
+    }
+
+    while len(rest) > 0:
+        tok = rest.popleft()
+        
+        if tok in ops:
+            if tok in ['&', '|']:
+                right, left = ids_stack.pop(), ids_stack.pop()
+                ids_stack.append(ops[tok](left, right))
+            elif tok == '!':
+                right = ids_stack.pop()
+                ids_stack.append(ops[tok](right))
+        else:
+            ids_stack.append(set(index[tok]))
+    
+    return ids_stack[0]
