@@ -5,15 +5,15 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src/spellchecker'))
+sys.path.insert(0, os.path.abspath('../src/spellchecker/'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Spellchecker'
-copyright = '2023, Denis Rogozhin'
-author = 'Denis Rogozhin'
-release = '0.0.1'
+project = 'Slack ds search system'
+copyright = '2023, Denis Rogozhin, Aleksej Zubaryov, Dmitriy Motrichenko, Alexander Vorontsov'
+author = 'Denis Rogozhin, Aleksej Zubaryov, Dmitriy Motrichenko, Alexander Vorontsov'
+release = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
