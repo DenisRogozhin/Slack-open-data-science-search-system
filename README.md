@@ -27,3 +27,11 @@
 1. `export PYTHONPATH="${PYTHONPATH}:{pwd}/src"`
 
 2. `streamlit run src/app/MainPage.py`
+
+## How to run ui tests
+
+0. `pip install -r requirements.dev.txt`
+
+1. `playwright install`
+
+2. `pytest tests/`
