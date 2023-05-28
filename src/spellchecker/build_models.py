@@ -5,11 +5,12 @@ from error_model import ErrorModel
 from utils import tokenize
 from prefix_tree import Bor
 import sys
+from typing import List, Tuple
 
 sys.setrecursionlimit(2000)
 
 
-def build_language_model(texts):
+def build_language_model(texts: List[str]):
     """Fit language model with texts.
 
     :param texts: list of texts to fit language model
@@ -19,7 +20,7 @@ def build_language_model(texts):
     pd.to_pickle(model, 'models/language_model.pickle')
 
 
-def build_error_model(fixed_texts):
+def build_error_model(fixed_texts: List[Tuple[str, str]]):
     """Fit error model with texts and their fixes.
 
     :param fixed_texts: list of texts and their fixes
@@ -30,7 +31,7 @@ def build_error_model(fixed_texts):
     return err
 
 
-def build_prefix_tree(err, texts):
+def build_prefix_tree(err, texts: List[str]):
     """Fit prefix_tree with texts using error model.
 
     :param err: error model
@@ -41,7 +42,7 @@ def build_prefix_tree(err, texts):
     pd.to_pickle(bor, 'models/prefix_tree.pickle')
 
 
-def get_fixes(texts):
+def get_fixes(texts: List[str]) -> List[Tuple[str, str]]:
     """Take text with their fixes from file with queries.
 
     :param texts: list of texts, some of them with their fixes
