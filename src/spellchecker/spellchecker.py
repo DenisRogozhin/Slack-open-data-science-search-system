@@ -28,7 +28,7 @@ class SpellCorrector():
         :return: list of fixing candidates
         """
         if len(words) < 2:
-            return words
+            return [words]
         joins = []
         for i in range(len(words) - 1):
             join = words[0:i]
@@ -67,6 +67,17 @@ class SpellCorrector():
         res = []
         candidates1 = list_of_candidates[0]
         candidates1 = list(map(lambda x: [x], candidates1))
+        if len(list_of_candidates) < 2:
+            res = []
+            for word1 in candidates1:
+                cost = self.lm.P2(" ".join(word1))
+                if len(res) < self.max_candidates:
+                    res.append((word1, cost))
+                else:
+                    if cost > res[-1][1]:
+                        res[-1] = (word1, cost)
+                res = sorted(res, key=lambda x: x[1], reverse=True)
+            return res    
         for i in range(1, len(list_of_candidates)):
             res = []
             candidates2 = list_of_candidates[i]
