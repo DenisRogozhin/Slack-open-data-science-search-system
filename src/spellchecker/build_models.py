@@ -17,7 +17,7 @@ def build_language_model(texts: List[str]):
     """
     model = BigramLanguageModel()
     model.fit(texts)
-    pd.to_pickle(model, 'models/language_model.pickle')
+    pd.to_pickle(model, 'src/spellchecker/models/language_model.pickle')
 
 
 def build_error_model(fixed_texts: List[Tuple[str, str]]):
@@ -27,7 +27,7 @@ def build_error_model(fixed_texts: List[Tuple[str, str]]):
     """
     err = ErrorModel()
     err.fit(fixed_texts)
-    pd.to_pickle(err, 'models/error_model.pickle')
+    pd.to_pickle(err, 'src/spellchecker/models/error_model.pickle')
     return err
 
 
@@ -39,7 +39,7 @@ def build_prefix_tree(err, texts: List[str]):
     """
     bor = Bor(err)
     bor.fit(texts)
-    pd.to_pickle(bor, 'models/prefix_tree.pickle')
+    pd.to_pickle(bor, 'src/spellchecker/models/prefix_tree.pickle')
 
 
 def get_fixes(texts: List[str]) -> List[Tuple[str, str]]:
@@ -56,12 +56,12 @@ def get_fixes(texts: List[str]) -> List[Tuple[str, str]]:
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('../../data/data.csv')
+    data = pd.read_csv('data/data.csv')
     texts = data.text.values
     build_language_model(texts)
 #    with open('queries_all.txt', 'r', encoding='utf-8') as f:
 #        lines = f.read().split('\n')
 #    fixed_texts = get_fixes(lines)
 #    err = build_error_model(fixed_texts)
-    err = pd.read_pickle('models/error_model.pickle')
+    err = pd.read_pickle('src/spellchecker/models/error_model.pickle')
     build_prefix_tree(err, texts)
