@@ -56,7 +56,7 @@ def get_fixes(texts: List[str]) -> List[Tuple[str, str]]:
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('data.csv')
+    data = pd.read_csv('../../data/data.csv')
     texts = data.text.values
     build_language_model(texts)
 #    with open('queries_all.txt', 'r', encoding='utf-8') as f:
