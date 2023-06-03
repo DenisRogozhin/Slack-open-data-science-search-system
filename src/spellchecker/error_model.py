@@ -29,7 +29,7 @@ def levenshtein_matrix(orig: str, fix: str) -> np.array:
     return matrix
 
 
-def levenshtein_dist(self, matrix: np.array) -> int:
+def levenshtein_dist(matrix: np.array) -> int:
     """Count levenshtein distance with given levenshtein matrix.
 
     :param matrix: levenshtein matrix
