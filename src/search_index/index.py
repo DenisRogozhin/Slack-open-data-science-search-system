@@ -1,12 +1,13 @@
 """Implementation of inverted search index."""
 from collections import defaultdict
-import varbyte_encoding
-import query_processing
+from typing import List, Tuple
+
 import pandas as pd
 import pickle
 import bitstring
-from typing import List, Tuple
 
+import src.search_index.varbyte_encoding as varbyte_encoding
+import src.search_index.query_processing as query_processing
 
 class Index:
     """Inverted search index class."""
@@ -63,6 +64,7 @@ class Index:
                                                  .strip().split(' ')),
                                reverse=True)
 
+        main_post_ids = main_post_ids[:min(len(main_post_ids), 10)]
         result = list()
         for pi, pn in main_post_ids:
             main_post_data = self.data.loc[pi][['text', 'ts']].tolist()
