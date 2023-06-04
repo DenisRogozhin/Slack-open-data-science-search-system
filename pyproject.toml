@@ -1,0 +1,35 @@
+[project]
+name = "Slack-open-data-science-search-system"
+version = "1.0.0"
+description = "Search system using slack dataset"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.txt"}
+keywords = ["slack", "search", "data science", "MSU"]
+authors = [
+  {name = "Denis Rogozhin", email = "den1s.rogozhin@mail.ru"},
+  {name = "Aleksej Zubaryov", email = "aleksej.zubaryov@gmail.com"},
+  {name = "Dmitriy Motrichenko", email = "001122mj@gmail.com"},
+  {name = "Alexander Vorontsov", email = "makler322@gmail.com"},
+]
+
+dependencies = [
+  "httpx",
+
+]
+
+dynamic = ["version"]
+
+[project.urls]
+Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
+
+[project.scripts]
+spam-cli = "spam:main_cli"
+
+[build-system]
+requires = ["Sphinx", "build", "coverage", "doit", "flake8", "pydocstyle", "pyfiglet", "setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+packages = ["Slack-open-data-science-search-system"]
