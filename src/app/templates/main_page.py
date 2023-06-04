@@ -217,11 +217,6 @@ def search_element(post: Post, max_snippet_len: int) -> str:
                 {post.datetime.strftime("%Y-%m-%d %H:%M:%S")}
             </div>
             <div style="
-                font-family: 'Prompt', sans-serif;
-            ">
-                {post.author}
-            </div>
-            <div style="
                 font-family: 'Roboto', sans-serif;
             ">
                 {_number_of_comments}: {len(post.comments)}
