@@ -2,7 +2,7 @@
 import pandas as pd
 from language_models import BigramLanguageModel
 from error_model import ErrorModel
-from utils import tokenize
+from support_functions import tokenize
 from prefix_tree import Bor
 import sys
 from typing import List, Tuple

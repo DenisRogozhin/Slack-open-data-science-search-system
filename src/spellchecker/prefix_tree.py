@@ -1,5 +1,5 @@
 """Realisation of Prefix tree with fixed words search."""
-from utils import tokenize
+from support_functions import tokenize
 from error_model import ErrorModel
 from typing import List
 

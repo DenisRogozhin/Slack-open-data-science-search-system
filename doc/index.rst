@@ -59,18 +59,13 @@ Welcome to Slack-open-data-science-search-system's documentation!
 1.6.  Вспомогательные функции
 -----------------------------
     
-.. automodule:: utils
+.. automodule:: support_functions
     :members:
     :undoc-members:
 
 Часть 2. Web app
 ========================================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   
-   
 Pages elements:
 
 .. automodule:: elements/common
@@ -100,6 +95,33 @@ Elements templates:
     :undoc-members:
 
 .. automodule:: templates/result_page
+    :members:
+    :undoc-members:
+
+Часть 3. Поисковый индекс
+========================================
+Задачи - хранение для каждого токена индексов документов, в которых он содержится; булев поиск множества документов по запросу пользователя.
+Для имеющихся данных строится обратный поисковый индекс и сжимается с помощью метода VarByte encoding. Булев поиск осуществляется с помощью перевода запроса пользователя в форму польской инверсной нотации и вычисления конечного множества документов на её основе.
+
+    
+2.1. Поисковый индекс
+------------------
+
+.. automodule:: index
+    :members:
+    :undoc-members:
+ 
+2.2. VarByte кодирование
+-----------------
+    
+.. automodule:: varbyte_encoding
+    :members:
+    :undoc-members:
+    
+2.3. Обработка запроса
+----------------------
+    
+.. automodule:: query_processing
     :members:
     :undoc-members:
 
