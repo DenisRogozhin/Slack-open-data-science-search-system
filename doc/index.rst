@@ -63,6 +63,46 @@ Welcome to Slack-open-data-science-search-system's documentation!
     :members:
     :undoc-members:
 
+Часть 2. Web app
+========================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   
+   
+Pages elements:
+
+.. automodule:: elements/common
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/main_page
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/result_page
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/utils
+    :members:
+    :undoc-members:
+
+Elements templates:
+
+.. automodule:: templates/common
+    :members:
+    :undoc-members:
+
+.. automodule:: templates/main_page
+    :members:
+    :undoc-members:
+
+.. automodule:: templates/result_page
+    :members:
+    :undoc-members:
+
 Indices and tables
 ==================
 
