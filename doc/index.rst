@@ -59,7 +59,7 @@ Welcome to Slack-open-data-science-search-system's documentation!
 1.6.  Вспомогательные функции
 -----------------------------
     
-.. automodule:: utils
+.. automodule:: support_functions
     :members:
     :undoc-members:
 
