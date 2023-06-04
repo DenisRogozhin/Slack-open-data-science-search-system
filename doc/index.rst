@@ -81,14 +81,14 @@ Welcome to Slack-open-data-science-search-system's documentation!
     :members:
     :undoc-members:
  
-1.2. VarByte кодирование
+2.2. VarByte кодирование
 -----------------
     
 .. automodule:: varbyte_encoding
     :members:
     :undoc-members:
     
-1.3. Обработка запроса
+2.3. Обработка запроса
 ----------------------
     
 .. automodule:: query_processing

@@ -77,7 +77,7 @@ class SpellCorrector():
                     if cost > res[-1][1]:
                         res[-1] = (word1, cost)
                 res = sorted(res, key=lambda x: x[1], reverse=True)
-            return res    
+            return res
         for i in range(1, len(list_of_candidates)):
             res = []
             candidates2 = list_of_candidates[i]
