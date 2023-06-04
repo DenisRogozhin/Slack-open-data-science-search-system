@@ -1,5 +1,5 @@
 """Realisation of SpellCorrector class."""
-from utils import keyboard, tokenize
+from support_functions import keyboard, tokenize
 from language_models import BigramLanguageModel
 from error_model import ErrorModel
 from prefix_tree import Bor
