@@ -98,10 +98,5 @@ def search_result_comment(comment: Comment, with_border: bool = True) -> str:
             ">
                 {comment.datetime.strftime("%Y-%m-%d %H:%M:%S")}
             </div>
-            <div style="
-                font-family: 'Prompt', sans-serif;
-            ">
-                {comment.author}
-            </div>
         </div>
     </div>"""

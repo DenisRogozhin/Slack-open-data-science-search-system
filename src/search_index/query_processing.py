@@ -1,7 +1,7 @@
 """Processing string query from user."""
 import re
 from collections import deque
-import varbyte_encoding
+import src.search_index.varbyte_encoding as varbyte_encoding
 from typing import List, Dict, Set
 
 REGEX_SPLIT = re.compile(r'\w+|[\(\)\|&!]', re.U)
