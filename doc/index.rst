@@ -63,17 +63,47 @@ Welcome to Slack-open-data-science-search-system's documentation!
     :members:
     :undoc-members:
 
+Часть 2. Web app
+========================================
 
-Часть 2. Поисковый индекс
+Pages elements:
+
+.. automodule:: elements/common
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/main_page
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/result_page
+    :members:
+    :undoc-members:
+
+.. automodule:: elements/utils
+    :members:
+    :undoc-members:
+
+Elements templates:
+
+.. automodule:: templates/common
+    :members:
+    :undoc-members:
+
+.. automodule:: templates/main_page
+    :members:
+    :undoc-members:
+
+.. automodule:: templates/result_page
+    :members:
+    :undoc-members:
+
+Часть 3. Поисковый индекс
 ========================================
 Задачи - хранение для каждого токена индексов документов, в которых он содержится; булев поиск множества документов по запросу пользователя.
 Для имеющихся данных строится обратный поисковый индекс и сжимается с помощью метода VarByte encoding. Булев поиск осуществляется с помощью перевода запроса пользователя в форму польской инверсной нотации и вычисления конечного множества документов на её основе.
 
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   
+    
 2.1. Поисковый индекс
 ---------------------
 
@@ -94,7 +124,6 @@ Welcome to Slack-open-data-science-search-system's documentation!
 .. automodule:: query_processing
     :members:
     :undoc-members:
-    
 
 Indices and tables
 ==================
