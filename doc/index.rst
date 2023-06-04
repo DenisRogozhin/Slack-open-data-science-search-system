@@ -75,14 +75,14 @@ Welcome to Slack-open-data-science-search-system's documentation!
    :caption: Contents:
    
 2.1. Поисковый индекс
-------------------
+---------------------
 
 .. automodule:: index
     :members:
     :undoc-members:
  
 2.2. VarByte кодирование
------------------
+------------------------
     
 .. automodule:: varbyte_encoding
     :members:
