@@ -23,4 +23,5 @@ doc:
 build: lint install localisation doc
 
 run:
+    python3 src\spellchecker\build_models.py
 	@streamlit run src/app/MainPage.py
