@@ -19,6 +19,7 @@ class Parser:
         """
         self.path: str = getcwd() + data_path
         self.file_arr: List[str] = []
+        self.date_arr: List[str] = []
         self.type_arr: List[str] = []
         self.ts_arr: List[datetime] = []
         self.source_arr: List[str] = []
@@ -45,6 +46,7 @@ class Parser:
                 dialog_arr = json.loads(json_file.read())
                 for cur_dialog in dialog_arr:
                     self.file_arr.append(dirpath.split('/')[-1])
+                    self.date_arr.append(file_name.split('/')[-1].split('.')[0])
                     self.type_arr.append(cur_dialog["type"])
                     self.ts_arr.append(datetime.fromtimestamp(float(cur_dialog["ts"])))
                     self.source_arr.append(
@@ -61,6 +63,7 @@ class Parser:
                 json_file.close()
         ans_dict = {
             "file": self.file_arr,
+            "date": self.date_arr,
             "ts": self.ts_arr,
             "source_team": self.source_arr,
             "user": self.user_arr,
