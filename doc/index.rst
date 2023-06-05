@@ -68,33 +68,33 @@ Welcome to Slack-open-data-science-search-system's documentation!
 
 Pages elements:
 
-.. automodule:: elements/common
+.. automodule:: elements.common
     :members:
     :undoc-members:
 
-.. automodule:: elements/main_page
+.. automodule:: elements.main_page
     :members:
     :undoc-members:
 
-.. automodule:: elements/result_page
+.. automodule:: elements.result_page
     :members:
     :undoc-members:
 
-.. automodule:: elements/utils
+.. automodule:: elements.utils
     :members:
     :undoc-members:
 
 Elements templates:
 
-.. automodule:: templates/common
+.. automodule:: templates.common
     :members:
     :undoc-members:
 
-.. automodule:: templates/main_page
+.. automodule:: templates.main_page
     :members:
     :undoc-members:
 
-.. automodule:: templates/result_page
+.. automodule:: templates.result_page
     :members:
     :undoc-members:
 
