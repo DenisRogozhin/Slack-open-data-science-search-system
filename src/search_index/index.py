@@ -18,7 +18,7 @@ class Index:
         """
         self.index = defaultdict(list)
         self.filepath = filepath
-        self.data = pd.read_csv(self.filepath, index_col=0).reset_index(drop=True)
+        self.data = pd.read_csv(self.filepath)
         self.all_doc_ids = set(self.data.index)
 
     def build(self, compress: bool = False):
@@ -26,11 +26,6 @@ class Index:
 
         :param compress: if True then use compression with VarByte encoding
         """
-        self.post_main_id = self.data.sort_values(by=['file', 'ts'],
-                                                  ascending=[True, True])\
-            .groupby('file').head(1).reset_index().groupby('file')\
-            .agg({'index': list})['index'].to_dict()
-
         for i, row in self.data.iterrows():
             tokens = row['lemmatize_text'].split(' ')
 
@@ -57,20 +52,18 @@ class Index:
         query_poliz = query_processing.build_search_structure(query)
         found_doc_ids = query_processing.find_doc_ids(query_poliz, self.index, self.all_doc_ids)
 
-        post_names = self.data.loc[list(found_doc_ids)]['file'].values
-        main_post_ids = sorted([(self.post_main_id[pn][0], pn) for pn in post_names],
-                               key=lambda x: len(self.data.loc[x[0]]['lemmatize_text']
-                                                 .strip().split(' ')),
-                               reverse=True)
+        found_posts = pd.merge(
+            self.data,
+            self.data.loc[list(found_doc_ids)].groupby(['date', 'file'], as_index=False).size(),
+            on=['date', 'file']
+        ).sort_values(by=['size', 'date', 'ts'], ascending=[False, True, True])
 
         result = list()
-        for pi, pn in main_post_ids:
-            main_post_data = self.data.loc[pi][['text', 'ts']].tolist()
-            comments_data = self.data.query(f'(file == "{pn}")')\
-                .sort_values(by=['ts'], ascending=[True])\
-                .drop(index=[pi])[['text', 'ts']].values.tolist()
+        for p, p_data in found_posts.groupby(['date', 'file'], sort=False):
+            main_post_data = p_data.reset_index(drop=True).loc[0, ['text', 'ts']].tolist()
+            comments_data = p_data.reset_index(drop=True).drop(index=[0])[['text', 'ts']]\
+                .values.tolist()
             result.append((main_post_data, comments_data))
-
         return result
 
     def dump(self, filepath):
@@ -81,9 +74,6 @@ class Index:
         with open(filepath + 'index.pkl', mode='wb') as ind_f:
             pickle.dump(self.index, ind_f)
 
-        with open(filepath + 'index_post.pkl', mode='wb') as post_f:
-            pickle.dump(self.post_main_id, post_f)
-
     def load(self, filepath):
         """Load index from dumps.
 
@@ -91,6 +81,3 @@ class Index:
         """
         with open(filepath + 'index.pkl', mode='rb') as ind_f:
             self.index = pickle.load(ind_f)
-
-        with open(filepath + 'index_post.pkl', mode='rb') as post_f:
-            self.post_main_id = pickle.load(post_f)
