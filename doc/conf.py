@@ -8,7 +8,8 @@ import sys
 sys.path.insert(0, os.path.abspath('../src/spellchecker/'))
 sys.path.insert(1, os.path.abspath('../src/app/'))
 sys.path.insert(2, os.path.abspath('../src/search_index/'))
-sys.path.insert(3, os.path.abspath('../.'))
+sys.path.insert(3, os.path.abspath('../src/parser/'))
+sys.path.insert(4, os.path.abspath('../.'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
