@@ -12,24 +12,30 @@ authors = [
   {name = "Dmitriy Motrichenko", email = "001122mj@gmail.com"},
   {name = "Alexander Vorontsov", email = "makler322@gmail.com"},
 ]
-
-dependencies = [
-  "httpx",
-
+maintainers = [
+  {name = "Denis Rogozhin", email = "den1s.rogozhin@mail.ru"}
 ]
+classifiers = [
+  "Development Status :: 1 - Beta",
+  "Programming Language :: Python"
+]
+dynamic = ["dependencies"]
 
-dynamic = ["version"]
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt", "requirements.dev.txt"] }
 
 [project.urls]
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
-[project.scripts]
-spam-cli = "spam:main_cli"
+[project.gui-scripts]
+DateTime = "src.app.MainPage"
 
 [build-system]
 requires = ["Sphinx", "build", "coverage", "doit", "flake8", "pydocstyle", "pyfiglet", "setuptools"]
 build-backend = "setuptools.build_meta"
 
+[bdist_wheel]
+universal = 1
 
 [tool.setuptools]
-packages = ["Slack-open-data-science-search-system"]
+packages = ["src", "doc", "tests"]
