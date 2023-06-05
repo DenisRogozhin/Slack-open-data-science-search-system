@@ -125,6 +125,24 @@ Elements templates:
     :members:
     :undoc-members:
 
+
+Часть 4. Парсер и подготовка данных
+========================================
+
+4.1. Парсер
+------------------
+
+.. automodule:: parser
+    :members:
+    :undoc-members:
+
+4.2. Чистка данных
+------------------
+
+.. automodule:: clean
+    :members:
+    :undoc-members:
+
 Indices and tables
 ==================
 
