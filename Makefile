@@ -4,6 +4,7 @@ lint:
 	@pydocstyle src
 
 test:
+	@playwright install
 	@pytest
 
 install:
