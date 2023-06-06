@@ -19,6 +19,7 @@ class Index:
         self.index = defaultdict(list)
         self.filepath = filepath
         self.data = pd.read_csv(self.filepath)
+        self.data = self.data[~self.data['text'].isna()].copy()
         self.all_doc_ids = set(self.data.index)
 
     def build(self, compress: bool = False):
@@ -69,7 +70,7 @@ class Index:
     def dump(self, filepath):
         """Dump index.
 
-        :param filepath: path .pickle files
+        :param filepath: path .pickle file
         """
         with open(filepath + 'index.pkl', mode='wb') as ind_f:
             pickle.dump(self.index, ind_f)
@@ -77,7 +78,7 @@ class Index:
     def load(self, filepath):
         """Load index from dumps.
 
-        :param filepath: path .pickle files
+        :param filepath: path .pickle file
         """
         with open(filepath + 'index.pkl', mode='rb') as ind_f:
             self.index = pickle.load(ind_f)
