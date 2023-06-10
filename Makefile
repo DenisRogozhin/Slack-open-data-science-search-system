@@ -16,12 +16,19 @@ install:
 localisation:
 	@pybabel compile -D app -d src/locales/ -l ru
 	@pybabel compile -D app -d src/locales/ -l en
-	@export PYTHONPATH="${PYTHONPATH}:{pwd}/src"
 
 doc:
-	cd doc && make html
+	@cd doc && make html
 
 build: install lint localisation doc
 
 run:
+	@python3 src/spellchecker/build_models.py
+	@export PYTHONPATH="${PYTHONPATH}:{pwd}/src"
 	@streamlit run src/app/MainPage.py
+
+wheel:
+	@pyproject-build -w -n
+
+clean:
+	@git clean -fdx
