@@ -1,3 +1,5 @@
+.PHONY: doc
+
 # commands
 lint:
 	@flake8 src
@@ -17,11 +19,9 @@ localisation:
 	@export PYTHONPATH="${PYTHONPATH}:{pwd}/src"
 
 doc:
-	@cd doc
-	@make html
+	cd doc && make html
 
-build: lint install localisation doc
+build: install lint localisation doc
 
 run:
-    python3 src\spellchecker\build_models.py
 	@streamlit run src/app/MainPage.py
