@@ -16,8 +16,7 @@ class Parser(BaseModel):
     def __init__(self, data_path: str = '/data/'):
         """Init Parser model.
 
-        Args:
-            data_path: str path with raw data
+        :param data_path: str path with raw data
         """
         self.path: str = getcwd() + data_path
         self.file_arr: List[str] = []
@@ -33,12 +32,10 @@ class Parser(BaseModel):
     def parse(self, stem: bool = False, local_save: bool = True) -> pd.DataFrame:
         """Take information from raw json files.
 
-        Args:
-            stem: bool param for use stemming
-            local_save: bool param for local saving result
+        :param stem: bool param for use stemming
+        :param local_save: bool param for local saving result
 
-        Returns:
-            pd.DataFrame: dataframe with parse result
+        :return: pd.DataFrame: dataframe with parse result
         """
         init_path = True
         for (dirpath, _, filenames) in walk(self.path):
