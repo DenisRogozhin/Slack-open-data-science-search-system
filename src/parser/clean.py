@@ -9,12 +9,9 @@ class Clean(BaseModel):
     def __init__(self, data_name: str = 'data.csv', save: bool = True):
         """Init Parser model.
 
-        Parameters:
-        ----------
-        data_name: str
-            name of raw data
-        save: bool
-            flag for saving data
+        Args:
+            data_name: name of raw data
+            save: bool flag for saving data
         """
         self.data_name = data_name
         self.save = save
@@ -30,10 +27,8 @@ class Clean(BaseModel):
         5) Drop messages with smiles (with :)
         6) Drop messages that repeat more than 100 times
 
-        Returns
-        -------
-        pd.DataFrame
-            Cleaning dataframe
+        Returns:
+            pd.DataFrame: Cleaning dataframe
         """
         df = pd.read_csv(self.data_name)
         text_column = df['text']
