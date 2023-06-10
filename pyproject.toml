@@ -22,7 +22,7 @@ classifiers = [
 dynamic = ["dependencies"]
 
 [tool.setuptools.dynamic]
-dependencies = { file = ["requirements.txt", "requirements.dev.txt"] }
+dependencies = { file = ["requirements.txt"] }
 
 [project.urls]
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
@@ -31,11 +31,19 @@ Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-sy
 DateTime = "src.app.MainPage"
 
 [build-system]
-requires = ["Sphinx", "build", "coverage", "doit", "flake8", "pydocstyle", "pyfiglet", "setuptools"]
+requires = ["sphinx", "build", "flake8", "pydocstyle", "pytest", "setuptools", "babel"]
 build-backend = "setuptools.build_meta"
 
 [bdist_wheel]
 universal = 1
+
+[tool.setuptools.package-dir]
+App = "src"
+Doc = "doc"
+
+[tool.setuptools.package-data]
+App = ["src/src/*/*/*.mo"]
+Doc = ["_build/html/*.html"]
 
 [tool.setuptools]
 packages = ["src", "doc", "tests"]
