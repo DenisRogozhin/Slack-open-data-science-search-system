@@ -7,7 +7,6 @@ from src.app.templates.common import load_style
 from src.app.utils import _
 
 
-
 def main():
     st.set_page_config(
         page_title=_("ODS dump search"),
@@ -21,19 +20,20 @@ def main():
 
     # init page elements
     header = Header()
-    
+
     search_results = SearchResults()
-    
+
     search_bar = SearchBar(search_results)
-    
+
     # display page elements
     header.display()
-    
+
     EmptySpace(2).display()
-    
+
     search_bar.display()
-    
+
     search_results.display()
-    
+
+
 if __name__ == "__main__":
     main()
