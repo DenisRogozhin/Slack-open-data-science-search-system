@@ -109,7 +109,7 @@ class SearchResults(Element, SessionStateMixin):
     It inherits from `Element` and `SessionStateMixin`.
     """
 
-    pages_options: list[int] = [5, 10, 20, 40, 80]
+    pages_options: List[int] = [5, 10, 20, 40, 80]
     # A list of possible options for the number of results per page
 
     def __init__(self) -> None:

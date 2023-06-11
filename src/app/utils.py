@@ -4,6 +4,7 @@ import gettext
 from dataclasses import dataclass
 import datetime
 from time import sleep
+from typing import List
 
 
 translation = gettext.translation(
@@ -26,14 +27,14 @@ class Post:
     text: str
     author: str
     datetime: datetime.datetime
-    comments: list[Comment]
+    comments: List[Comment]
 
 
 def search(
     query: str,
     start_date: datetime.date,
     end_date: datetime.date,
-) -> list[Post]:
+) -> List[Post]:
     sleep(2)
     comments = [
         Comment(
@@ -58,5 +59,5 @@ def search(
     ]
 
 
-def sort_results(query: str, results: list[Post], sorting_direction: str) -> list[Post]:
+def sort_results(query: str, results: List[Post], sorting_direction: str) -> List[Post]:
     return results
