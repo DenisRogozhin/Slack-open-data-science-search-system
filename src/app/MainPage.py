@@ -8,6 +8,7 @@ from src.app.utils import _
 
 
 def main():
+    """Start application."""
     st.set_page_config(
         page_title=_("ODS dump search"),
         page_icon="🤖",

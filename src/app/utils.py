@@ -17,6 +17,8 @@ _, ngettext = translation.gettext, translation.ngettext
 
 @dataclass
 class Comment:
+    """Comment."""
+
     text: str
     author: str
     datetime: datetime.datetime
@@ -24,6 +26,8 @@ class Comment:
 
 @dataclass
 class Post:
+    """Post."""
+
     text: str
     author: str
     datetime: datetime.datetime
@@ -35,6 +39,7 @@ def search(
     start_date: datetime.date,
     end_date: datetime.date,
 ) -> List[Post]:
+    """Search relevant posts for query."""
     sleep(2)
     comments = [
         Comment(
@@ -60,4 +65,5 @@ def search(
 
 
 def sort_results(query: str, results: List[Post], sorting_direction: str) -> List[Post]:
+    """Return query results."""
     return results
