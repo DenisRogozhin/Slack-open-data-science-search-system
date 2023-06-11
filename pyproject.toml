@@ -28,7 +28,7 @@ dependencies = { file = ["requirements.txt"] }
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
 [project.gui-scripts]
-DateTime = "src.app.MainPage"
+DateTime = "src.app.MainPage:main"
 
 [build-system]
 requires = ["sphinx", "build", "flake8", "pydocstyle", "pytest", "setuptools", "babel"]
