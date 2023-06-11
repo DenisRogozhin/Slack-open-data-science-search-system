@@ -4,6 +4,7 @@ import gettext
 from dataclasses import dataclass
 import datetime
 from time import sleep
+from typing import List
 
 from src.search_index.index import Index
 
@@ -25,6 +26,8 @@ _, ngettext = translation.gettext, translation.ngettext
 
 @dataclass
 class Comment:
+    """Comment."""
+
     text: str
     author: str
     datetime: datetime.datetime
@@ -32,10 +35,12 @@ class Comment:
 
 @dataclass
 class Post:
+    """Post."""
+
     text: str
     author: str
     datetime: datetime.datetime
-    comments: list[Comment]
+    comments: List[Comment]
 
 
 def search(
@@ -69,5 +74,6 @@ def search(
     return result
 
 
-def sort_results(query: str, results: list[Post], sorting_direction: str) -> list[Post]:
+def sort_results(query: str, results: List[Post], sorting_direction: str) -> List[Post]:
+    """Return query results."""
     return results

@@ -4,9 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pydantic = "*"
+numpy = "*"
+textdistance = "*"
+streamlit = "*"
+streamlit-extras = "*"
+bitstring = "*"
+pandas = "*"
+pymystem3 = "*"
 
 [dev-packages]
+flake8 = "*"
+pytest = "*"
+pydocstyle = "*"
+sphinx = "*"
+babel = "*"
 build = "*"
+setuptools = "*"
 
 [requires]
 python_version = "3.10"
