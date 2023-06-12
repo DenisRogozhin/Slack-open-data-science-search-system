@@ -1,12 +1,11 @@
 """Realisation of Clean model."""
 import pandas as pd
-from pydantic import BaseModel
 
 
-class Clean(BaseModel):
+class Clean:
     """Clean model."""
 
-    def __init__(self, data_name: str = 'data.csv', save: bool = True):
+    def __init__(self, data_name: str = 'data/data.csv', save: bool = True):
         """Init Parser model.
 
         :param data_name: name of raw data
@@ -34,8 +33,8 @@ class Clean(BaseModel):
         df = df[~text_column.isna()]
         df = df[~user_column.isna()]
         df = df[text_column.str.len() > 10]
-        df = df[~text_column.str.contains('<')]
-        df = df[~text_column.str.contains(':')]
+        df = df[~text_column.str.contains('<', na=False)]
+        df = df[~text_column.str.contains(':', na=False)]
 
         counts = text_column.value_counts()
         df = df[text_column.isin(counts[counts < 100].index)]
