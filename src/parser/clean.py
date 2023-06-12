@@ -5,7 +5,7 @@ import pandas as pd
 class Clean:
     """Clean model."""
 
-    def __init__(self, data_name: str = 'data.csv', save: bool = True):
+    def __init__(self, data_name: str = 'data/data.csv', save: bool = True):
         """Init Parser model.
 
         :param data_name: name of raw data
