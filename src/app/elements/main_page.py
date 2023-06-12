@@ -155,8 +155,12 @@ class SearchResults(Element, SessionStateMixin):
                 end_time = time.time()
                 self.set_state("search_time", end_time - start_time)
                 # TODO: need sort results by sorting_directon here
-                self.set_state("search_results", new_search_result)
-                self.set_state("page_number", 1)
+                if len(new_search_result) > 0:
+                    self.set_state("search_results", new_search_result)
+                    self.set_state("page_number", 1)
+                else:
+                    self.set_state("search_results", None)
+                    self.set_state("page_number", None)
             else:
                 self.set_state("search_results", None)
                 self.set_state("page_number", None)

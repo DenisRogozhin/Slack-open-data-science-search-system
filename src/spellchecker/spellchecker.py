@@ -1,8 +1,8 @@
 """Realisation of SpellCorrector class."""
-from support_functions import keyboard, tokenize
-from language_models import BigramLanguageModel
-from error_model import ErrorModel
-from prefix_tree import Bor
+from src.spellchecker.support_functions import keyboard, tokenize
+from src.spellchecker.language_models import BigramLanguageModel
+from src.spellchecker.error_model import ErrorModel
+from src.spellchecker.prefix_tree import Bor
 from typing import List
 
 

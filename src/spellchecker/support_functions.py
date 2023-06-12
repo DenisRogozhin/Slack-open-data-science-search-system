@@ -3,6 +3,10 @@
 import re
 from typing import List
 
+# import resource, sys
+# # resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
+# sys.setrecursionlimit(10**6)
+
 keyboard = {
         'й': 'q', 'ц': 'w', 'у': 'e', 'к': 'r',
         'е': 't', 'н': 'y', 'г': 'u', 'ш': 'i',
@@ -29,4 +33,6 @@ def tokenize(text: str) -> List[str]:
     :param text: text to tokenize
     :return: tokenized text
     """
+    if not(isinstance(text, str)):
+        return []
     return re.findall(pattern=r"(?u)\w+", string=text.lower())

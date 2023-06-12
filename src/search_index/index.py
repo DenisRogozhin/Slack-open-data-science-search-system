@@ -60,13 +60,13 @@ class Index:
             on=['date', 'file']
         ).sort_values(by=['size', 'date', 'ts'], ascending=[False, True, True])
 
-        main_post_ids = main_post_ids[:min(len(main_post_ids), 10)]
         result = list()
         for p, p_data in found_posts.groupby(['date', 'file'], sort=False):
             main_post_data = p_data.reset_index(drop=True).loc[0, ['text', 'ts']].tolist()
             comments_data = p_data.reset_index(drop=True).drop(index=[0])[['text', 'ts']]\
                 .values.tolist()
             result.append((main_post_data, comments_data))
+
         return result
 
     def dump(self, filepath):
