@@ -5,15 +5,36 @@ from dataclasses import dataclass
 import datetime
 from time import sleep
 from typing import List
+import sys
 
+import pandas as pd
+
+import src.spellchecker.language_models as language_models
+from src.spellchecker.spellchecker import SpellCorrector
 from src.search_index.index import Index
 
-inv = Index(os.path.join(os.path.dirname(__file__), "../../data.csv"))
+# build index
+inv = Index(os.path.join(os.path.dirname(__file__), "../../data/data.csv"))
 inv.build()
 
-# дамп/загрузка
-inv.dump('index')
-# inv.load('файл с дампом')
+# build spellchecker
+sys.path.append(os.path.join(
+    os.path.dirname(__file__), 
+    "../spellchecker",
+))
+lm = pd.read_pickle(os.path.join(
+    os.path.dirname(__file__), 
+    "../spellchecker/models/language_model.pickle",
+))
+err = pd.read_pickle(os.path.join(
+    os.path.dirname(__file__), 
+    "../spellchecker/models/error_model.pickle",
+))
+bor = pd.read_pickle(os.path.join(
+    os.path.dirname(__file__), 
+    "../spellchecker/models/prefix_tree.pickle",
+))
+sc = SpellCorrector(lm, err, bor)
 
 
 translation = gettext.translation(
@@ -48,11 +69,12 @@ def search(
     start_date: datetime.date,
     end_date: datetime.date,
 ) -> list[Post]:
-    # sleep(2)
     print("Query:", query)
-    search_res = inv.search(query)
-    print("Search results count:")
-    print(len(search_res))
+    corrected_query = " & ".join(sc.spellcorrect(query))
+    print("Corrected query:", corrected_query)
+    full_query = " & ".join(query.split()) + " | " + corrected_query
+    print("Full query:", full_query)
+    search_res = inv.search(full_query)
 
     result = []
     for _res in search_res:
@@ -69,9 +91,11 @@ def search(
             datetime=datetime.datetime.fromisoformat(_res[0][1]), 
             comments=comments,
         )
-        result.append(post)
 
-    return result
+        if post.datetime.date >= start_date and post.datetime.date <= end_date:
+            result.append(post)
+
+    return sort_results(query, result, sorting_direction="relevance")
 
 
 def sort_results(query: str, results: List[Post], sorting_direction: str) -> List[Post]:

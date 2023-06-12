@@ -1,9 +1,9 @@
 """Build language model and prefix tree."""
 import pandas as pd
-from language_models import BigramLanguageModel
-from error_model import ErrorModel
-from support_functions import tokenize
-from prefix_tree import Bor
+from src.spellchecker.language_models import BigramLanguageModel
+from src.spellchecker.error_model import ErrorModel
+from src.spellchecker.support_functions import tokenize
+from src.spellchecker.prefix_tree import Bor
 import sys
 from typing import List, Tuple
 

@@ -1,6 +1,6 @@
 """Realisation of Prefix tree with fixed words search."""
-from support_functions import tokenize
-from error_model import ErrorModel
+from src.spellchecker.support_functions import tokenize
+from src.spellchecker.error_model import ErrorModel
 from typing import List
 
 
