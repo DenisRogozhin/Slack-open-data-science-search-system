@@ -34,16 +34,12 @@ DateTime = "src.app.MainPage:main"
 requires = ["sphinx", "build", "flake8", "pydocstyle", "pytest", "setuptools", "babel"]
 build-backend = "setuptools.build_meta"
 
-[bdist_wheel]
-universal = 1
-
 [tool.setuptools.package-dir]
-App = "src"
+AppRu = "src/locales/ru"
+AppEn = "src/locales/en"
 Doc = "doc"
 
 [tool.setuptools.package-data]
-App = ["src/src/*/*/*.mo"]
+AppRu = ["LC_MESSAGES/*.mo"]
+AppEn = ["LC_MESSAGES/*.mo"]
 Doc = ["_build/html/*.html"]
-
-[tool.setuptools]
-packages = ["src", "doc", "tests"]
