@@ -44,7 +44,10 @@ class Index:
             self.index[tok] = varbyte_encoding.compress(self.index[tok])
 
     def decompress_ids(self, ids: bitstring.BitStream) -> List[int]:
-        """Decompress index for one term from VarByte encoding."""
+        """Decompress index for one term from VarByte encoding.
+
+        :param ids:  ids to decompress
+        """
         return varbyte_encoding.decompress(ids)
 
     def search(self, query: str) -> List[Tuple[str, str]]:
