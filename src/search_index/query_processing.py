@@ -102,4 +102,7 @@ def find_doc_ids(poliz: List[str], index: Dict[str, List[int]],
             else:
                 ids_stack.append(set(index[tok]))
 
+    if len(ids_stack) != 1:
+        raise ValueError('Wrong format of query')
+
     return ids_stack[0]
