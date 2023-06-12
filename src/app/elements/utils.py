@@ -2,7 +2,8 @@
 from typing import Callable
 
 import streamlit
-
+import sys
+sys.path.append('.')
 from src.app.templates.common import load_style
 
 

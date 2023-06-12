@@ -1,10 +1,11 @@
 """Build language model and prefix tree."""
 import pandas as pd
+import sys
+sys.path.append('.')
 from src.spellchecker.language_models import BigramLanguageModel
 from src.spellchecker.error_model import ErrorModel
 from src.spellchecker.support_functions import tokenize
 from src.spellchecker.prefix_tree import Bor
-import sys
 from typing import List, Tuple
 
 sys.setrecursionlimit(2000)

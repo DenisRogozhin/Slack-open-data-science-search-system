@@ -5,7 +5,8 @@ from typing import List, Tuple
 import pandas as pd
 import pickle
 import bitstring
-
+import sys
+sys.path.append('.')
 import src.search_index.varbyte_encoding as varbyte_encoding
 import src.search_index.query_processing as query_processing
 

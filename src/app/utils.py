@@ -8,10 +8,13 @@ import sys
 import pandas as pd
 from src.spellchecker.spellchecker import SpellCorrector
 from src.search_index.index import Index
+import pandas as pd
 
 # build index
-inv = Index(os.path.join(os.path.dirname(__file__), "../../data/data.csv"))
-inv.build()
+#Index(os.path.join(os.path.dirname(__file__), "../../data/data.csv"))
+#print("building index")
+#inv.build()
+#pd.to_pickle(inv, 'buided_index.pickle')
 
 # build spellchecker
 sys.path.append(os.path.join(
@@ -31,6 +34,10 @@ bor = pd.read_pickle(os.path.join(
     "../spellchecker/models/prefix_tree.pickle",
 ))
 sc = SpellCorrector(lm, err, bor)
+inv = pd.read_pickle(os.path.join(
+    os.path.dirname(__file__),
+    "../../index/buided_index.pickle",
+))
 
 
 translation = gettext.translation(
@@ -95,7 +102,7 @@ def search(
             comments=comments,
         )
 
-        if post.datetime.date >= start_date and post.datetime.date <= end_date:
+        if post.datetime.date() >= start_date and post.datetime.date() <= end_date:
             result.append(post)
 
     return sort_results(query, result, sorting_direction="relevance")

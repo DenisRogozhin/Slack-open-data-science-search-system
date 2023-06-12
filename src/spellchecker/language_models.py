@@ -1,5 +1,6 @@
 """Bigram language model to count text probabilities."""
-
+import sys
+sys.path.append('.')
 from src.spellchecker.support_functions import tokenize
 from collections import defaultdict
 from typing import List, Tuple

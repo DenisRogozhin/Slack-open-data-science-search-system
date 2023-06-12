@@ -1,6 +1,8 @@
 """Processing string query from user."""
 import re
 from collections import deque
+import sys
+sys.path.append('.')
 import src.search_index.varbyte_encoding as varbyte_encoding
 from typing import List, Dict, Set
 

@@ -1,6 +1,7 @@
 """Main page."""
 import streamlit as st
-
+import sys
+sys.path.append('.')
 from src.app.elements.main_page import Header, SearchResults, SearchBar
 from src.app.elements.common import EmptySpace
 from src.app.templates.common import load_style

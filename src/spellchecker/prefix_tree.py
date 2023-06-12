@@ -1,4 +1,6 @@
 """Realisation of Prefix tree with fixed words search."""
+import sys
+sys.path.append('.')
 from src.spellchecker.support_functions import tokenize
 from src.spellchecker.error_model import ErrorModel
 from typing import List

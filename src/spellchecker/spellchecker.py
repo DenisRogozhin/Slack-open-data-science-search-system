@@ -1,4 +1,6 @@
 """Realisation of SpellCorrector class."""
+import sys
+sys.path.append('.')
 from src.spellchecker.support_functions import keyboard, tokenize
 from src.spellchecker.language_models import BigramLanguageModel
 from src.spellchecker.error_model import ErrorModel

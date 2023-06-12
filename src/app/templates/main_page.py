@@ -1,4 +1,6 @@
 """Templates for displaying on the mane page."""
+import sys
+sys.path.append('.')
 from src.app.utils import Post, _, ngettext
 
 

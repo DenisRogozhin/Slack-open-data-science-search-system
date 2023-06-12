@@ -1,4 +1,6 @@
 """Templates for displaying on the result page."""
+import sys
+sys.path.append('.')
 from src.app.utils import Comment
 from src.app.utils import _
 

@@ -5,7 +5,8 @@ from typing import List
 
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-
+import sys
+sys.path.append('.')
 from src.app.elements.common import EmptySpace, SessionStateMixin, Element
 from src.app.elements.utils import button_decorator
 from src.app.templates.main_page import (
