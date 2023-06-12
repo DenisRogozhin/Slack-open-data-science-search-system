@@ -6,11 +6,10 @@ from os import getcwd, walk
 from typing import List
 
 import pandas as pd
-from pydantic import BaseModel
 from pymystem3 import Mystem
 
 
-class Parser(BaseModel):
+class Parser:
     """Parser model."""
 
     def __init__(self, data_path: str = '/data/'):
