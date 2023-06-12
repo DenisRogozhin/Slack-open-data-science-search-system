@@ -1,9 +1,8 @@
 """Realisation of Clean model."""
 import pandas as pd
-from pydantic import BaseModel
 
 
-class Clean(BaseModel):
+class Clean:
     """Clean model."""
 
     def __init__(self, data_name: str = 'data.csv', save: bool = True):
