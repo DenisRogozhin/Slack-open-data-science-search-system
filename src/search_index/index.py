@@ -48,6 +48,7 @@ class Index:
         """Decompress index for one term from VarByte encoding.
 
         :param ids:  ids to decompress
+        :return: list of ids
         """
         return varbyte_encoding.decompress(ids)
 
@@ -55,23 +56,24 @@ class Index:
         """Search for user query.
 
         :param query: query from user
+        :return: list of relevant posts and comments
         """
         query_poliz = query_processing.build_search_structure(query)
+        print(query_poliz)
         found_doc_ids = query_processing.find_doc_ids(query_poliz, self.index, self.all_doc_ids)
-
+        
         found_posts = pd.merge(
             self.data,
             self.data.loc[list(found_doc_ids)].groupby(['date', 'file'], as_index=False).size(),
             on=['date', 'file']
         ).sort_values(by=['size', 'date', 'ts'], ascending=[False, True, True])
-
+        
         result = list()
         for p, p_data in found_posts.groupby(['date', 'file'], sort=False):
             main_post_data = p_data.reset_index(drop=True).loc[0, ['text', 'ts']].tolist()
             comments_data = p_data.reset_index(drop=True).drop(index=[0])[['text', 'ts']]\
                 .values.tolist()
             result.append((main_post_data, comments_data))
-
         return result
 
     def dump(self, filepath):

@@ -6,4 +6,5 @@ streamlit-extras
 bitstring
 pandas
 pymystem3
+pymorphy2
 

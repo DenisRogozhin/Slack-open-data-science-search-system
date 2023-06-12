@@ -5,22 +5,36 @@ import sys
 sys.path.append('.')
 import src.search_index.varbyte_encoding as varbyte_encoding
 from typing import List, Dict, Set
+import pymorphy2
 
 REGEX_SPLIT = re.compile(r'\w+|[\(\)\|&!]', re.U)
+morph = pymorphy2.MorphAnalyzer()
 
+def lemmatize(tokens: List[str]) -> List[str]:
+    """Lemmatize tokens in string.
+
+    :param tokens: list of tokens
+    :return: list of lemmas
+    """
+    lemmas = [morph.parse(token)[0].normal_form if morph.word_is_known(token) else token 
+                                        for token in tokens]
+    return lemmas
 
 def tokenize(query_str: str) -> List[str]:
     """Split string by ()&|! symbols.
 
     :param query_str: query from user
+    :return: list of tokens
     """
-    return list(map(lambda t: t.lower(), re.findall(REGEX_SPLIT, query_str)))
+    tokens = list(map(lambda t: t.lower(), re.findall(REGEX_SPLIT, query_str)))
+    return tokens
 
 
 def tokenized_query_to_poliz(tokens: List[str]) -> List[str]:
     """Transform tokenized query into a reverse polish notation.
 
     :param tokens: query tokens
+    :return: user query in poliz
     """
     priors = {
         '|': 0,
@@ -66,9 +80,11 @@ def build_search_structure(query_str: str) -> List[str]:
     """Build reverse polish notation search structure for query.
 
     :param query_str: query from user
+    :return: polizes query
     """
     tokens = tokenize(query_str)
-    return tokenized_query_to_poliz(tokens)
+    lemmas = lemmatize(tokens)
+    return tokenized_query_to_poliz(lemmas)
 
 
 def find_doc_ids(poliz: List[str], index: Dict[str, List[int]],
@@ -79,6 +95,7 @@ def find_doc_ids(poliz: List[str], index: Dict[str, List[int]],
     :param index: search index
     :param all_doc_ids: list of all document ids in search index
     :param decompress: if True then VarByte compression was used in search index
+    :return: set of valid doc ids
     """
     rest = deque(poliz)
     ids_stack = list()

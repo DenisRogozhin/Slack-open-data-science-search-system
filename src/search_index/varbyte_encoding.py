@@ -8,6 +8,7 @@ def add_byte(bs: bitstring.BitStream, d: int) -> bitstring.BitStream:
 
     :param bs: bitstream
     :param d: contains value of adding bit`
+    :return: bitstring
     """
     b = '0b1' if d == 1 else '0b0'
     bs.append(b)
@@ -46,6 +47,7 @@ def decompress(id_bytes: bitstring.BitStream) -> List[int]:
     """Decompress bytes into a list of ints.
 
     :param id_bytes: bytestr containing compressed list`
+    :return: list of ids
     """
     id_list = []
     bs = bitstring.BitStream(id_bytes)

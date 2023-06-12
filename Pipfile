@@ -11,6 +11,7 @@ streamlit = "*"
 streamlit-extras = "*"
 bitstring = "*"
 pandas = "*"
+pymorphy2 = "*"
 pymystem3 = "*"
 
 [dev-packages]
