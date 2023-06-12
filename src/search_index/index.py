@@ -9,6 +9,7 @@ import bitstring
 import src.search_index.varbyte_encoding as varbyte_encoding
 import src.search_index.query_processing as query_processing
 
+
 class Index:
     """Inverted search index class."""
 

@@ -3,13 +3,9 @@ import os
 import gettext
 from dataclasses import dataclass
 import datetime
-from time import sleep
 from typing import List
 import sys
-
 import pandas as pd
-
-import src.spellchecker.language_models as language_models
 from src.spellchecker.spellchecker import SpellCorrector
 from src.search_index.index import Index
 
@@ -19,19 +15,19 @@ inv.build()
 
 # build spellchecker
 sys.path.append(os.path.join(
-    os.path.dirname(__file__), 
+    os.path.dirname(__file__),
     "../spellchecker",
 ))
 lm = pd.read_pickle(os.path.join(
-    os.path.dirname(__file__), 
+    os.path.dirname(__file__),
     "../spellchecker/models/language_model.pickle",
 ))
 err = pd.read_pickle(os.path.join(
-    os.path.dirname(__file__), 
+    os.path.dirname(__file__),
     "../spellchecker/models/error_model.pickle",
 ))
 bor = pd.read_pickle(os.path.join(
-    os.path.dirname(__file__), 
+    os.path.dirname(__file__),
     "../spellchecker/models/prefix_tree.pickle",
 ))
 sc = SpellCorrector(lm, err, bor)
@@ -69,6 +65,13 @@ def search(
     start_date: datetime.date,
     end_date: datetime.date,
 ) -> list[Post]:
+    """Run searh for given query.
+
+    :param query: query
+    :param start_date: start_date
+    :param end_date: end_date
+    :return: list of televant posts
+    """
     print("Query:", query)
     corrected_query = " & ".join(sc.spellcorrect(query))
     print("Corrected query:", corrected_query)
@@ -81,14 +84,14 @@ def search(
         comments = []
         for _comment in _res[1]:
             comments.append(Comment(
-                text=_comment[0], 
-                author="", 
+                text=_comment[0],
+                author="",
                 datetime=datetime.datetime.fromisoformat(_comment[1]),
             ))
         post = Post(
-            text=_res[0][0], 
-            author="", 
-            datetime=datetime.datetime.fromisoformat(_res[0][1]), 
+            text=_res[0][0],
+            author="",
+            datetime=datetime.datetime.fromisoformat(_res[0][1]),
             comments=comments,
         )
 

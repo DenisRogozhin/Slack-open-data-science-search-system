@@ -33,6 +33,6 @@ def tokenize(text: str) -> List[str]:
     :param text: text to tokenize
     :return: tokenized text
     """
-    if not(isinstance(text, str)):
+    if not (isinstance(text, str)):
         return []
     return re.findall(pattern=r"(?u)\w+", string=text.lower())
