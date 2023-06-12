@@ -24,7 +24,7 @@ def compress(id_list: List[int]):
         if i == 0:
             delta = id_list[i]
         else:
-            delta = id_list[i] - id_list[i-1]
+            delta = id_list[i] - id_list[i - 1]
         rest_bits = 7
 
         while delta:

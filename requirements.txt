@@ -7,4 +7,5 @@ bitstring
 pandas
 pymystem3
 pymorphy2
+gdown
 

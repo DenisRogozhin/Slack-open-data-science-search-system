@@ -61,13 +61,12 @@ class Index:
         query_poliz = query_processing.build_search_structure(query)
         print(query_poliz)
         found_doc_ids = query_processing.find_doc_ids(query_poliz, self.index, self.all_doc_ids)
-        
+
         found_posts = pd.merge(
             self.data,
             self.data.loc[list(found_doc_ids)].groupby(['date', 'file'], as_index=False).size(),
             on=['date', 'file']
         ).sort_values(by=['size', 'date', 'ts'], ascending=[False, True, True])
-        
         result = list()
         for p, p_data in found_posts.groupby(['date', 'file'], sort=False):
             main_post_data = p_data.reset_index(drop=True).loc[0, ['text', 'ts']].tolist()
@@ -81,7 +80,7 @@ class Index:
 
         :param filepath: path .pickle file
         """
-        with open(filepath + 'index.pkl', mode='wb') as ind_f:
+        with open(filepath + 'buided_index.pickle', mode='wb') as ind_f:
             pickle.dump(self.index, ind_f)
 
     def load(self, filepath):
@@ -89,5 +88,5 @@ class Index:
 
         :param filepath: path .pickle file
         """
-        with open(filepath + 'index.pkl', mode='rb') as ind_f:
+        with open(filepath + 'buided_index.pickle', mode='rb') as ind_f:
             self.index = pickle.load(ind_f)

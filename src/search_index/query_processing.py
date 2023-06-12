@@ -7,8 +7,10 @@ import src.search_index.varbyte_encoding as varbyte_encoding
 from typing import List, Dict, Set
 import pymorphy2
 
+
 REGEX_SPLIT = re.compile(r'\w+|[\(\)\|&!]', re.U)
 morph = pymorphy2.MorphAnalyzer()
+
 
 def lemmatize(tokens: List[str]) -> List[str]:
     """Lemmatize tokens in string.
@@ -16,9 +18,10 @@ def lemmatize(tokens: List[str]) -> List[str]:
     :param tokens: list of tokens
     :return: list of lemmas
     """
-    lemmas = [morph.parse(token)[0].normal_form if morph.word_is_known(token) else token 
-                                        for token in tokens]
+    lemmas = [morph.parse(token)[0].normal_form if morph.word_is_known(token) else token
+              for token in tokens]
     return lemmas
+
 
 def tokenize(query_str: str) -> List[str]:
     """Split string by ()&|! symbols.

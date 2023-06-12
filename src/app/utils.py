@@ -7,16 +7,8 @@ from typing import List
 import sys
 import pandas as pd
 from src.spellchecker.spellchecker import SpellCorrector
-from src.search_index.index import Index
-import pandas as pd
 
-# build index
-#Index(os.path.join(os.path.dirname(__file__), "../../data/data.csv"))
-#print("building index")
-#inv.build()
-#pd.to_pickle(inv, 'buided_index.pickle')
 
-# build spellchecker
 sys.path.append(os.path.join(
     os.path.dirname(__file__),
     "../spellchecker",

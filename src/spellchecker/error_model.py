@@ -54,21 +54,21 @@ def find_mistakes_types(orig: str, fix: str, matrix: np.array) -> List[Tuple[str
         m_left = matrix[i, j - 1]  # del
         m_diag = matrix[i - 1, j - 1]  # replace
         if m_diag <= m_left and m_diag <= m_up:
-            if orig[i-1] != fix[j-1]:
-                way.append(('replace', fix[j-1], orig[i-1]))
+            if orig[i - 1] != fix[j - 1]:
+                way.append(('replace', fix[j - 1], orig[i - 1]))
             i = i - 1
             j = j - 1
         elif m_left < m_diag and m_left < m_up:
-            way.append(('delete', fix[j-1]))
+            way.append(('delete', fix[j - 1]))
             j = j - 1
         else:
-            way.append(('insert', orig[i-1]))
+            way.append(('insert', orig[i - 1]))
             i = i - 1
     while i > 0:
-        way.append(('insert', orig[i-1]))
+        way.append(('insert', orig[i - 1]))
         i = i - 1
     while j > 0:
-        way.append(('delete', fix[j-1]))
+        way.append(('delete', fix[j - 1]))
         j = j - 1
     return way[::-1]
 
@@ -127,20 +127,20 @@ class ErrorModel:
                 if self.replaces[(error[1], error[2])] == 0:
                     dist += 1
                 else:
-                    dist += 1 - (self.replaces[(error[1], error[2])] /
-                                 sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
+                    dist += 1 - (self.replaces[(error[1], error[2])]
+                                 / sum([self.replaces[x] for x in self.replaces if x[0] == error[1]]))
             elif error[0] == 'delete':
                 if self.deletions[error[1]] == 0:
                     dist += 1
                 else:
-                    dist += 1 - (self.deletions[error[1]] /
-                                 sum([self.deletions[x] for x in self.deletions]))
+                    dist += 1 - (self.deletions[error[1]]
+                                 / sum([self.deletions[x] for x in self.deletions]))
             elif error[0] == 'insert':
                 if self.inserts[error[1]] == 0:
                     dist += 1
                 else:
-                    dist += 1 - (self.inserts[error[1]] /
-                                 sum([self.inserts[x] for x in self.inserts]))
+                    dist += 1 - (self.inserts[error[1]]
+                                 / sum([self.inserts[x] for x in self.inserts]))
         return dist
 
     def P_err(self, orig: str, fix: str) -> float:
