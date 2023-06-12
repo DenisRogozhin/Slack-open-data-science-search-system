@@ -33,8 +33,8 @@ class Clean:
         df = df[~text_column.isna()]
         df = df[~user_column.isna()]
         df = df[text_column.str.len() > 10]
-        df = df[~text_column.str.contains('<')]
-        df = df[~text_column.str.contains(':')]
+        df = df[~text_column.str.contains('<', na=False)]
+        df = df[~text_column.str.contains(':', na=False)]
 
         counts = text_column.value_counts()
         df = df[text_column.isin(counts[counts < 100].index)]
