@@ -28,16 +28,14 @@ class Clean:
         :return: pd.DataFrame: Cleaning dataframe
         """
         df = pd.read_csv(self.data_name)
-        text_column = df['text']
-        user_column = df['user']
-        df = df[~text_column.isna()]
-        df = df[~user_column.isna()]
-        df = df[text_column.str.len() > 10]
-        df = df[~text_column.str.contains('<', na=False)]
-        df = df[~text_column.str.contains(':', na=False)]
+        df = df[~df['text'].isna()]
+        df = df[~df['user'].isna()]
+        df = df[(df['text'].str.len() > 10)]
+        df = df[~df['text'].str.contains('<', na=False)]
+        df = df[~df['text'].str.contains(':', na=False)]
 
-        counts = text_column.value_counts()
-        df = df[text_column.isin(counts[counts < 100].index)]
+        counts = df['text'].value_counts()
+        df = df[df['text'].isin(counts[counts < 100].index)]
         if self.save:
             df.to_csv(self.data_name, index=False, escapechar='\\')
         return df
