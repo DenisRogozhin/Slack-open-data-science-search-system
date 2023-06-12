@@ -32,3 +32,7 @@ wheel:
 
 clean:
 	@git clean -fdx
+
+
+download:
+	@python3 src/parser/downloader.py
