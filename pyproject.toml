@@ -28,7 +28,7 @@ dependencies = { file = ["requirements.txt"] }
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
 [project.gui-scripts]
-MainPage = "src.app.__init__:main"
+MainPage = "src.app.run:main"
 
 [tool.setuptools]
 packages = ["src", "src.app", "src.parser", "src.spellchecker", "src.search_index", 
@@ -45,7 +45,6 @@ AppEn = "src/locales/en"
 Doc = "doc"
 Models = "src/models"
 Index = "index"
-Src = "src"
 
 [tool.setuptools.package-data]
 AppRu = ["LC_MESSAGES/*.mo"]
@@ -53,4 +52,3 @@ AppEn = ["LC_MESSAGES/*.mo"]
 Doc = ["_build/html/*.html"]
 Models = ["*.pickle"]
 Index = ["*.pickle"]
-Src = ["*/*.pickle"]
