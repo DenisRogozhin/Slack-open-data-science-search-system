@@ -28,7 +28,7 @@ dependencies = { file = ["requirements.txt"] }
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
 [project.gui-scripts]
-MainPage = "src.app.MainPage:main"
+MainPage = "src.app.__init__:main"
 
 [tool.setuptools]
 packages = ["src", "src.app", "src.parser", "src.spellchecker", "src.search_index", 
