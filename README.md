@@ -10,28 +10,35 @@
 3. Разработать веб-приложение, к которому пользователи могут слать поисковые вопросы/запросы, а на выходе получать топ N релевантных ответов
 4. Предусмотреть исправление опечаток в пользовательском запросе
 
-Используемые инструменты:
-
-1. Для парсинга: библиотека re
-2. Для предобработки, токенизации - библиотека nltk
-3. Для построения системы исправления опечаток: возможно sklearn(для обучения моделей)
 
 ![image](https://user-images.githubusercontent.com/74496817/228052382-f99e3c1e-601c-480c-a888-cd6e71f91712.png)
 
-## How to run app
 
-0. `pybabel compile -D app -d src/locales/ -l ru`
+## Команды Makefile
 
-   `pybabel compile -D app -d src/locales/ -l en`
+Команда | Описание
+---|---
+style | Проверка на flake8 и pydocstyle
+load | Загрузка моделей
+load_data | Загрузка обработанных данных
+build | Сборка индекса
+test | Запуск всех тестов
+local | Локализация
+doc | Сборка документации
+run | Запуск проекта
+wheel | Запуск колеса
+clean | Чистка
 
-1. `export PYTHONPATH="${PYTHONPATH}:{pwd}/src"`
 
-2. `streamlit run src/app/MainPage.py`
-
-## How to run ui tests
-
-0. `pip install -r requirements.dev.txt`
-
-1. `playwright install`
-
-2. `pytest tests/`
+После 
+```bash
+make build 
+```
+формируется колесо, которое можно установить через 
+```bash
+pip install
+```
+После установки приложение запускается командной:
+```bash
+python -m src.app.run
+```
