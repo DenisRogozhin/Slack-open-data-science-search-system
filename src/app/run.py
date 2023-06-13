@@ -1,3 +1,5 @@
+"""Run MainPage code."""
+
 import os
 
 
