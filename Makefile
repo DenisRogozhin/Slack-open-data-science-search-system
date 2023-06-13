@@ -38,5 +38,9 @@ run:
 wheel:
 	@pyproject-build -w -n
 
+run_all: install load_data load local doc run
+
+build_all: install load_data load local doc wheel
+
 clean:
 	@git clean -fdx
