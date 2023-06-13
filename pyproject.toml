@@ -32,7 +32,7 @@ MainPage = "src.app.run:main"
 
 [tool.setuptools]
 packages = ["src", "src.app", "src.parser", "src.spellchecker", "src.search_index", 
-            "src.app.elements", "src.app.templates", "src.app.pages", "index"]
+            "src.app.elements", "src.app.templates", "src.app.pages", "index", "src.locales"]
 
 [build-system]
 requires = ["sphinx", "build", "flake8", "pydocstyle", "pytest", "setuptools", "babel"]
