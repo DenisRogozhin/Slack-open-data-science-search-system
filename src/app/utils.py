@@ -1,6 +1,7 @@
 """Utils for app."""
 import os
 import gettext
+import locale
 from dataclasses import dataclass
 import datetime
 from typing import List
@@ -31,12 +32,21 @@ inv = pd.read_pickle(os.path.join(
     "../../index/buided_index.pickle",
 ))
 
+LANGUAGES = {
+    "ru_RU": "ru",
+}
+
+# Get the user's locale
+user_locale = locale.getdefaultlocale()[0]
+
 
 translation = gettext.translation(
     domain="app",
     localedir=os.path.join(os.path.dirname(__file__), "../locales"),
-    languages=["en", "ru"],
+    # languages=["ru", "en"],
+    languages=[LANGUAGES.get(user_locale, "en")]
 )
+
 _, ngettext = translation.gettext, translation.ngettext
 
 
