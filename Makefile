@@ -6,8 +6,8 @@ style:
 	@pydocstyle src
 
 load: 
-	@gdown --fuzzy https://drive.google.com/file/d/16bINNiCQs4P3W58Qj5FGfPf-GdfWRTC_/view?usp=sharing -O src/spellchecker/models/prefix_tree.pickle
-	@gdown --fuzzy https://drive.google.com/file/d/1XLUZ1qSliuDdqiLQPumLyzZSP1n3ZWS8/view?usp=sharing -O src/spellchecker/models/language_model.pickle
+	@gdown --fuzzy https://drive.google.com/file/d/16bINNiCQs4P3W58Qj5FGfPf-GdfWRTC_/view?usp=sharing -O src/models/prefix_tree.pickle
+	@gdown --fuzzy https://drive.google.com/file/d/1XLUZ1qSliuDdqiLQPumLyzZSP1n3ZWS8/view?usp=sharing -O src/models/language_model.pickle
 	@gdown --fuzzy https://drive.google.com/file/d/1UE09HPhwmw2nkZoqTB0hIXeWYJR67sp-/view?usp=sharing -O index/buided_index.pickle
 
 load_data:    

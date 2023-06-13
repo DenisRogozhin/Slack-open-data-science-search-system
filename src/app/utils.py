@@ -15,15 +15,15 @@ sys.path.append(os.path.join(
 ))
 lm = pd.read_pickle(os.path.join(
     os.path.dirname(__file__),
-    "../spellchecker/models/language_model.pickle",
+    "../models/language_model.pickle",
 ))
 err = pd.read_pickle(os.path.join(
     os.path.dirname(__file__),
-    "../spellchecker/models/error_model.pickle",
+    "../models/error_model.pickle",
 ))
 bor = pd.read_pickle(os.path.join(
     os.path.dirname(__file__),
-    "../spellchecker/models/prefix_tree.pickle",
+    "../models/prefix_tree.pickle",
 ))
 sc = SpellCorrector(lm, err, bor)
 inv = pd.read_pickle(os.path.join(

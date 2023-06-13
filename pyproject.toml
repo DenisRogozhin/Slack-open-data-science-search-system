@@ -28,18 +28,29 @@ dependencies = { file = ["requirements.txt"] }
 Repository = "https://github.com/DenisRogozhin/Slack-open-data-science-search-system"
 
 [project.gui-scripts]
-DateTime = "src.app.MainPage:main"
+MainPage = "src.app.MainPage:main"
+
+[tool.setuptools]
+packages = ["src", "src.app", "src.parser", "src.spellchecker", "src.search_index", 
+            "src.app.elements", "src.app.templates", "src.app.pages", "index"]
 
 [build-system]
 requires = ["sphinx", "build", "flake8", "pydocstyle", "pytest", "setuptools", "babel"]
 build-backend = "setuptools.build_meta"
 
+
 [tool.setuptools.package-dir]
 AppRu = "src/locales/ru"
 AppEn = "src/locales/en"
 Doc = "doc"
+Models = "src/models"
+Index = "index"
+Src = "src"
 
 [tool.setuptools.package-data]
 AppRu = ["LC_MESSAGES/*.mo"]
 AppEn = ["LC_MESSAGES/*.mo"]
 Doc = ["_build/html/*.html"]
+Models = ["*.pickle"]
+Index = ["*.pickle"]
+Src = ["*/*.pickle"]
