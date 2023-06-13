@@ -1,0 +1,2 @@
+recursive-include src *.pickle
+recursive-include index *.pickle
